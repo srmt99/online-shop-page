@@ -1,0 +1,71 @@
+@import "NavigationBar.css";
+/***
+This file defines the general style of the site
+***/
+
+/*
+Default styles for all components
+*/
+
+* {
+    font-size: 16px;
+    font-family: BYekan, 'BYekan', tahoma;
+    box-sizing: border-box;
+    direction: rtl;
+}
+
+/*
+Making all pages cover the entire height of the screen
+*/
+
+html, body {
+    height: 100%;
+}
+
+/*
+Styling the main section of the page - contains all components
+max-width and centered
+*/
+
+#main-section {
+    max-width: 1280px;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+}
+
+/*
+The main content of each page is shown in the container component -> takes all the space from header to footer
+*/
+
+.container {
+    flex: 1 0 auto;
+}
+
+/*
+Styling the body
+*/
+
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #e6e6e6;
+}
+
+/*
+Styling footer -> sticky
+*/
+
+footer {
+    flex-shrink: 0;
+    background-color: black;
+    color: #cccccc;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 60px;
+    width: 100%;
+}
