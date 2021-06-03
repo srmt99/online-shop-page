@@ -183,6 +183,7 @@ Styling the filter box's main characteristics
     flex-direction: column;
     align-items: flex-start;
     background-color: white;
+    box-shadow: 0 2px 5px 0 #4b4b4b;
 }
 
 /***
