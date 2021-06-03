@@ -1,0 +1,80 @@
+@import "GeneralLayout.css";
+/***
+This file defines the general style of the site
+***/
+
+/***
+Basic style characteristics for hero header background
+flex display, full width
+***/
+
+.hero-header {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    background-color: #f9593a;
+    align-items: center;
+    padding-top: 40px;
+}
+
+/***
+Styling the main hero header title
+***/
+
+#hero-text {
+    color: white;
+    font-size: 200%;
+}
+
+/***
+Styling the product search form
+***/
+
+.hero-form {
+    display: flex;
+    flex-direction: column;
+    margin-top: 40px;
+    margin-bottom: 40px;
+    justify-items: center;
+    width: 100%;
+    align-items: center;
+}
+
+/***
+Styling the product search input box
+***/
+
+#product-input {
+    background-color: white;
+    width: 60%;
+    text-align: center;
+    border-radius: 24px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+/***
+Styling the product search submit button
+***/
+
+#product-submit {
+    margin-top: 35px;
+    background-color: #ffcc00;
+    color: black;
+    border-radius: 24px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-right: 30px;
+    padding-left: 30px;
+}
+
+/***
+Styling the product search submit button on hover
+***/
+
+#product-submit:hover {
+    box-shadow: 0 0px 16px 0 rgba( 255, 255, 125, 0.40);
+}
