@@ -79,6 +79,10 @@ Styling the product search submit button on hover
     box-shadow: 0 0px 16px 0 rgba( 255, 255, 125, 0.40);
 }
 
+/***
+Styling the sort box general layout
+***/
+
 .sort-box {
     height: 50px;
     display: flex;
@@ -86,9 +90,17 @@ Styling the product search submit button on hover
     justify-content: flex-start;
 }
 
+/***
+Giving the sort box text a slight margin from right
+***/
+
 #sort-by-text {
     margin-right: 30px;
 }
+
+/***
+Styling sort box buttons when deactivated
+***/
 
 .sort-button {
     background-color: white;
@@ -105,9 +117,17 @@ Styling the product search submit button on hover
     margin-right: 10px;
 }
 
+/***
+Styling deactivated sort box buttons when hovered on
+***/
+
 .sort-button:hover {
     color: #b6b6b7;
 }
+
+/***
+Styling sort box buttons when activated
+***/
 
 .sort-button-active {
     background-color: #009cff;
@@ -125,7 +145,80 @@ Styling the product search submit button on hover
     box-shadow: 0 5px 10px 0 #b0cee0;
 }
 
+/***
+Styling activated sort box buttons when hovered on
+***/
 
 .sort-button-active:hover {
     color: #e8e9ed;
+}
+
+/***
+setting product section background
+***/
+
+.product-view-wrapper {
+    background-color: #d3d3d3;
+    height: 100%;
+}
+
+/***
+Styling product details section's main characteristics
+***/
+
+.product-view {
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    grid-gap: 15px;
+    padding: 15px;
+}
+
+/***
+Styling the filter box's main characteristics
+***/
+
+.filter-box {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    background-color: white;
+}
+
+/***
+Adding border to the bottom of filter box's header section
+***/
+
+.filter-header {
+    width: 100%;
+    border-bottom: solid 1px;
+    border-color: #e6e6e6;
+    padding: 15px;
+}
+
+/***
+Max width for filter box header and content
+***/
+
+.filter-box-sections {
+    width: 100%;
+}
+
+/***
+Setting scrollbar to filter contents if max height is exceeded
+***/
+
+.filter-content {
+    padding: 15px;
+    max-height: 200px;
+    overflow: auto;
+}
+
+/***
+Setting a small margin between all checkbox and label wrappers
+***/
+
+.checkbox-wrapper {
+    margin-top: 10px;
+    margin-bottom: 10px;
 }

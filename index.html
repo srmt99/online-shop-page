@@ -46,17 +46,62 @@
             <!--Hero Header Section-->
             <div class="hero-header">
                 <p id="hero-text">در محصولات سایت جستجو کنید...</p>
-                    <form class="hero-form">
-                        <input type="text" id="product-input" placeholder="نام محصول خود را وارد کنید...">
-                        <input type="submit" id="product-submit" value="جستجو کنید">
-                    </form>
-                    <img src="images/clock.png" alt="clock">
+                <form class="hero-form">
+                    <input type="text" id="product-input" placeholder="نام محصول خود را وارد کنید...">
+                    <input type="submit" id="product-submit" value="جستجو کنید">
+                </form>
+                <img src="images/clock.png" alt="clock">
             </div>
             <!--Sort Box-->
             <div class="sort-box">
                 <p id="sort-by-text">مرتب سازی بر اساس:</p>
                 <button class="sort-button-active" id="sort-by-max-sale-button">بیشترین فروش</button>
                 <button class="sort-button" id="sort-by-price">قیمت</button>
+            </div>
+            <!--Product list and filters-->
+            <div class="product-view-wrapper">
+                <div class="product-view">
+                    <div class="filter-box">
+                        <div class="filter-box-sections">
+                            <div class="filter-header">
+                                <p class="filter-header-text">دسته بندی ها</p>
+                            </div>
+                            <div class="filter-content">
+                                <form class="filter-checkbox-list">
+                                    <div class="checkbox-wrapper">
+                                        <input class="filter-checkbox" type="checkbox" id="filter1" value="f1">
+                                        <label for="filter1">دسته بندی اول</label><br>
+                                    </div>
+                                    <div class="checkbox-wrapper">
+                                        <input class="filter-checkbox" type="checkbox" id="filter2" value="f2">
+                                        <label for="filter2">دسته بندی دوم</label><br>
+                                    </div>
+                                    <div class="checkbox-wrapper">
+                                        <input class="filter-checkbox" type="checkbox" id="filter3" value="f3">
+                                        <label for="filter3">دسته بندی سوم</label><br>
+                                    </div>
+                                    <div class="checkbox-wrapper">
+                                        <input class="filter-checkbox" type="checkbox" id="filter4" value="f4">
+                                        <label for="filter4">دسته بندی چهارم</label><br>
+                                    </div>
+                                    <div class="checkbox-wrapper">
+                                        <input class="filter-checkbox" type="checkbox" id="filter5" value="f5">
+                                        <label for="filter5">دسته بندی پنجم</label><br>
+                                    </div>
+                                    <div class="checkbox-wrapper">
+                                        <input class="filter-checkbox" type="checkbox" id="filter6" value="f6">
+                                        <label for="filter6">دسته بندی ششم</label><br>
+                                    </div>
+                                    <div class="checkbox-wrapper">
+                                        <input class="filter-checkbox" type="checkbox" id="filter7" value="f6">
+                                        <label for="filter7">دسته بندی هفتم</label><br>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="product-list"></div>
+                </div>
             </div>
         </div>
 
