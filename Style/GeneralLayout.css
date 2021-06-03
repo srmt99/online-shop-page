@@ -18,7 +18,7 @@ Default styles for all components
 Making all pages cover the entire height of the screen
 */
 
-html, body {
+html {
     height: 100%;
 }
 
@@ -53,6 +53,7 @@ body {
     flex-direction: column;
     align-items: center;
     background-color: #e6e6e6;
+    height: max-content;
 }
 
 /*
