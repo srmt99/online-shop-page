@@ -78,3 +78,54 @@ Styling the product search submit button on hover
 #product-submit:hover {
     box-shadow: 0 0px 16px 0 rgba( 255, 255, 125, 0.40);
 }
+
+.sort-box {
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+#sort-by-text {
+    margin-right: 30px;
+}
+
+.sort-button {
+    background-color: white;
+    color: black;
+    border-radius: 24px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-right: 10px;
+    padding-left: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.sort-button:hover {
+    color: #b6b6b7;
+}
+
+.sort-button-active {
+    background-color: #009cff;
+    color: white;
+    border-radius: 24px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-right: 10px;
+    padding-left: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
+    box-shadow: 0 5px 10px 0 #b0cee0;
+}
+
+
+.sort-button-active:hover {
+    color: #e8e9ed;
+}
