@@ -1,5 +1,6 @@
-/*  */
-#submit_input {
+@import "GeneralLayout.css";
+
+.yellow_button {
     
     margin-top: 30px;
     background-color: #ffcc00;
