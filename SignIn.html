@@ -1,0 +1,69 @@
+<!--
+    In this file, the shared components in all pages (menu, content section, footer) are defined.
+    Pages using this file vary only in the container div section.
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Web Project</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link href='http://www.fontonline.ir/css/BYekan.css' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="style/GeneralLayout.css">
+    <link rel="stylesheet" href="style/reset.css">
+    <link rel="stylesheet" href="style/Reg&Login.css">
+</head>
+
+<body>
+    <!--Main section - fix width - centered-->
+    <section id="main-section">
+        <header>
+            <!--Navigation bar-->
+            <nav class="navigation-bar">
+                <div id="menu-item-div" class="menu-div">
+                    <h2 id="menu-logo">فروشگاه</h2>
+                    <a href="#" class="menu-item">صفحه اول</a>
+                    <a href="#" class="menu-item">تماس با ما</a>
+                    <a href="#" class="menu-item">پشتیبانی</a>
+                    <a href="#" class="menu-item">محصولات</a>
+                </div>
+                <div id="menu-button-div" class="menu-div">
+                    <button class="menu-button">ورود / ثبت نام</button>
+                    <!--
+                    <button class="menu-button">هادی </button>
+                    <div class="hidden-div">
+                        <div id="menu-dropdown" class="dropdown-content">
+                            <a href="#" class="nav-submenu-item">پروفایل</a>
+                            <a href="#" class="nav-submenu-item">خروج از حساب</a>
+                        </div>
+                    </div>
+                    -->
+                </div>
+            </nav>
+        </header>
+
+        <!--Only change this div for each page!!!!!!-->
+        <div class="container">
+            <form action="" id="form_input">
+                <h3 id="login_title">فروشگاه - ورود</h3>
+                <div class="input_">
+                    <label for="email" class="input_label" id="email_input_label">ایمیل</label>
+                    <input type="email" class="input_box" id="email_input" name="email" placeholder="ایمیل خود را وارد کنید..." title="یک ایمیل معتبر وارد نمایید">
+                </div>
+                <div class="input_">
+                    <label for="password" class="input_label" id="pass_input_label">رمز عبور</label>
+                    <input type="password" class="input_box" id="pass_input" name="password" placeholder="رمز عبور خود را وارد کنید..." pattern="(.*).{6,}" title="باید لااقل ۶ کاراکتر باشد" required>
+                </div>
+                <input type="submit" id="submit_input" value="ورود">
+            </form>
+        </div>
+
+        <!--Footer-->
+        <footer>
+            <p>تمامی حقوق برای توسعه دهندگان محفوظ است. سروش مرتضوی مقدم - مانا عطارد</p>
+        </footer>
+    </section>
+</body>
+
+</html>
