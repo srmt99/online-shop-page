@@ -20,13 +20,6 @@
     flex-direction: column;
 }
 
-.input_ {
-    display: flex;
-    flex-direction: row;
-    margin-top: 10px;
-    width: 100%;
-}
-
 #login_title {
     font-size: large;
     margin-bottom: 20px;
@@ -40,6 +33,14 @@
     justify-content: center;
 }
 
+
+.input_ {
+    display: flex;
+    flex-direction: row;
+    margin-top: 10px;
+    width: 400px;
+}
+
 .input_label {
     text-align: center;
     color: white;
@@ -49,7 +50,7 @@
     padding-top: 10px;
     padding-right: 10px;
     padding-left: 10px;
-    width: 20%;
+    width: 25%;
 }
 
 .input_box {
@@ -61,4 +62,37 @@
     padding-right: 20px;
     padding-left: 20px;
     width: 300px;
+}
+
+#signup_link {
+    font-size: medium;
+    margin-top: 20px;
+}
+
+#section1 {
+    display: flex;
+    flex-direction: row;
+    width: 820px;
+    justify-content: space-between;
+}
+
+#section2 {
+    display: flex;
+    flex-direction: row;
+    width: 820px;
+    justify-content: space-between;
+}
+
+#address_input_label {
+    padding-top: 30px;
+    padding-bottom: 30px;
+    width: 13.5%;
+}
+
+#address_box {
+    width: 100%;
+}
+
+#address_input {
+    width: 100%;
 }
