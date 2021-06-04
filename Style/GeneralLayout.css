@@ -40,7 +40,9 @@ max-width and centered
 The main content of each page is shown in the container component -> takes all the space from header to footer
 */
 
+
 .container {
+    background-color: #ebebeb;
     flex: 1 0 auto;
 }
 
@@ -53,7 +55,7 @@ body {
     flex-direction: column;
     align-items: center;
     background-color: #e6e6e6;
-    height: max-content;
+    height: 100%;
 }
 
 /*

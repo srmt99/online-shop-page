@@ -8,6 +8,10 @@ Basic style characteristics for hero header background
 flex display, full width
 ***/
 
+body {
+    height: max-content;
+}
+
 .hero-header {
     width: 100%;
     display: flex;
