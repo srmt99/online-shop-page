@@ -10,8 +10,9 @@
     <title>Web Project</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <link href='http://www.fontonline.ir/css/BYekan.css' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="style/GeneralLayout.css">
     <link rel="stylesheet" href="style/reset.css">
-    <link rel="stylesheet" href="style/profile.css">
+    <link rel="stylesheet" href="style/receipts.css">
 </head>
 
 <body>
@@ -44,35 +45,43 @@
 
         <!--Only change this div for each page!!!!!!-->
         <div class="container">
-            <div id="profile_title">
-                <h2 id="profile_title_h">هادی عزیز، خوش آمدید|</h2>
-                <h4 id="profile_title_h2">موجودی حساب شما: ۱۰/۰۰۰</h4>
-                <button id="profile_title_b" class="yellow_button" >افزایش موجودی</button>
+            <h2 id="profile_title_h">هادی عزیز، خوش آمدید</h2>
+            <div id="profile_tabs">
+                <button class="tab" id="pro_tab">پروفایل</button>
+                <button class="tab" id="rec_tab">رسید ها</button>
             </div>
-            <div id="profile_info">
-                <div id="profile_tabs">
-                    <button class="tab" id="pro_tab">پروفایل</button>
-                    <button class="tab" id="rec_tab">رسید ها</button>
+            <div id="receipt_section">
+                <div class="receipt_item" id="receipt_title">
+                    <p class="item_1">کد پیگیری</p>
+                    <p class="item_2">کالا</p>
+                    <p class="item_3">قیمت پرداخت شده</p>
+                    <p class="item_4">آدرس ارسال شده</p>
                 </div>
-                <div id="section1">
-                    <div class="input_">
-                        <label for="name" class="input_label" id="name_input_label">نام</label>
-                        <input type="text" class="input_box" id="name_input" name="name" placeholder="هادی" required>
-                    </div>
-                    <div class="input_">
-                        <label for="lastname" class="input_label" id="lastname_input_label">نام خانوادگی</label>
-                        <input type="text" class="input_box" id="lastname_input" name="lastname" placeholder="طباطبایی  " required>
-                    </div>
+                <div class="receipt_item">
+                    <p class="item_1">0H2083H08H22H</p>
+                    <p class="item_2">موس گیمینگ ریزر</p>
+                    <p class="item_3">۱۰/۰۰۰ تومن</p>
+                    <p class="item_4">تهران، خیابان حافظ، دانشگاه امیرکبیر</p>
                 </div>
-                <div class="input_" id="pass_box">
-                    <label for="password" class="input_label" id="pass_input_label">رمز عبور</label>
-                    <input type="password" class="input_box" id="pass_input" name="password" placeholder="رمز عبور خود را وارد کنید..." pattern="(.*).{6,}" title="باید لااقل ۶ کاراکتر باشد" required>
+                <div class="receipt_item">
+                    <p class="item_1">0H2083H08H22H</p>
+                    <p class="item_2">موس گیمینگ ریزر</p>
+                    <p class="item_3">۱۰/۰۰۰ تومن</p>
+                    <p class="item_4">تهران، خیابان حافظ، دانشگاه امیرکبیر</p>
                 </div>
-                <div class="input_" id="address_box">
-                    <label for="address" class="input_label" id="address_input_label">آدرس</label>
-                    <input type="text" cols="40" rows="5" class="input_box" id="address_input" name="address" placeholder="تهران، خیابان حافظ، دانشگاه صنعتی امیرکبیر" required>
+                <div class="receipt_item" >
+                    <p class="item_1">0H2083H08H22H</p>
+                    <p class="item_2">موس گیمینگ ریزر</p>
+                    <p class="item_3">۱۰/۰۰۰ تومن</p>
+                    <p class="item_4">تهران، خیابان حافظ، دانشگاه امیرکبیر</p>
                 </div>
-                <input type="submit" id="submit_input" class="yellow_button" value="ویرایش اطلاعات">
+                <div class="receipt_item">
+                    <p class="item_1">0H2083H08H22H</p>
+                    <p class="item_2">موس گیمینگ ریزر</p>
+                    <p class="item_3">۱۰/۰۰۰ تومن</p>
+                    <p class="item_4">تهران، خیابان حافظ، دانشگاه امیرکبیر</p>
+                </div>
+
             </div>
         </div>
 

@@ -1,0 +1,62 @@
+@import "profile.css";
+
+#profile_title_h {
+    margin-bottom: 0cm;
+    margin-top: 0cm;
+}
+
+#profile_tabs {
+    margin-bottom: 30px;
+}
+
+#rec_tab {
+    background-color: #cccccc;
+    border: 2px solid #cccccc;
+    color: black;
+}
+
+#pro_tab {
+    background-color: #ebebeb;
+    border: 2px solid #cccccc;
+    color: gray;
+}
+
+#receipt_section {
+    border-radius: 5px;
+    background-color: white;
+    padding: 15px;
+}
+
+.receipt_item {
+    color: #4d4d4d;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-self: center;
+    background-color: white;
+    width: 1150px;
+    padding-right: 80px;
+    padding-left: 80px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #ebebeb;
+}
+
+#receipt_title {
+    font-family: BYekan, 'BYekan', tahoma;
+    color: #cccccc;
+}
+
+.receipt_item .item_1 {
+    font-family: Geneva, Tahoma, sans-serif;
+    width: 20%;
+}
+.receipt_item .item_2 {
+    width: 25%;
+}
+.receipt_item .item_3 {
+    width: 20%;
+}
+.receipt_item .item_4 {
+    width: 35%;
+}
