@@ -57,29 +57,8 @@ Styling the product search input box
     padding-bottom: 5px;
 }
 
-/***
-Styling the product search submit button
-***/
-
-#product-submit {
-    margin-top: 35px;
-    background-color: #ffcc00;
-    color: black;
-    border-radius: 24px;
-    text-align: center;
-    display: flex;
-    align-items: center;
-    padding-top: 10px;
-    padding-bottom: 10px;
-    padding-right: 30px;
-    padding-left: 30px;
-}
-
-/***
-Styling the product search submit button on hover
-***/
-
 #product-submit:hover {
+    color: black;
     box-shadow: 0 0px 16px 0 rgba( 255, 255, 125, 0.40);
 }
 
@@ -100,61 +79,6 @@ Giving the sort box text a slight margin from right
 
 #sort-by-text {
     margin-right: 30px;
-}
-
-/***
-Styling sort box buttons when deactivated
-***/
-
-.sort-button {
-    background-color: white;
-    color: black;
-    border-radius: 24px;
-    text-align: center;
-    display: flex;
-    align-items: center;
-    padding-top: 5px;
-    padding-bottom: 5px;
-    padding-right: 10px;
-    padding-left: 10px;
-    margin-left: 10px;
-    margin-right: 10px;
-}
-
-/***
-Styling deactivated sort box buttons when hovered on
-***/
-
-.sort-button:hover {
-    color: #b6b6b7;
-}
-
-/***
-Styling sort box buttons when activated
-***/
-
-.sort-button-active {
-    background-color: #009cff;
-    color: white;
-    border-radius: 24px;
-    text-align: center;
-    display: flex;
-    align-items: center;
-    padding-top: 5px;
-    padding-bottom: 5px;
-    padding-right: 10px;
-    padding-left: 10px;
-    margin-left: 10px;
-    margin-right: 10px;
-    box-shadow: 0 5px 10px 0 #b0cee0;
-}
-
-/***
-Styling activated sort box buttons when hovered on
-***/
-
-.sort-button-active:hover {
-    color: #e8e9ed;
 }
 
 /***
@@ -293,20 +217,4 @@ Changing product category font style
     margin-top: 40px;
     border-top:  solid 1px;
     border-color: #e6e6e6;
-}
-
-.buy-product-button {
-    background-color: #009cff;
-    color: white;
-    border-radius: 24px;
-    text-align: center;
-    display: flex;
-    align-items: center;
-    padding-top: 5px;
-    padding-bottom: 5px;
-    padding-right: 10px;
-    padding-left: 10px;
-    margin-left: 10px;
-    margin-right: 10px;
-    box-shadow: 0 5px 10px 0 #b0cee0;
 }

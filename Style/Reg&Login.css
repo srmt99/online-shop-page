@@ -1,20 +1,5 @@
 @import "GeneralLayout.css";
 
-.yellow_button {
-    
-    margin-top: 30px;
-    background-color: #ffcc00;
-    color: black;
-    border-radius: 25px;
-    text-align: center;
-    display: flex;
-    align-items: center;
-    padding-top: 10px;
-    padding-bottom: 10px;
-    padding-right: 50px;
-    padding-left: 50px;
-}
-
 #form_input {
     display: flex;
     align-items: center;
