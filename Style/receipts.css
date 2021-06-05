@@ -5,19 +5,18 @@
     margin-top: 0cm;
 }
 
-#profile_tabs {
-    margin-bottom: 30px;
-}
-
 #rec_tab {
     background-color: #cccccc;
-    border: 2px solid #cccccc;
     color: black;
 }
 
 #pro_tab {
     background-color: #ebebeb;
-    border: 2px solid #cccccc;
+    color: gray;
+}
+
+#cat_tab {
+    background-color: #ebebeb;
     color: gray;
 }
 
@@ -59,4 +58,14 @@
 }
 .receipt_item .item_4 {
     width: 35%;
+}
+
+#search_input_ {
+    width: 100%;
+    justify-content: center;
+    margin-bottom: 40px;
+}
+
+#search_input_label {
+    width: 15%;
 }
