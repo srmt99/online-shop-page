@@ -1,0 +1,47 @@
+@import "profile.css";
+@import "GeneralLayout.css";
+
+#rec_tab {
+    background-color: #ebebeb;
+    color: gray;
+}
+
+#pro_tab {
+    background-color: #cccccc;
+    color: black;
+}
+
+#cat_tab {
+    background-color: #ebebeb;
+    color: gray;
+}
+
+#new-product {
+    padding: 10px;
+    padding-right: 30px;
+    padding-left: 30px;
+    margin-bottom: 30px;
+}
+
+.product-list {
+    width: 70%;
+    grid-gap: 60px;
+    margin-bottom: 30px;
+}
+
+.product-info-wrapper .sold-num {
+    position: relative;
+    top: -235px;
+    left: -220px;
+    justify-content: center;
+    padding-top: 6px;
+    text-align: center;
+    height: 40px;
+    width: 40px;
+    color: #009cff;
+    font-size: large;
+    background-color: white;
+    border-radius: 50%;
+    display: inline-block;
+    box-shadow: 5px 5px 20px 0  silver;
+}

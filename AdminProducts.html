@@ -1,0 +1,113 @@
+<!--
+    In this file, the shared components in all pages (menu, content section, footer) are defined.
+    Pages using this file vary only in the container div section.
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Web Project</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link href='http://www.fontonline.ir/css/BYekan.css' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="style/reset.css">
+    <link rel="stylesheet" href="style/products.css">
+</head>
+
+<body>
+    <!--Main section - fix width - centered-->
+    <section id="main-section">
+        <header>
+            <!--Navigation bar-->
+            <nav class="navigation-bar">
+                <div id="menu-item-div" class="menu-div">
+                    <h2 id="menu-logo">فروشگاه</h2>
+                    <a href="#" class="menu-item">صفحه اول</a>
+                    <a href="#" class="menu-item">تماس با ما</a>
+                    <a href="#" class="menu-item">پشتیبانی</a>
+                    <a href="#" class="menu-item">محصولات</a>
+                </div>
+                <div id="menu-button-div" class="menu-div">
+                    <button class="white-button-yellow-border">ورود / ثبت نام</button>
+                    <!--
+                    <button class="white-button-yellow-border">هادی </button>
+                    <div class="hidden-div">
+                        <div id="menu-dropdown" class="dropdown-content">
+                            <a href="#" class="nav-submenu-item">پروفایل</a>
+                            <a href="#" class="nav-submenu-item">خروج از حساب</a>
+                        </div>
+                    </div>
+                    -->
+                </div>
+            </nav>
+        </header>
+
+        <!--Only change this div for each page!!!!!!-->
+        <div class="container">
+            <h2 id="profile_title_h">ادمین عزیز، خوش آمدید</h2>
+            <div id="profile_tabs">
+                <button class="tab" id="pro_tab">لیست کالاها</button>
+                <button class="tab" id="cat_tab">لیست دسته ها</button>
+                <button class="tab" id="rec_tab">رسید ها</button>
+            </div>
+            <button class="blue-button do-hover" id="new-product" >+ ایجاد محصول جدید</button>
+            <div class="product-list">
+                <div class="product-box">
+                    <img src="images/backpack.jpg" alt="mug" class="product-img">
+                    <div class="product-info-wrapper">
+                        <p class="product-title">کوله پشتی1</p>
+                        <p class="product-category">دسته بندی اول</p>
+                        <span class="sold-num">12</span>
+                    </div>
+                    <div class="bottom-product-wrapper">
+                        <p class="product-price">10/000 تومان</p>
+                        <button class="blue-button">ویرایش محصول</button>
+                    </div>
+                </div>
+                <div class="product-box">
+                    <img src="images/backpack.jpg" alt="mug" class="product-img">
+                    <div class="product-info-wrapper">
+                        <p class="product-title">کوله پشتی2</p>
+                        <p class="product-category">دسته بندی اول</p>
+                        <span class="sold-num">12</span>
+                    </div>
+                    <div class="bottom-product-wrapper">
+                        <p class="product-price">10/000 تومان</p>
+                        <button class="blue-button">ویرایش محصول</button>
+                    </div>
+                </div>
+                <div class="product-box">
+                    <img src="images/backpack.jpg" alt="mug" class="product-img">
+                    <div class="product-info-wrapper">
+                        <p class="product-title">کوله پشتی3</p>
+                        <p class="product-category">دسته بندی اول</p>
+                        <span class="sold-num">12</span>
+                    </div>
+                    <div class="bottom-product-wrapper">
+                        <p class="product-price">10/000 تومان</p>
+                        <button class="blue-button">ویرایش محصول</button>
+                    </div>
+                </div>
+                <div class="product-box">
+                    <img src="images/backpack.jpg" alt="mug" class="product-img">
+                    <div class="product-info-wrapper">
+                        <p class="product-title">کوله پشتی4</p>
+                        <p class="product-category">دسته بندی اول</p>
+                        <span class="sold-num">12</span>
+                    </div>
+                    <div class="bottom-product-wrapper">
+                        <p class="product-price">10/000 تومان</p>
+                        <button class="blue-button">ویرایش محصول</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--Footer-->
+        <footer>
+            <p>تمامی حقوق برای توسعه دهندگان محفوظ است. سروش مرتضوی مقدم - مانا عطارد</p>
+        </footer>
+    </section>
+</body>
+
+</html>
