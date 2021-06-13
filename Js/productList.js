@@ -125,6 +125,7 @@ class Pagination {
      * @param {*} e 
      */
     destPage(destNum, e){
+        this.currentPageNum = destNum;
         this.changePage(destNum);
         e.preventDefault();
     }
