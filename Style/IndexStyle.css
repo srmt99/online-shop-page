@@ -257,3 +257,77 @@ Setting a small margin between all checkbox and label wrappers
     margin-top: 10px;
     margin-bottom: 10px;
 }
+
+/***
+Styling pagination wrapper to center element
+***/
+
+.pagination-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/***
+Styling paginatio div
+***/
+
+.pagination {
+    display: inline-block;
+}
+
+/***
+General style pagination buttons
+***/
+
+.pagination-button {
+    color: gray;
+    float: right;
+    padding: 8px 16px;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+/***
+Styling pagination buttons when actively clicked
+***/
+
+.pagination-button:active {
+    color: black;
+}
+
+/***
+Styling pagination buttons when hovered on but not clicked on
+***/
+
+.pagination-button:hover:not(.active) {
+    background-color: #ddd;
+}
+
+/***
+Styling pagination prev and next buttons
+***/
+
+.pagination-navigator {
+    color: gray;
+    float: right;
+    padding: 8px 16px;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+/***
+Styling pagination navigation buttons when actively clicked
+***/
+
+.pagination-navigator:active {
+    color: black;
+}
+
+/***
+Styling pagination buttons when hovered on but not clicked on
+***/
+
+.pagination-navigator:hover:not(.active) {
+    background-color: #ddd;
+}
