@@ -168,11 +168,22 @@ Styling the product search input box
 }
 
 /***
+Styling pagination number per page and sort wrapper
+***/
+.product-sort-num-wrapper {
+    height: 50px;
+    background-color: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/***
 Styling the sort box general layout
 ***/
 
 .sort-box {
-    height: 50px;
+    height: 100%;
     display: flex;
     align-items: center;
     justify-content: flex-start;
@@ -185,6 +196,37 @@ Giving the sort box text a slight margin from right
 #sort-by-text {
     margin-right: 30px;
 }
+
+/***
+Styling pagination page-limit selection box
+***/
+.select-item-num-box {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+/***
+Giving the item num box text a slight margin from left
+***/
+#item-num-text {
+    margin-left: 30px;
+}
+
+/***
+Styling item num selection
+***/
+.item-num-select {
+    margin-left: 20px;
+    background-color: #f2f2f2;
+    padding-left: 10px;
+    padding-right: 10px;
+    height: 70%;
+    border-radius: 20px;
+    width: 80px;
+}
+
 
 /***
 setting product section background

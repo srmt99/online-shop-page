@@ -67,11 +67,23 @@
                     <img src="images/clock.png" alt="clock">
                 </div>
             </div>
-            <!--Sort Box-->
-            <div class="sort-box">
-                <p id="sort-by-text">مرتب سازی بر اساس:</p>
-                <button class="blue-button do-hover" id="sort-by-max-sale-button">بیشترین فروش</button>
-                <button class="white-button" id="sort-by-price">قیمت</button>
+            <!--Sort box and item-per-page chooser wrapper-->
+            <div class="product-sort-num-wrapper">
+                <!--Sort Box-->
+                <div class="sort-box">
+                    <p id="sort-by-text">مرتب سازی بر اساس:</p>
+                    <button class="blue-button do-hover" id="sort-by-max-sale-button">بیشترین فروش</button>
+                    <button class="white-button" id="sort-by-price">قیمت</button>
+                </div>
+                <!--items per page-->
+                <div class="select-item-num-box">
+                    <p id="item-num-text">تعداد در هر صفحه:</p>
+                    <select class="item-num-select" id="select-page-limit">
+                        <option value="10">10</option>
+                        <option value="15" selected="selected">15</option>
+                        <option value="20">20</option>
+                    </select>
+                </div>
             </div>
             <!--Product list and filters-->
             <div class="product-view-wrapper">
@@ -119,7 +131,7 @@
                     <div class="product-section-wrapper">
                         <!--Product list section-->
                         <div class="product-list" id="product-list-section">
-                            
+
                         </div>
                         <!--Pagination section-->
                         <div class="pagination-wrapper">

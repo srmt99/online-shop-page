@@ -1,7 +1,7 @@
 /**
  * Class for defining product attributes
  */
- class Product {
+class Product {
     constructor(imgSource, title, category, price) {
         this.imgSource = imgSource;
         this.title = title;
@@ -22,6 +22,7 @@ class Pagination {
         this.changePage(this.currentPageNum);
         this.setNavigatorEventListeners();
         this.setPageNumberButtinsEventListeners();
+        this.setProductPerPageSelectionEventListener();
     }
 
     /**
@@ -36,16 +37,16 @@ class Pagination {
     /**
      * Create pagination section buttons
      */
-    setPaginationSection(){
+    setPaginationSection() {
         let lastPageNum = this.numOfPages();
         var paginationSection = document.getElementById("pagination-section");
         paginationSection.innerHTML = '<a href=\"#\" class=\"pagination-navigator\" id=\"prev-page\">&laquo;</a>';
-        for (var j = 1; j <= lastPageNum; j++){
-            paginationSection.innerHTML += '<a href=\"#\" class=\"pagination-button\">'+j+'</a>';
+        for (var j = 1; j <= lastPageNum; j++) {
+            paginationSection.innerHTML += '<a href=\"#\" class=\"pagination-button\">' + j + '</a>';
         }
         paginationSection.innerHTML += '<a href=\"#\" class=\"pagination-navigator\" id=\"next-page\">&raquo;</a>';
     }
-    
+
     /**
      * Go to given page and view products based on that
      * @param {} pageNum 
@@ -54,30 +55,30 @@ class Pagination {
         var productSection = document.getElementById("product-list-section");
         let lastPageNum = this.numOfPages();
 
-        if (pageNum < 1){
+        if (pageNum < 1) {
             pageNum = 1;
         }
-        else{
-            if (pageNum > lastPageNum){
+        else {
+            if (pageNum > lastPageNum) {
                 pageNum = lastPageNum;
             }
         }
 
         productSection.innerHTML = "";
-        for (var i = (pageNum-1) * this.numOfProductsPerPage; i < (pageNum * this.numOfProductsPerPage) && i<this.productList.length; i++) {
+        for (var i = (pageNum - 1) * this.numOfProductsPerPage; i < (pageNum * this.numOfProductsPerPage) && i < this.productList.length; i++) {
             let imgSrc = this.productList[i].imgSource;
             let title = this.productList[i].title;
             let cat = this.productList[i].category;
             let cost = this.productList[i].price;
-            productSection.innerHTML += '<div class=\"product-box\"><img src='+
-            imgSrc
-            +' alt=\"\" class=\"product-img\"><div class=\"product-info-wrapper\"><p class=\"product-title\">'+
-            title
-            +'</p><p class=\"product-category\">'+
-            cat
-            +'</p></div><div class=\"bottom-product-wrapper\"><p class=\"product-price\">'+
-            cost
-            +'</p><button class=\"blue-button\">خرید محصول</button></div></div>'
+            productSection.innerHTML += '<div class=\"product-box\"><img src=' +
+                imgSrc
+                + ' alt=\"\" class=\"product-img\"><div class=\"product-info-wrapper\"><p class=\"product-title\">' +
+                title
+                + '</p><p class=\"product-category\">' +
+                cat
+                + '</p></div><div class=\"bottom-product-wrapper\"><p class=\"product-price\">' +
+                cost
+                + '</p><button class=\"blue-button\">خرید محصول</button></div></div>'
         }
 
         var next = document.getElementById("next-page");
@@ -88,14 +89,14 @@ class Pagination {
         } else {
             prev.style.visibility = "visible";
         }
-    
+
         if (pageNum == lastPageNum) {
             next.style.visibility = "hidden";
         } else {
             next.style.visibility = "visible";
         }
     }
-    
+
     /**
      * Go to previous page
      */
@@ -106,7 +107,7 @@ class Pagination {
         }
         e.preventDefault();
     }
-    
+
     /**
      * Go to next page
      */
@@ -124,10 +125,37 @@ class Pagination {
      * @param {} destNum 
      * @param {*} e 
      */
-    destPage(destNum, e){
+    destPage(destNum, e) {
         this.currentPageNum = destNum;
         this.changePage(destNum);
         e.preventDefault();
+    }
+
+    /**
+     * Set the number of viewed products per page based on the selection box
+     */
+    setPageLimit() {
+        var selectSection = document.getElementById('select-page-limit');
+        let selectionOptions = selectSection.options;
+        let numPerPage = selectionOptions[selectionOptions.selectedIndex].value;
+        console.log("number");
+        console.log(numPerPage);
+        for (var opt, j = 0; opt = selectionOptions[j]; j++) {
+            if (opt.value == numPerPage) {
+                selectSection.selectedIndex = j;
+                console.log("selected");
+                console.log(j);
+                this.numOfProductsPerPage = numPerPage;
+                console.log("updated number per page");
+                console.log(this.numOfProductsPerPage);
+                this.currentPageNum = 1;
+                this.setPaginationSection();
+                this.changePage(this.currentPageNum);
+                this.setNavigatorEventListeners();
+                this.setPageNumberButtinsEventListeners();
+                break;
+            }
+        }
     }
 
     /**
@@ -143,12 +171,20 @@ class Pagination {
     /**
      * Set event listeners for pagination page number buttons
      */
-    setPageNumberButtinsEventListeners(){
+    setPageNumberButtinsEventListeners() {
         var pageNumBtns = document.getElementsByClassName("pagination-button");
-        for (var i = 0; i < pageNumBtns.length; i++){
+        for (var i = 0; i < pageNumBtns.length; i++) {
             let pageToGo = parseInt(pageNumBtns[i].innerHTML);
             pageNumBtns[i].addEventListener('click', this.destPage.bind(this, pageToGo));
         }
+    }
+
+    /**
+     * Set event listeners for selection box to change the number of viewed items per page
+     */
+    setProductPerPageSelectionEventListener() {
+        var selectSection = document.getElementById('select-page-limit');
+        selectSection.addEventListener('change', this.setPageLimit.bind(this));
     }
 }
 
