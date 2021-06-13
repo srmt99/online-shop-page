@@ -12,12 +12,20 @@ body {
     height: max-content;
 }
 
+/***
+Styling the div holding the slider
+***/
+
 #slider {
     height: 505px;
     width: 100%;
     position: relative;
     overflow: hidden;
 }
+
+/***
+Styling the slider images container
+***/
 
 .slider-container {
     transform: translate(0);
@@ -28,14 +36,26 @@ body {
     max-height: 505px;
 }
 
+/***
+Making the slider images fill the slider
+***/
+
 .slider-img {
     object-fit: fill;
 }
+
+/***
+Styling slider contoller
+***/
 
 .slider-controls {
     color: #fff;
     font-size: 3rem;
 }
+
+/***
+Styling slider control buttons
+***/
 
 .slider-control-button {
     padding-left: 20px;
@@ -52,19 +72,35 @@ body {
     z-index: 1000;
 }
 
+/***
+Change the opacity of slider control buttons on hover
+***/
+
 .slider-control-button:hover {
     opacity: 1;
 }
+
+/***
+Slider previous button image and position
+***/
 
 #previous {
     background-image: url('../images/l-b.png');
     left: 50px;
 }
 
+/***
+Slider next button image and position
+***/
+
 #next {
     background-image: url('../images/r-b.png');
     right: 50px;
 }
+
+/***
+Styling the div containing the content of hero header except the slider
+***/
 
 #hero-content {
     top: 65px;
@@ -76,6 +112,10 @@ body {
     align-items: center;
     height: max-content;
 }
+
+/***
+Styling the div containing all components of the hero header
+***/
 
 .hero-header {
     width: 100%;
