@@ -12,13 +12,78 @@ body {
     height: max-content;
 }
 
-.hero-header {
+#slider {
+    height: 505px;
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+}
+
+.slider-container {
+    transform: translate(0);
+    transition: transform .3s ease;
+    display: flex;
+    position: relative;
+    width: 100%;
+    max-height: 505px;
+}
+
+.slider-img {
+    object-fit: fill;
+}
+
+.slider-controls {
+    color: #fff;
+    font-size: 3rem;
+}
+
+.slider-control-button {
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    display: inline-block;
+    cursor: pointer;
+    opacity: .5;
+    transform: translateY(-50%);
+    position: absolute;
+    top: 50%;
+    transition: all .3s ease;
+    z-index: 1000;
+}
+
+.slider-control-button:hover {
+    opacity: 1;
+}
+
+#previous {
+    background-image: url('../images/l-b.png');
+    left: 50px;
+}
+
+#next {
+    background-image: url('../images/r-b.png');
+    right: 50px;
+}
+
+#hero-content {
+    top: 65px;
+    padding-top: 40px;
+    position: absolute;
     width: 100%;
     display: flex;
     flex-direction: column;
-    background-color: #f9593a;
     align-items: center;
-    padding-top: 40px;
+    height: max-content;
+}
+
+.hero-header {
+    width: 100%;
+    background-color: #f9593a;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: max-content;
 }
 
 /***
@@ -152,4 +217,3 @@ Setting a small margin between all checkbox and label wrappers
     margin-top: 10px;
     margin-bottom: 10px;
 }
-

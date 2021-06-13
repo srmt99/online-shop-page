@@ -9,8 +9,8 @@
     <title>Web Project</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <link href='http://www.fontonline.ir/css/BYekan.css' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" href="style/IndexStyle.css">
-    <link rel="stylesheet" href="style/reset.css">
+    <link rel="stylesheet" href="Style/IndexStyle.css">
+    <link rel="stylesheet" href="Style/reset.css">
 </head>
 
 <body>
@@ -44,13 +44,26 @@
         <!--Main content-->
         <div class="container">
             <!--Hero Header Section-->
-            <div class="hero-header">
-                <p id="hero-text">در محصولات سایت جستجو کنید...</p>
-                <form class="hero-form">
-                    <input type="text" id="product-input" placeholder="نام محصول خود را وارد کنید...">
-                    <input type="submit" class="yellow-button" id="product-submit" value="جستجو کنید">
-                </form>
-                <img src="images/clock.png" alt="clock">
+            <div class="hero-header" id="hero-slider">
+                <div id="slider" class="hero-section">
+                    <div class="slider-container" id="hero-slider-container">
+                        <img src="images/Bags.png" alt="" class="slider-img">
+                        <img src="images/Tools.png" alt="" class="slider-img">
+                        <img src="images/SchoolClipart.png" alt="" class="slider-img">
+                    </div>
+                    <div class="slider-controls">
+                        <span id="previous" class="slider-control-button"></span>
+                        <span id="next" class="slider-control-button"></span>
+                    </div>
+                </div>
+                <div id="hero-content" class="hero-section">
+                    <p id="hero-text">در محصولات سایت جستجو کنید...</p>
+                    <form class="hero-form">
+                        <input type="text" id="product-input" placeholder="نام محصول خود را وارد کنید...">
+                        <input type="submit" class="yellow-button" id="product-submit" value="جستجو کنید">
+                    </form>
+                    <img src="images/clock.png" alt="clock">
+                </div>
             </div>
             <!--Sort Box-->
             <div class="sort-box">
@@ -155,6 +168,7 @@
             <p>تمامی حقوق برای توسعه دهندگان محفوظ است. سروش مرتضوی مقدم - مانا عطارد</p>
         </footer>
     </section>
+    <script src="Js/slider.js"></script>
 </body>
 
 </html>
