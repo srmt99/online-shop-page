@@ -11,7 +11,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <link href='http://www.fontonline.ir/css/BYekan.css' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="style/reset.css">
-    <link rel="stylesheet" href="style/Reg&Login.css">
+    <link rel="stylesheet" href="style/Reg&Login.css"> 
 </head>
 
 <body>
@@ -44,31 +44,46 @@
 
         <!--Only change this div for each page!!!!!!-->
         <div class="container">
-            <form action="" id="form_input">
+            <form name= "reg-form" action="" id="form_input" novalidate>
                 <h3 id="login_title">فروشگاه - ثبت نام</h3>
                 <div id="section1">
                     <div class="input_">
                         <label for="name" class="input_label" id="name_input_label">نام</label>
-                        <input type="text" class="input_box" id="name_input" name="name" placeholder="نام خود را وارد کنید..." required>
+                        <div class="input_message">
+                            <input type="text" class="input_box" id="name_input" name="name" placeholder="نام خود را وارد کنید..." required>
+                            <span class="error" aria-live="polite"></span>
+                        </div>
                     </div>
                     <div class="input_">
                         <label for="lastname" class="input_label" id="lastname_input_label">نام خانوادگی</label>
-                        <input type="text" class="input_box" id="lastname_input" name="lastname" placeholder="نام خانوادگی خود را وارد کنید..." required>
+                        <div class="input_message">
+                            <input type="text" class="input_box" id="lastname_input" maxLength="255" name="lastname" placeholder="نام خانوادگی خود را وارد کنید..." required>
+                            <span class="error" aria-live="polite"></span>
+                        </div>
                     </div>
                 </div>
                 <div id="section2">
                     <div class="input_">
                         <label for="email" class="input_label" id="email_input_label">ایمیل</label>
-                        <input type="email" class="input_box" id="email_input" name="email" placeholder="ایمیل خود را وارد کنید..." title="یک ایمیل معتبر وارد نمایید" required>
+                        <div class="input_message">
+                            <input type="email" class="input_box" id="email_input" maxLength="255" name="email" placeholder="ایمیل خود را وارد کنید..." title="یک ایمیل معتبر وارد نمایید" required>
+                            <span class="error" aria-live="polite"></span>
+                        </div>
                     </div>
                     <div class="input_">
                         <label for="password" class="input_label" id="pass_input_label">رمز عبور</label>
-                        <input type="password" class="input_box" id="pass_input" name="password" placeholder="رمز عبور خود را وارد کنید..." pattern="(.*).{6,}" title="باید لااقل ۶ کاراکتر باشد" required>
+                        <div class="input_message">
+                            <input type="password" class="input_box" id="pass_input" minlength="6" maxLength="255" pattern="^(?=.*[a-zA-Z])(?=.*[0-9]).{6,266}" name="password" placeholder="رمز عبور خود را وارد کنید..." pattern="(.*).{6,}" title="باید لااقل ۶ کاراکتر باشد" required>
+                            <span class="error" aria-live="polite"></span>
+                        </div>
                     </div>
                 </div>
                 <div class="input_" id="address_box">
                     <label for="address" class="input_label" id="address_input_label">آدرس</label>
-                    <input type="text" cols="40" rows="5" class="input_box" id="address_input" name="address" placeholder="آدرس خود را وارد کنید..." required>
+                    <div class="input_message">
+                        <input type="text" cols="40" rows="5" class="input_box" maxLength="1000" id="address_input" name="address" placeholder="آدرس خود را وارد کنید..." required>
+                        <span class="error" aria-live="polite"></span>
+                    </div>
                 </div>
                 <input type="submit" id="submit_input" class="yellow-button" value="ثبت نام">
             </form>
@@ -79,6 +94,7 @@
             <p>تمامی حقوق برای توسعه دهندگان محفوظ است. سروش مرتضوی مقدم - مانا عطارد</p>
         </footer>
     </section>
+    <script src="Script\SignUp.js"></script>
 </body>
 
 </html>
