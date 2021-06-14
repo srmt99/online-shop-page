@@ -44,15 +44,21 @@
 
         <!--Only change this div for each page!!!!!!-->
         <div class="container">
-            <form action="" id="form_input">
+            <form action="" id="form_input" novalidate>
                 <h3 id="login_title">فروشگاه - ورود</h3>
                 <div class="input_">
                     <label for="email" class="input_label" id="email_input_label">ایمیل</label>
-                    <input type="email" class="input_box" id="email_input" name="email" placeholder="ایمیل خود را وارد کنید..." title="یک ایمیل معتبر وارد نمایید">
+                    <div class="input_message">
+                        <input type="email" class="input_box" id="email_input" maxLength="255" name="email" placeholder="ایمیل خود را وارد کنید..." title="یک ایمیل معتبر وارد نمایید" required>
+                        <span class="error" aria-live="polite"></span>
+                    </div>
                 </div>
                 <div class="input_">
                     <label for="password" class="input_label" id="pass_input_label">رمز عبور</label>
-                    <input type="password" class="input_box" id="pass_input" name="password" placeholder="رمز عبور خود را وارد کنید..." pattern="(.*).{6,}" title="باید لااقل ۶ کاراکتر باشد" required>
+                    <div class="input_message">
+                        <input type="password" class="input_box" id="pass_input" name="password" placeholder="رمز عبور خود را وارد کنید..." required>
+                        <span class="error" aria-live="polite"></span>
+                    </div>
                 </div>
                 <input type="submit" id="submit_input" class="yellow-button" value="ورود">
                 <a id="signup_link" href="SignUp.html">اگر حسابی ثبت نکرده اید در اینجا ثبت نام کنید</a> 
@@ -64,6 +70,17 @@
             <p>تمامی حقوق برای توسعه دهندگان محفوظ است. سروش مرتضوی مقدم - مانا عطارد</p>
         </footer>
     </section>
+    <!-- The Modal -->
+    <div id="modalWindow" class="modal">
+        <!-- Modal content -->
+        <div id="modal" class="modal-content">
+            <span class="modalClose">&times;</span>
+            <div id="modal-message"></div>
+        </div>
+    
+    </div>
+
+    <script src="Script\SignIn.js"></script>
 </body>
 
 </html>
