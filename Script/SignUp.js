@@ -111,7 +111,7 @@ adrr.addEventListener('focus', function(event) {
   } else {
     showError(adrr, adrrError, maxl=10);
   } } );
-  
+
 adrr.addEventListener('input', function (event) {
   if (adrr.validity.valid) {
     adrrError.textContent = '';
@@ -122,22 +122,63 @@ adrr.addEventListener('input', function (event) {
 });
 
 const form  = document.getElementsByTagName('form')[0];
+// Get the modal
+var modal = document.getElementById("modalWindow");
+// Get the <span> element that closes the modal
+var closeModal = document.getElementsByClassName("modalClose")[0];
+// When the user clicks on the button, open the modal
+closeModal.onclick = function() {
+  modal.style.display = "none";
+}
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+  if (event.target == modal) {
+    modal.style.display = "none";
+  }
+} 
 form.addEventListener('submit', function (event) {
 
+  var user_emails = ["test@test", "srmt@web", "Apple@gmail"];
+  
   fname.value = fname.value.trim()
   lname.value = lname.value.trim()
   email.value = email.value.trim()
 
   if ((!fname.validity.valid) || (!lname.validity.valid) || (!email.validity.valid) ||
-     (!pass.validity.valid) || (!addr.validity.valid)) {
-    window.alert("SHIT")
-    // If it isn't, we display an appropriate error message
-    showError();
+     (!pass.validity.valid) || (!adrr.validity.valid)) {
+    // If all inputs aren't valid, we display an appropriate error message 
+    message = document.getElementById('modal-message')
+    message.innerHTML = `
+    <p>ثبت نام شما انجام نشد</p>
+    <p>اشکالی در اطلاعات وارد شده وجود دارد</p>
+    <p>لطفا دوباره فیلد های وارد شده را برسی کنید</p>
+    `;
+
+    document.getElementById("modal").style.borderColor = 'red';
+    modal.style.display = "block";
+    // Then we prevent the form from being sent by canceling the event
+    event.preventDefault();
+  }
+  else if (user_emails.includes(email.value)) { // if the email already exists
+    message = document.getElementById('modal-message')
+    message.innerHTML = `
+    <p>ثبت نام شما انجام نشد</p>
+    <p>ایمیل وارد شده قبلا در سیستم ثبت شده است</p>
+    `;
+    document.getElementById("modal").style.borderColor = 'red';
+    modal.style.display = "block";
     // Then we prevent the form from being sent by canceling the event
     event.preventDefault();
   }
   else { // form is valid
-
+    message = document.getElementById('modal-message')
+    message.innerHTML = `
+    <p>ثبت نام شما با موفقیت انجام شد</p>
+    `;
+    document.getElementById("modal").style.borderColor = '#30f04d';
+    modal.style.display = "block";
+    // handle the event
+    event.preventDefault();
   }
 });
 
@@ -175,3 +216,18 @@ function resetAll() {
   passError.textContent = '';
   adrrError.textContent = '';
 }
+
+var modalContent = `<div class="modal-content">
+  <div class="modal-header">
+    <span class="close">&times;</span>
+    <h2>Modal Header</h2>
+  </div>
+  <div class="modal-body">
+    <p>Some text in the Modal Body</p>
+    <p>Some other text...</p>
+  </div>
+  <div class="modal-footer">
+    <h3>Modal Footer</h3>
+  </div>
+</div>`
+
