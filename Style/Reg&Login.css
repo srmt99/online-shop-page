@@ -167,6 +167,6 @@
   } 
   /* Add Animation */
 @keyframes animatetop {
-    from {width: 1%; opacity: 0}
+    from {width: 1%; opacity: 0.3}
     to {width: 80%; opacity: 1}
   }
