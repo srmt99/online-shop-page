@@ -82,6 +82,9 @@
 #address_box .input_message {
     width: 100%;
 }
+#pass_box .input_message {
+  width: 100%;
+}
 
 #address_input {
     width: 100%;
