@@ -13,7 +13,7 @@ function change_tab_rec(){
 function change_tab_pro(){
     document.getElementById('profile_title_h2').style.display = "block"
     document.getElementById('profile_title_b').style.display = "none"
-    document.getElementById('profile_title_b').style.display = "block"
+    document.getElementById('profile_title_b').style.display = "flex"
     var tab = document.getElementById('pro_tab')
     tab.style.backgroundColor = "#cccccc";
     tab.style.color = "black";

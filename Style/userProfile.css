@@ -3,9 +3,11 @@
 .container {
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
 }
 
 #profile_title {
+    margin-top: 30px;
     display: flex;
     flex-direction: row;
 }
@@ -15,7 +17,6 @@
     width: max-content;
     text-align: center;
     margin-bottom: 0cm;
-    margin-top: 0cm;
 }
 
 #profile_title_h2 {
@@ -35,6 +36,7 @@
 }
 
 #profile_tabs {
+    margin: auto;
     margin-bottom: 30px;
     margin-top: 30px;
     border: 2px solid #cccccc;
@@ -72,7 +74,10 @@
     color: gray;
     border-radius: 0px;
 }
-
+#profile_info{
+    margin: auto;
+    margin-top: 0px;
+}
 #pass_input_label {
     width: 13.5%;
 }
@@ -91,9 +96,12 @@
 }
 
 #receipt_section {
+    display: none;
     border-radius: 5px;
     background-color: white;
     padding: 15px;
+    margin: auto;
+    margin-top: 10px;
 }
 
 .receipt_item {
@@ -137,8 +145,4 @@
 
 #search_input_label {
     width: 15%;
-}
-
-#receipt_section {
-    display: none;
 }
