@@ -3,9 +3,11 @@
 .container {
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
 }
 
 #profile_title {
+    margin-top: 30px;
     display: flex;
     flex-direction: row;
 }
@@ -14,6 +16,7 @@
     font-size: xx-large;
     width: max-content;
     text-align: center;
+    margin-bottom: 0cm;
 }
 
 #profile_title_h2 {
@@ -23,7 +26,6 @@
     text-align: right;
 }
 #profile_title_b {
-
     /* font-size: small; */
     margin: auto;
     border-radius: 25px;
@@ -34,6 +36,7 @@
 }
 
 #profile_tabs {
+    margin: auto;
     margin-bottom: 30px;
     margin-top: 30px;
     border: 2px solid #cccccc;
@@ -71,7 +74,10 @@
     color: gray;
     border-radius: 0px;
 }
-
+#profile_info{
+    margin: auto;
+    margin-top: 0px;
+}
 #pass_input_label {
     width: 13.5%;
 }
@@ -87,4 +93,56 @@
 #submit_input {
     margin: auto;
     margin-top: 40px;
+}
+
+#receipt_section {
+    display: none;
+    border-radius: 5px;
+    background-color: white;
+    padding: 15px;
+    margin: auto;
+    margin-top: 10px;
+}
+
+.receipt_item {
+    color: #4d4d4d;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-self: center;
+    background-color: white;
+    width: 1150px;
+    padding-right: 80px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #ebebeb;
+}
+
+#receipt_title {
+    font-family: BYekan, 'BYekan', tahoma;
+    color: #cccccc;
+}
+
+.receipt_item .item_1 {
+    font-family: Geneva, Tahoma, sans-serif;
+    width: 20%;
+}
+.receipt_item .item_2 {
+    width: 25%;
+}
+.receipt_item .item_3 {
+    width: 20%;
+}
+.receipt_item .item_4 {
+    width: 35%;
+}
+
+#search_input_ {
+    width: 100%;
+    justify-content: center;
+    margin-bottom: 40px;
+}
+
+#search_input_label {
+    width: 15%;
 }
