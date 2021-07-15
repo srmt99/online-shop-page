@@ -1,4 +1,3 @@
-create database shop;
 use shop;
 
 -- creating the USERs table
@@ -37,7 +36,6 @@ CREATE TABLE Products (
     PRIMARY KEY (p_id),
 	CONSTRAINT BelongsToCat FOREIGN KEY (category)
     REFERENCES Categories (name)
-    ON DELETE CASCADE
     ON UPDATE CASCADE
 	); 
 
@@ -51,13 +49,16 @@ CREATE TABLE Receipts (
 	buyer_address varchar(1000) NOT NULL,
 	price int NOT NULL,
 	buy_date datetime DEFAULT CURRENT_TIMESTAMP,
-	status varchar(20) DEFAULT 'in_progress',
+	status varchar(20) DEFAULT 'pending',
     PRIMARY KEY (r_code)
 	); 
 
 -- INSERTS
 -- inserting the one and only admin
 INSERT INTO Admin VALUES ('jesus','bebackin3');
+
+-- inserting the uncategorized category
+INSERT INTO Categories VALUES ('uncategorized');
 
 -- TRIGGERS
 -- trigger on user email
@@ -83,4 +84,14 @@ BEGIN
 			PRINT 'receipt info are unchangeable'
 			ROLLBACK
 		END
+END
+
+-- trigger on category deletion
+GO
+CREATE TRIGGER category_deletion  
+ON Categories INSTEAD OF DELETE 
+AS
+BEGIN
+    update Products set category = 'uncategorized' where Products.category = (SELECT deleted.name FROM deleted)
+	DELETE Categories WHERE name = (SELECT deleted.name FROM deleted)
 END
