@@ -1,0 +1,6 @@
+2021-07-13 21:48:56.097951 --- Deleted product with p_id=2 
+2021-07-13 21:50:39.891232 --- inserted category:random to database
+2021-07-13 21:50:39.903200 --- inserted product: p_id=5 and name='sth' and price=5555 and available=3 and category='random' and sold=0
+2021-07-13 21:57:51.669287 --- inserted product: p_id=6 and name='sth' and price=5555 and available=3 and category='random' and sold=0
+2021-07-13 21:58:24.663926 --- inserted product: p_id=7 and name='sth' and price=5555 and available=3 and category='random' and sold=0
+2021-07-13 21:58:24.673900 --- Deleted Category 'a'
