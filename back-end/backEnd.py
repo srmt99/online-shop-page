@@ -255,10 +255,10 @@ class Receipt:
         conn.close()
 
     @staticmethod
-    def _get_all():
+    def _get_all(orderBy='buy_date', order='desc', searchText=''):
         conn = connect_db()
         # cursor = conn.cursor()
-        sql_query = pd.read_sql_query(f"SELECT * FROM Receipts", conn)
+        sql_query = pd.read_sql_query(f"SELECT * FROM Receipts WHERE r_code LIKE '%{searchText}%' ORDER BY {orderBy} {order}", conn)
         conn.close()
         return sql_query
 
