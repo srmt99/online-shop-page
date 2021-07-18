@@ -8,9 +8,9 @@ import re
 
 def connect_db():
     conn = pyodbc.connect('Driver={SQL Server};'
-                          'Server=DESKTOP-GK7V7V3;'
+                          'Server=DESKTOP-UH3DDJR;'
                           'Database=shop;'
-                          'User=mana;'
+                          'User=srmt;'
                           'Password=123'
                           'Trusted_Connection=yes;')
     return conn
@@ -37,27 +37,28 @@ def check_categories(cat):
 
 class Product:
     def __init__(self, name, price, available, sold=0, category="uncategorized", picture=None):
-        conn = connect_db()
-        cursor = conn.cursor()
-        # check if category does not exist, insert it into database
-        check_categories(category)
-
         self.name = name
         self.category = category
         self.price = price
         self.available = available
         self.sold = 0
         self.picture = picture
-
+    
+    @staticmethod
+    def insert_product(self):
+        conn = connect_db()
+        cursor = conn.cursor()
+        # check if category does not exist, insert it into database
+        check_categories(category)
         cursor.execute("insert into Products(name, price, available, sold, category, picture) values (?,?,?,?,?,?)",
-                       name, price, available, sold, category, picture)
+                       self.name, self.price, self.available, self.sold, self.category, self.picture)
         conn.commit()
         sql_query = pd.read_sql_query(
-            f"SELECT * FROM Products WHERE name='{name}' and price={price} and available={available} and category='{category}' and sold={sold}",
+            f"SELECT * FROM Products WHERE name='{self.name}' and price={self.price} and available={self.available} and category='{self.category}' and sold={self.sold}",
             conn)
         self.p_id = sql_query.iloc[-1]['p_id']
         _log(
-            f"inserted product: p_id={self.p_id} and name='{name}' and price={price} and available={available} and category='{category}' and sold={sold}")
+            f"inserted product: p_id={self.p_id} and name='{self.name}' and price={self.price} and available={self.available} and category='{self.category}' and sold={self.sold}")
         conn.close()
 
     def update_self(self, new_name=None, new_cat=None, new_price=None, new_available=None, new_picture=None):
@@ -103,7 +104,7 @@ class Product:
             f"update Products set name='{name}',price={price}, available={available},category='{category}', picture={picture} WHERE p_id={p_id}").rowcount
         conn.commit()
         _log(
-            f"updated product with p_id={p_id} : name={name}, price={price}, available={available}, category={category}, picture={picture}")
+            f"updated product with p_id={p_id} : name={name}, price={price}, available={available}, category={category}, picture={picture} [{count} rows affected]")
         conn.close()
 
     def available_dec_self(self, amount=1):
@@ -119,7 +120,7 @@ class Product:
         cursor = conn.cursor()
         count = cursor.execute(f"update Products set available=available - {amount} WHERE p_id={p_id}").rowcount
         conn.commit()
-        _log(f"updated product with p_id={p_id} : available -= {amount}")
+        _log(f"updated product with p_id={p_id} : available -= {amount} [{count} rows affected]")
         conn.close()
 
     def sold_inc_self(self, amount=1):
@@ -132,7 +133,7 @@ class Product:
         cursor = conn.cursor()
         count = cursor.execute(f"update Products set sold=sold + {amount} WHERE p_id={p_id}").rowcount
         conn.commit()
-        _log(f"updated product with p_id={p_id} : sold += {amount}")
+        _log(f"updated product with p_id={p_id} : sold += {amount} [{count} rows affected]")
         conn.close()
 
     def delete_self(self):
@@ -148,14 +149,26 @@ class Product:
         cursor = conn.cursor()
         count = cursor.execute(f"DELETE FROM Products WHERE p_id={p_id}").rowcount
         conn.commit()
-        _log(f"Deleted product with p_id={p_id} ")
+        _log(f"Deleted product with p_id={p_id}  [{count} rows affected]  ")
         conn.close()
 
     @staticmethod
-    def _get_all():
+    def get_all_products(orderBy='sold', order='desc', filterCat=None, searchText='', min_price=0, max_price=None):
         conn = connect_db()
-        # cursor = conn.cursor()
-        sql_query = pd.read_sql_query(f"SELECT * FROM Products", conn)
+        # cursor = conn.cursor()=
+        if filterCat is None: # No category filter available
+                if max_price is not None:
+                    sql_query = pd.read_sql_query(f"SELECT * FROM Products WHERE name LIKE '%{searchText}%' and price between {min_price} and {max_price} ORDER BY {orderBy} {order}", conn)
+                else:
+                    sql_query = pd.read_sql_query(
+                        f"SELECT * FROM Products WHERE name LIKE '%{searchText}%' and price >= {min_price} ORDER BY {orderBy} {order}",conn)
+        else: # category filter available
+                if max_price is not None:
+                    sql_query = pd.read_sql_query(
+                    f"SELECT * FROM Products WHERE category = '{filterCat}' and name LIKE '%{searchText}%' and price between {min_price} and {max_price} ORDER BY {orderBy} {order}", conn)
+                else:
+                    sql_query = pd.read_sql_query(
+                    f"SELECT * FROM Products WHERE category = '{filterCat}' and name LIKE '%{searchText}%' and price > {min_price} ORDER BY {orderBy} {order}", conn)
         conn.close()
         return sql_query
 
@@ -175,7 +188,7 @@ class Category:
         cursor = conn.cursor()
         count = cursor.execute(f"update Categories set name='{new_name}' WHERE name={old_name}").rowcount
         conn.commit()  # update is cascaded on products as well (catrgory foreign key)
-        _log(f"updated Category '{old_name}' --> '{new_name}'")
+        _log(f"updated Category '{old_name}' --> '{new_name}' [{count} rows affected] ")
         conn.close()
 
     def update_self(self, new_name):
@@ -188,7 +201,7 @@ class Category:
         cursor = conn.cursor()
         count = cursor.execute(f"DELETE FROM Categories WHERE name='{name}'").rowcount
         conn.commit()
-        _log(f"Deleted Category '{name}'")
+        _log(f"Deleted Category '{name}' [{count} rows affected] ")
         conn.close()
 
     @staticmethod
@@ -242,10 +255,10 @@ class Receipt:
         conn.close()
 
     @staticmethod
-    def _get_all():
+    def _get_all(orderBy='buy_date', order='desc', searchText=''):
         conn = connect_db()
         # cursor = conn.cursor()
-        sql_query = pd.read_sql_query(f"SELECT * FROM Receipts", conn)
+        sql_query = pd.read_sql_query(f"SELECT * FROM Receipts WHERE r_code LIKE '%{searchText}%' ORDER BY {orderBy} {order}", conn)
         conn.close()
         return sql_query
 
@@ -352,7 +365,7 @@ class User:
             f"update Users set password='{password}',name='{name}', lastname='{lastname}',address='{address}', credit={credit} WHERE username='{username}'").rowcount
         conn.commit()
         _log(
-            f"updated user with username={username} : password={password}, name={name}, lastname={lastname}, address={address}, credit={credit}")
+            f"updated user with username={username} : password={password}, name={name}, lastname={lastname}, address={address}, credit={credit} [{count} rows affected] ")
         conn.close()
 
     def inc_credit_self(self, amount=0):
@@ -366,7 +379,7 @@ class User:
         cursor = conn.cursor()
         count = cursor.execute(f"update Users set credit=credit + {amount} WHERE username='{username}'").rowcount
         conn.commit()
-        _log(f"updated user with username={username} : credit += {amount}")
+        _log(f"updated user with username={username} : credit += {amount} [{count} rows affected] ")
         conn.close()
 
     def delete_self(self):
@@ -383,34 +396,9 @@ class User:
         cursor = conn.cursor()
         count = cursor.execute(f"DELETE FROM Users WHERE username='{username}'").rowcount
         conn.commit()
-        _log(f"Deleted user with username={username} ")
+        _log(f"Deleted user with username={username}  [{count} rows affected] ")
         conn.close()
 
-    # CHANGE THE STATIC METHOD _get_all IN PRODUCTS TO THIS
-    @staticmethod
-    def get_all_products(orderBy='sold', order='desc', filterCat=None, searchText='', min_price=0, max_price=None):
-        conn = connect_db()
-        cursor = conn.cursor()
-        price_filter = ''
-        price_filter = min_price > 0 or max_price is not None
-        if filterCat is None:
-            if price_filter:
-                if max_price is not None:
-                    sql_query = pd.read_sql_query(f"SELECT * FROM Products WHERE name LIKE '%{searchText}%' and price between {min_price} and {max_price} ORDER BY {orderBy} {order}", conn)
-                else:
-                    sql_query = pd.read_sql_query(
-                        f"SELECT * FROM Products WHERE name LIKE '%{searchText}%' and price >= {min_price} ORDER BY {orderBy} {order}",
-                        conn)
-        else:
-            if price_filter:
-                if max_price is not None:
-                    sql_query = pd.read_sql_query(
-                    f"SELECT * FROM Products WHERE category = '{filterCat}' and name LIKE '%{searchText}%' and price between {min_price} and {max_price} ORDER BY {orderBy} {order}", conn)
-                else:
-                    sql_query = pd.read_sql_query(
-                    f"SELECT * FROM Products WHERE category = '{filterCat}' and name LIKE '%{searchText}%' and price > {min_price} ORDER BY {orderBy} {order}", conn)
-        conn.close()
-        return sql_query
 
     @staticmethod
     def buy_product(username, product_id, amount=1):
