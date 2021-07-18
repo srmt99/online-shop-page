@@ -4,3 +4,61 @@
 2021-07-13 21:57:51.669287 --- inserted product: p_id=6 and name='sth' and price=5555 and available=3 and category='random' and sold=0
 2021-07-13 21:58:24.663926 --- inserted product: p_id=7 and name='sth' and price=5555 and available=3 and category='random' and sold=0
 2021-07-13 21:58:24.673900 --- Deleted Category 'a'
+2021-07-17 02:41:53.708575 --- user: username=mana.atarod@gmail.com already exists - cannot add user with duplicate email
+2021-07-17 02:44:39.115336 --- user: username=mana.atarod@gmail.com already exists - cannot add user with duplicate email
+2021-07-17 02:49:41.041500 --- user: username=mana.atarod_test@gmail.com already exists - cannot add user with duplicate email
+2021-07-17 02:50:15.204341 --- user: username=mana.atarod_test@gmail.com already exists - cannot add user with duplicate email
+2021-07-17 02:50:34.090244 --- user: username=mana.atarod_test@gmail.com already exists - cannot add user with duplicate email
+2021-07-17 02:52:02.476196 --- user: username=mana.atarod_test@gmail.com already exists - cannot add user with duplicate email
+2021-07-17 02:53:14.664696 --- user: username=mana.atarod_test@gmail.com - cannot add user to database
+2021-07-17 02:54:09.986898 --- user: username=mana.atarod_test@gmail.com - cannot add user to database
+2021-07-17 02:54:34.884469 --- user: username=mana.atarod_test@gmail.com - cannot add user to database
+2021-07-17 02:55:06.755423 --- user: username=mana.atarod_test@gmail.com - cannot add user to database
+2021-07-17 02:57:03.712883 --- inserted user: username=mana.atarod_test@gmail.com and password='12345678' and name=Mana_test and lastname=Atarod_test and address='Test Address' and credit=0
+2021-07-17 02:59:24.940984 --- updated user with username=2000000 : credit += 0
+2021-07-17 02:59:56.618827 --- updated user with username=2000000 : credit += 0
+2021-07-17 03:01:14.708033 --- updated user with username=mana.atarod_test@gmail.com : credit += 2000000
+2021-07-17 03:02:21.145386 --- updated user with username=mana.atarod_test@gmail.com : credit += 2000000
+2021-07-17 03:02:42.858249 --- updated user with username=mana.atarod_test@gmail.com : credit += 2000000
+2021-07-17 03:02:56.212283 --- updated user with username=mana.atarod_test@gmail.com : credit += 2000000
+2021-07-17 03:04:11.898287 --- updated user with username=mana.atarod_test@gmail.com : credit += 2000000
+2021-07-17 03:05:54.366836 --- updated user with username=mana.atarod_test@gmail.com : credit += 2000000
+2021-07-17 03:06:15.235258 --- updated user with username=mana.atarod_test@gmail.com : credit += 2000000
+2021-07-17 03:06:24.344186 --- updated user with username=mana.atarod_test@gmail.com : credit += 2000000
+2021-07-17 03:06:37.734005 --- updated user with username=mana.atarod_test@gmail.com : credit += 2000000
+2021-07-17 03:06:49.750660 --- updated user with username=mana.atarod_test@gmail.com : credit += 2000000
+2021-07-17 03:07:43.912450 --- updated user with username=mana.atarod_test@gmail.com : credit += 2000000
+2021-07-17 03:07:43.935191 --- updated user with username=mana.atarod_test@gmail.com : password=01234567, name=Mana_test, lastname=Atarod_test, address=Test Address, credit=2000000
+2021-07-17 03:08:11.182892 --- updated user with username=mana.atarod_test@gmail.com : credit += 2000000
+2021-07-17 03:16:40.061504 --- updated user with username=mana.atarod_test@gmail.com : credit += -10500000
+2021-07-17 03:16:40.072242 --- updated product with p_id=2 : available -= 3
+2021-07-17 03:16:40.079074 --- updated product with p_id=2 : sold += 3
+2021-07-17 03:18:33.489395 --- updated user with username=mana.atarod_test@gmail.com : credit += 40000000
+2021-07-17 03:18:33.517895 --- updated user with username=mana.atarod_test@gmail.com : credit += -10500000
+2021-07-17 03:18:33.519875 --- updated product with p_id=2 : available -= 3
+2021-07-17 03:18:33.523776 --- updated product with p_id=2 : sold += 3
+2021-07-17 03:19:21.107714 --- updated user with username=mana.atarod_test@gmail.com : credit += 40000000
+2021-07-17 03:19:21.147187 --- updated user with username=mana.atarod_test@gmail.com : credit += -10500000
+2021-07-17 03:19:21.152065 --- updated product with p_id=2 : available -= 3
+2021-07-17 03:19:21.154018 --- updated product with p_id=2 : sold += 3
+2021-07-17 03:21:17.661376 --- updated user with username=mana.atarod_test@gmail.com : credit += 40000000
+2021-07-17 03:27:09.854988 --- inserted receipt: r_code=WS2KC80KGU and name='purse' and number_sold=1 and buyer_firstname=Mana_test buyer_lastname='Atarod_test' and buyer_address='Test Address' and price=3500000 and buy_date='2021-03-18 10:20:09.000' and status=Pending
+2021-07-17 03:27:09.861791 --- updated user with username=mana.atarod_test@gmail.com : credit += -3500000
+2021-07-17 03:27:09.865696 --- updated product with p_id=2 : available -= 1
+2021-07-17 03:27:09.870575 --- updated product with p_id=2 : sold += 1
+2021-07-17 03:47:07.357726 --- inserted receipt: r_code=BB7WV6OOHX and name='backpack' and number_sold=1 and buyer_firstname=Mana buyer_lastname='Atarod' and buyer_address='My address' and price=2500000 and buy_date='2021-03-18 10:20:09.000' and status=Pending
+2021-07-17 03:47:07.426047 --- updated user with username=mana.atarod@gmail.com : credit += -2500000
+2021-07-17 03:47:07.430963 --- updated product with p_id=1 : available -= 1
+2021-07-17 03:47:07.438038 --- updated product with p_id=1 : sold += 1
+2021-07-17 03:51:16.102279 --- inserted receipt: r_code=F0WDC2Z3ZL and name='backpack' and number_sold=1 and buyer_firstname=Mana_test buyer_lastname='Atarod_test' and buyer_address='Test Address' and price=2500000 and buy_date='2021-03-18 10:20:09.000' and status=Pending
+2021-07-17 03:51:16.113045 --- updated user with username=mana.atarod_test@gmail.com : credit += -2500000
+2021-07-17 03:51:16.117930 --- updated product with p_id=1 : available -= 1
+2021-07-17 03:51:16.120823 --- updated product with p_id=1 : sold += 1
+2021-07-17 03:53:22.469877 --- inserted receipt: r_code=OH9N65CI5Q and name='purse' and number_sold=1 and buyer_firstname=Mana_test buyer_lastname='Atarod_test' and buyer_address='Test Address' and price=3500000 and buy_date='2021-03-18 10:20:09.000' and status=Pending
+2021-07-17 03:53:22.477684 --- updated user with username=mana.atarod_test@gmail.com : credit += -3500000
+2021-07-17 03:53:22.479667 --- updated product with p_id=2 : available -= 1
+2021-07-17 03:53:22.482598 --- updated product with p_id=2 : sold += 1
+2021-07-17 03:55:30.778895 --- inserted receipt: r_code=WNGPUQJMWX and name='purse' and number_sold=1 and buyer_firstname=Mana_test buyer_lastname='Atarod_test' and buyer_address='Test Address' and price=3500000 and buy_date='2021-07-17 03:55:30' and status=Pending
+2021-07-17 03:55:30.785726 --- updated user with username=mana.atarod_test@gmail.com : credit += -3500000
+2021-07-17 03:55:30.787681 --- updated product with p_id=2 : available -= 1
+2021-07-17 03:55:30.790606 --- updated product with p_id=2 : sold += 1
