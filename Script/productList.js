@@ -78,7 +78,7 @@ class Pagination {
                 cat
                 + '</p></div><div class=\"bottom-product-wrapper\"><p class=\"product-price\">' +
                 cost
-                + '</p><button class=\"blue-button\">خرید محصول</button></div></div>'
+                + '</p><button class=\"blue-button\" '+' id=\"'+'12'+'\"'+' onclick=\"buy()\">خرید محصول</button></div></div>'
         }
 
         var next = document.getElementById("next-page");
@@ -186,6 +186,48 @@ class Pagination {
         var selectSection = document.getElementById('select-page-limit');
         selectSection.addEventListener('change', this.setPageLimit.bind(this));
     }
+}
+
+// Modal page for buying a product
+const form  = document.getElementsByTagName('form')[0];
+// Get the modal
+var modal = document.getElementById("modalWindow");
+// Get the <span> element that closes the modal
+var closeModal = document.getElementsByClassName("modalClose")[0];
+// When the user clicks on the button, open the modal
+closeModal.onclick = function() {
+  modal.style.display = "none";
+}
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+  if (event.target == modal) {
+    modal.style.display = "none";
+  }
+}
+
+function buy() {
+
+    var btn = document.getElementById("12");
+    var price = 1000
+    console.log(btn.id)
+    message = document.getElementById('modal-message')
+    message.innerHTML = `
+    <p style="padding-bottom:5%;">لطفا تعداد مورد نظر از کالا را انتخاب فرمایید</p>
+    <form action="">
+                <label style="margin-right: 5%;" for="points">تعداد</label>
+                <input class="buy_num" type="number" id="points" name="points" step="1" value="1">
+                <label id="total_price" for="points">قیمت نهایی ${price} تومان</label>
+                <button class="blue-button" id="submit_receipt">ثبت سفارش</button>
+    </form> 
+    `;
+    document.getElementById("modal").style.borderColor = 'orange';
+    modal.style.display = "block";
+    document.getElementById('points').addEventListener('change', function (event) {
+        var tPrice = document.getElementById('total_price')
+        amount = document.getElementById('points').value
+        tPrice.innerHTML = " قیمت نهایی " + amount*price  + " تومان "
+    });
+    // document.getElementById("modal").style.borderColor = '#30f04d';
 }
 
 /**
