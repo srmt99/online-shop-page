@@ -1,3 +1,29 @@
+// fetching user info from database
+async function fetch_user_info(username){
+
+  try {
+    response = await fetch('http://127.0.0.1:5002/user/profile/'+username);
+    return await response.json();
+
+  } catch (error) {
+    console.error('There has been a problem with fetching user info:', error);
+  }
+
+}
+
+// setting user information in input boxes and in the header
+async function set_user_info(username){
+  info = await fetch_user_info(username)
+  info = info[0]
+  document.getElementById("profile_title_h").innerHTML = info['name'] +" عزیز، خوش آمدید  "
+  document.getElementById("profile_title_h2").innerHTML = "|"+ "موجودی حساب شما: " + info['credit']
+  document.getElementById("name_input").placeholder = info['name']
+  document.getElementById("lastname_input").placeholder = info['lastname']
+  document.getElementById("address_input").placeholder = info['address']
+}
+
+set_user_info("mm") // THIS HAS TO CHANGE FOR EACH LOGGED IN USER
+
 function change_tab_rec(){
     document.getElementById('profile_title_h2').style.display = "none"
     document.getElementById('profile_title_b').style.display = "none"

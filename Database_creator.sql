@@ -2,11 +2,11 @@ use shop;
 
 -- creating the USERs table
 CREATE TABLE Users (  
-    username varchar(255) NOT NULL,  
+    username varchar(255) NOT NULL ,  
     password varchar(255) NOT NULL ,
-	name varchar(255) NOT NULL,
-	lastname varchar(255) NOT NULL,
-	address varchar(1000) NOT NULL,
+	name varchar(255) COLLATE Latin1_General_100_CI_AI_SC_UTF8 NOT NULL,
+	lastname varchar(255) COLLATE Latin1_General_100_CI_AI_SC_UTF8 NOT NULL,
+	address varchar(1000) COLLATE Latin1_General_100_CI_AI_SC_UTF8 NOT NULL,
 	credit int DEFAULT 0,
     PRIMARY KEY (username)
 	); 
@@ -20,15 +20,15 @@ CREATE TABLE Admin (
 
 -- creating the CATEGORIES table
 CREATE TABLE Categories (
-    name varchar(255) NOT NULL,
+    name varchar(255) COLLATE Latin1_General_100_CI_AI_SC_UTF8 NOT NULL,
     PRIMARY KEY (name)
 	); 
 
 -- creating the PRODUCTs table
 CREATE TABLE Products (
 	p_id int IDENTITY(1,1),
-	name varchar(255) NOT NULL,
-	category varchar(255) NOT NULL DEFAULT 'uncategorized',
+	name varchar(255) COLLATE Latin1_General_100_CI_AI_SC_UTF8 NOT NULL,
+	category varchar(255) COLLATE Latin1_General_100_CI_AI_SC_UTF8 NOT NULL DEFAULT 'uncategorized',
 	price int NOT NULL,
 	available int DEFAULT 0,
 	sold int DEFAULT 0,
@@ -42,11 +42,11 @@ CREATE TABLE Products (
 -- creating the RECEIPTs table
 CREATE TABLE Receipts (
 	r_code varchar(10) NOT NULL,
-	name varchar(255) NOT NULL,
+	name varchar(255) COLLATE Latin1_General_100_CI_AI_SC_UTF8 NOT NULL,
 	number_sold int NOT NULL,
-	buyer_firstname varchar(255) NOT NULL,
-	buyer_lastname varchar(255) NOT NULL,
-	buyer_address varchar(1000) NOT NULL,
+	buyer_firstname varchar(255) COLLATE Latin1_General_100_CI_AI_SC_UTF8 NOT NULL,
+	buyer_lastname varchar(255) COLLATE Latin1_General_100_CI_AI_SC_UTF8 NOT NULL,
+	buyer_address varchar(1000) COLLATE Latin1_General_100_CI_AI_SC_UTF8 NOT NULL,
 	price int NOT NULL,
 	buy_date datetime DEFAULT CURRENT_TIMESTAMP,
 	status varchar(20) DEFAULT 'pending',
