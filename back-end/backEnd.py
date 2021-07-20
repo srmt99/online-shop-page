@@ -9,7 +9,7 @@ import re
 def connect_db():
     conn = pyodbc.connect('Driver={SQL Server};'
                           'Server=DESKTOP-GK7V7V3;'
-                          'Database=shop;'
+                          'Database=shop_db;'
                           'User=mana;'
                           'Password=123'
                           'Trusted_Connection=yes;')

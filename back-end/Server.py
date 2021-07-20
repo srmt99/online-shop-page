@@ -15,12 +15,6 @@ api = Api(app)
 app = Flask(__name__, template_folder="../")
 
 
-#@app.after_request
-#def add_header(response):
-#    response.headers.add('Access-Control-Allow-Origin', '*')
-#    return response
-
-
 def df_to_dict(df):
     dict_df = df.to_dict()
     print(dict_df)
@@ -60,16 +54,9 @@ def get_all_products():
     searchText = request.args.get('searchText')
     min_price = request.args.get('min_price')
     max_price = request.args.get('max_price')
-    if category is not None:
-        #category = str(category)
-        print("cat type = ", type(category))
-        print(category)
     df = Product.get_all_products(orderBy=orderBy, order=order, filterCat=category, searchText=searchText,
                                   min_price=min_price, max_price=max_price)
     print(df)
-    if category is not None:
-        print("Category:")
-        print(category)
     response = jsonify(df_to_dict(df))
     return response
 
@@ -77,9 +64,10 @@ def get_all_products():
 @app.route("/category/category_list/")
 @cross_origin()
 def get_all_categories():
-    df = Category._get_all()
+    df =    Category._get_all()
     response = jsonify(df_to_dict(df))
     return response
+
 
 if __name__ == '__main__':
     app.run(port=5002)
