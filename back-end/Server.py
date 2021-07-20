@@ -1,18 +1,64 @@
 from flask import Flask, request, render_template, jsonify
 from flask_restful import Resource, Api
+from flask_jwt_extended import create_access_token
+from flask_jwt_extended import get_jwt_identity
+from flask_jwt_extended import jwt_required
+from flask_jwt_extended import JWTManager
 from flask_cors import CORS, cross_origin
 from backEnd import User, Product, Category
-import os
-import json
 import datetime
 from collections import defaultdict
 
-from flask_restful.utils.cors import crossdomain
 
-app = Flask(__name__, template_folder=os.path.abspath("../"))
-# CORS(app)
+app = Flask(__name__)
+CORS(app)
 api = Api(app)
-app = Flask(__name__, template_folder="../")
+app.debug = True
+app.config["JWT_SECRET_KEY"] = "super-secret"
+jwt = JWTManager(app)
+
+# Defining class for Users to be authenticated with jwt
+class UserAuthenticate(object):
+    def __init__(self, id, username, password):
+        self.id = id
+        self.username = username
+        self.password = password
+
+    def __str__(self):
+        return "User(id='%s')" % self.id
+
+# Reading Users from DB and adding their credentials to dicts
+usersDF = User.get_all_users()
+users = []
+for index, row in usersDF.iterrows():
+    users.append(UserAuthenticate(row['id'], row['username'], row['password']))
+username_table = {u.username: u for u in users}
+userid_table = {u.id: u for u in users}
+password_table = {u.password: u for u in users}
+
+
+# Login path with JWT
+@app.route("/login/", methods=["POST"])
+@cross_origin()
+def login():
+    username = request.args.get("username", None)
+    password = request.args.get("password", None)
+    if username not in userid_table or password not in password_table:
+        return jsonify({"msg": "Bad username or password"}), 401
+    elif userid_table[username] != password_table[password]:
+        return jsonify({"msg": "Bad username or password"}), 401
+    access_token = create_access_token(identity=username)
+    print("TOKEN:")
+    print(jsonify(access_token=access_token))
+    return jsonify(access_token=access_token)
+
+
+# Protected resource with jwt example
+@app.route("/protected/", methods=["GET"])
+@jwt_required()
+def protected():
+    current_user = get_jwt_identity()
+    return jsonify(logged_in_as=current_user), 200
 
 
 def df_to_dict(df):
@@ -64,7 +110,7 @@ def get_all_products():
 @app.route("/category/category_list/")
 @cross_origin()
 def get_all_categories():
-    df =    Category._get_all()
+    df = Category._get_all()
     response = jsonify(df_to_dict(df))
     return response
 

@@ -4,7 +4,7 @@
 class Product {
     constructor(id, imgSource, title, category, price, available, sold) {
         this.id = id;
-        this.imgSource = 'images/'+imgSource;
+        this.imgSource = 'images/' + imgSource;
         this.title = title;
         this.category = category;
         this.price = price;
@@ -367,7 +367,7 @@ function viewCategories(categoryList) {
  * Get all category checkboxes with a checked status
  * @returns 
  */
-function getCheckedCategories(){
+function getCheckedCategories() {
     let availableategories = document.getElementsByClassName('filter-checkbox');
     let checkedCategories = [];
     for (let j = 0; j < availableategories.length; ++j) {
@@ -429,7 +429,7 @@ function setSortOptionsEventListener() {
  * Handler for category checkboxes - get all products according to page state
  * @param {*} e 
  */
-function filterByCategory(e){
+function filterByCategory(e) {
     e.preventDefault();
     console.log("CHANGE DETECTED");
     let pageStatURL = createGetProductsURL(productViewStat());
@@ -439,7 +439,7 @@ function filterByCategory(e){
 /**
  * Set handlers for category filter checkboxes
  */
- function setCategoryCheckboxesEventListener() {
+function setCategoryCheckboxesEventListener() {
     let categoryForm = document.getElementById('category-form');
     categoryForm.addEventListener('change', filterByCategory);
 }
@@ -448,7 +448,7 @@ function filterByCategory(e){
  * Determine the proper parameters that need to be in the URL to get products according to the page's state
  * @returns
  */
-function productViewStat(){
+function productViewStat() {
     let searchInput = document.getElementById("product-input").value;
     if (searchInput == "") {
         searchInput = undefined;
@@ -481,14 +481,14 @@ function productViewStat(){
     if (startPrice == "") {
         startPrice = undefined;
     }
-    else if (startPrice === parseInt(startPrice, 10)){
+    else if (startPrice === parseInt(startPrice, 10)) {
         startPrice = parseInt(data, 10);
     }
     let stopPrice = document.getElementById("max-price-input").value;
     if (stopPrice == "") {
         stopPrice = undefined;
     }
-    else if (stopPrice === parseInt(stopPrice, 10)){
+    else if (stopPrice === parseInt(stopPrice, 10)) {
         stopPrice = parseInt(data, 10);
     }
     console.log("range = " + startPrice + ",  " + stopPrice);
@@ -497,7 +497,7 @@ function productViewStat(){
         selectedCategories = undefined
     }
     console.log("selected categories: ", selectedCategories);
-    return {orderBy: sortModeText, order: orderview, category: selectedCategories, searchText: searchInput, min_price: startPrice, max_price: stopPrice}
+    return { orderBy: sortModeText, order: orderview, category: selectedCategories, searchText: searchInput, min_price: startPrice, max_price: stopPrice }
 }
 
 /**
@@ -516,7 +516,7 @@ function priceRangeHandler(e) {
  */
 let productsPerPage = 15;
 
-getProducts(createGetProductsURL({ orderBy: 'price', order: 'asc'}));
+getProducts(createGetProductsURL({ orderBy: 'price', order: 'asc' }));
 getCategories();
 setSortOptionsEventListener();
 setCategoryCheckboxesEventListener();
@@ -526,3 +526,32 @@ productSubmitButton.addEventListener('click', searchText);
 
 let priceRangeSubmitButton = document.getElementById("price-filter-submit");
 priceRangeSubmitButton.addEventListener('click', priceRangeHandler);
+
+/**
+ * JWT token authentication and protected resource access example
+ */
+/*
+let postData = {
+    "username": "user0@gmail.com",
+    "password": "11111111"
+};
+jsonData = JSON.stringify(postData);
+fetch('http://127.0.0.1:5002/login/?username=user0@gmail.com&password=11111111', {
+    method: "POST",
+    body: JSON.stringify(postData)
+}).then(res => res.json())
+.then(function (data) {
+    console.log("JWT Token:")
+    console.log(data)
+    let jwtToken = data['access_token'];
+    localStorage.setItem('jwt', jwtToken)
+});
+
+fetch('http://127.0.0.1:5002/protected/', {
+    method: "GET",
+    headers: {'Authorization': 'Bearer ' + localStorage.getItem('jwt')}
+}).then(res => res.json())  
+.then(function (data) {
+    console.log(data);
+});
+*/
