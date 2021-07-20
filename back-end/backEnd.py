@@ -8,9 +8,9 @@ import re
 
 def connect_db():
     conn = pyodbc.connect('Driver={SQL Server};'
-                          'Server=DESKTOP-UH3DDJR;'
+                          'Server=DESKTOP-GK7V7V3;'
                           'Database=shop;'
-                          'User=srmt;'
+                          'User=mana;'
                           'Password=123'
                           'Trusted_Connection=yes;')
     return conn
@@ -43,9 +43,9 @@ class Product:
         self.available = available
         self.sold = 0
         self.picture = picture
-    
+
     @staticmethod
-    def insert_product(self):
+    def insert_product(self, category):
         conn = connect_db()
         cursor = conn.cursor()
         # check if category does not exist, insert it into database
@@ -153,22 +153,46 @@ class Product:
         conn.close()
 
     @staticmethod
-    def get_all_products(orderBy='sold', order='desc', filterCat=None, searchText='', min_price=0, max_price=None):
+    def get_all_products(orderBy=None, order=None, filterCat=None, searchText=None, min_price=None, max_price=None):
         conn = connect_db()
-        # cursor = conn.cursor()=
-        if filterCat is None: # No category filter available
+        if orderBy is None:
+            orderBy = 'sold'
+        if order is None:
+            order = 'desc'
+        if searchText is None:
+            searchText = ''
+        if min_price is None:
+            min_price = 0
+        if filterCat is None:  # No category filter available
+            if max_price is not None:
+                sql_query = pd.read_sql_query(
+                    f"SELECT * FROM Products WHERE name LIKE '%{searchText}%' and price between {min_price} and {max_price} ORDER BY {orderBy} {order}",
+                    conn)
+            else:
+                sql_query = pd.read_sql_query(
+                    f"SELECT * FROM Products WHERE name LIKE '%{searchText}%' and price >= {min_price} ORDER BY {orderBy} {order}",
+                    conn)
+        else:  # category filter available
+            filterCat = tuple(filterCat.split(","))
+            if len(filterCat) == 1:
+                filterCat = filterCat[0]
                 if max_price is not None:
-                    sql_query = pd.read_sql_query(f"SELECT * FROM Products WHERE name LIKE '%{searchText}%' and price between {min_price} and {max_price} ORDER BY {orderBy} {order}", conn)
+                    sql_query = pd.read_sql_query(
+                        f"SELECT * FROM Products WHERE category = '{filterCat}' and name LIKE '%{searchText}%' and price between {min_price} and {max_price} ORDER BY {orderBy} {order}",
+                        conn)
                 else:
                     sql_query = pd.read_sql_query(
-                        f"SELECT * FROM Products WHERE name LIKE '%{searchText}%' and price >= {min_price} ORDER BY {orderBy} {order}",conn)
-        else: # category filter available
+                        f"SELECT * FROM Products WHERE category = '{filterCat}' and name LIKE '%{searchText}%' and price > {min_price} ORDER BY {orderBy} {order}",
+                        conn)
+            else:
                 if max_price is not None:
                     sql_query = pd.read_sql_query(
-                    f"SELECT * FROM Products WHERE category = '{filterCat}' and name LIKE '%{searchText}%' and price between {min_price} and {max_price} ORDER BY {orderBy} {order}", conn)
+                        f"SELECT * FROM Products WHERE category in {filterCat} and name LIKE '%{searchText}%' and price between {min_price} and {max_price} ORDER BY {orderBy} {order}",
+                        conn)
                 else:
                     sql_query = pd.read_sql_query(
-                    f"SELECT * FROM Products WHERE category = '{filterCat}' and name LIKE '%{searchText}%' and price > {min_price} ORDER BY {orderBy} {order}", conn)
+                        f"SELECT * FROM Products WHERE category in {filterCat} and name LIKE '%{searchText}%' and price > {min_price} ORDER BY {orderBy} {order}",
+                        conn)
         conn.close()
         return sql_query
 
@@ -235,15 +259,15 @@ class Receipt:
         conn.close()
         return generated_code
 
-
     def insert_receipt(self):
         conn = connect_db()
         cursor = conn.cursor()
         print(self.r_code, self.name, self.number_sold, self.buyer_firstname, self.buyer_lastname,
-                       self.buyer_address, self.price, self.buy_date, self.status)
+              self.buyer_address, self.price, self.buy_date, self.status)
         cursor.execute("insert into Receipts(r_code, name, number_sold, buyer_firstname, buyer_lastname, "
                        "buyer_address, price, buy_date, status) values (?,?,?,?,?,?,?,?,?)",
-                       self.r_code, str(self.name), str(self.number_sold), str(self.buyer_firstname), str(self.buyer_lastname),
+                       self.r_code, str(self.name), str(self.number_sold), str(self.buyer_firstname),
+                       str(self.buyer_lastname),
                        str(self.buyer_address), int(self.price), str(self.buy_date), str(self.status))
         conn.commit()
         sql_query = pd.read_sql_query(
@@ -258,7 +282,8 @@ class Receipt:
     def _get_all(orderBy='buy_date', order='desc', searchText=''):
         conn = connect_db()
         # cursor = conn.cursor()
-        sql_query = pd.read_sql_query(f"SELECT * FROM Receipts WHERE r_code LIKE '%{searchText}%' ORDER BY {orderBy} {order}", conn)
+        sql_query = pd.read_sql_query(
+            f"SELECT * FROM Receipts WHERE r_code LIKE '%{searchText}%' ORDER BY {orderBy} {order}", conn)
         conn.close()
         return sql_query
 
@@ -278,7 +303,7 @@ class User:
         cursor = conn.cursor()
         sql_query = pd.read_sql_query(f"SELECT username FROM Users WHERE username = '{self.username}'", conn)
         regex = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'
-        if sql_query.empty and self.password.isalnum() and re.match(regex, self.username)\
+        if sql_query.empty and self.password.isalnum() and re.match(regex, self.username) \
                 and self.check_length_validity_or_none(self.username, 255) and \
                 self.check_length_validity_or_none(self.password, 255, 8) and \
                 self.check_length_validity_or_none(self.name, 255) and \
@@ -322,7 +347,9 @@ class User:
 
     def get_user_receipts(self):
         conn = connect_db()
-        sql_query = pd.read_sql_query(f"SELECT * FROM Receipts r inner join User_Receipts ur on r.r_code = ur.r_code WHERE ur.username = '{self.username}'", conn)
+        sql_query = pd.read_sql_query(
+            f"SELECT * FROM Receipts r inner join User_Receipts ur on r.r_code = ur.r_code WHERE ur.username = '{self.username}'",
+            conn)
         conn.close()
         return sql_query
 
@@ -399,7 +426,6 @@ class User:
         _log(f"Deleted user with username={username}  [{count} rows affected] ")
         conn.close()
 
-
     @staticmethod
     def buy_product(username, product_id, amount=1):
         # THE FIRST THREE LINES COULD BE REFACTORED AS A METHOD IN PRODUCT (SIMILAR TO read_profile IN USER)
@@ -407,7 +433,8 @@ class User:
         cursor = conn.cursor()
         product_desc = pd.read_sql_query(f"SELECT * FROM Products WHERE p_id ='{product_id}'", conn)
         current_user = User.read_profile(username)
-        if current_user.iloc[0]['credit'] >= product_desc.iloc[0]['price'] * amount and amount < product_desc.iloc[0]['available']:
+        if current_user.iloc[0]['credit'] >= product_desc.iloc[0]['price'] * amount and amount < product_desc.iloc[0][
+            'available']:
             new_receipt = Receipt(product_desc.iloc[0]['name'], amount, current_user.iloc[0]['name'],
                                   current_user.iloc[0]['lastname'], current_user.iloc[0]['address'],
                                   product_desc.iloc[0]['price'], 'Pending')

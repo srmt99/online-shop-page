@@ -72,8 +72,12 @@
                 <!--Sort Box-->
                 <div class="sort-box">
                     <p id="sort-by-text">مرتب سازی بر اساس:</p>
-                    <button class="blue-button do-hover" id="sort-by-max-sale-button">بیشترین فروش</button>
-                    <button class="white-button" id="sort-by-price">قیمت</button>
+                    <button class="sort-option blue-button do-hover" id="sort-by-max-sale-button">بیشترین فروش</button>
+                    <!--<button class="white-button" id="sort-by-price">قیمت</button> -->
+                    <!--changed for phase 3-->
+                    <button class="sort-option white-button" id="sort-by-price-desc">قیمت نزولی</button>
+                    <button class="sort-option white-button" id="sort-by-price-asc">قیمت صعودی</button>
+                    <button class="sort-option white-button" id="sort-by-date">تاریخ</button>
                 </div>
                 <!--items per page-->
                 <div class="select-item-num-box">
@@ -87,6 +91,7 @@
             </div>
             <!--Product list and filters-->
             <div class="product-view-wrapper" id="product-list-div">
+                <p id="searched-items"></p>
                 <div class="product-view">
                     <div class="filter-box">
                         <div class="filter-box-sections">
@@ -94,36 +99,21 @@
                                 <p class="filter-header-text">دسته بندی ها</p>
                             </div>
                             <div class="filter-content">
-                                <form class="filter-checkbox-list">
-                                    <div class="checkbox-wrapper">
-                                        <input class="filter-checkbox" type="checkbox" id="filter1" value="f1">
-                                        <label for="filter1">دسته بندی اول</label><br>
-                                    </div>
-                                    <div class="checkbox-wrapper">
-                                        <input class="filter-checkbox" type="checkbox" id="filter2" value="f2">
-                                        <label for="filter2">دسته بندی دوم</label><br>
-                                    </div>
-                                    <div class="checkbox-wrapper">
-                                        <input class="filter-checkbox" type="checkbox" id="filter3" value="f3">
-                                        <label for="filter3">دسته بندی سوم</label><br>
-                                    </div>
-                                    <div class="checkbox-wrapper">
-                                        <input class="filter-checkbox" type="checkbox" id="filter4" value="f4">
-                                        <label for="filter4">دسته بندی چهارم</label><br>
-                                    </div>
-                                    <div class="checkbox-wrapper">
-                                        <input class="filter-checkbox" type="checkbox" id="filter5" value="f5">
-                                        <label for="filter5">دسته بندی پنجم</label><br>
-                                    </div>
-                                    <div class="checkbox-wrapper">
-                                        <input class="filter-checkbox" type="checkbox" id="filter6" value="f6">
-                                        <label for="filter6">دسته بندی ششم</label><br>
-                                    </div>
-                                    <div class="checkbox-wrapper">
-                                        <input class="filter-checkbox" type="checkbox" id="filter7" value="f6">
-                                        <label for="filter7">دسته بندی هفتم</label><br>
-                                    </div>
+                                <form class="filter-checkbox-list" id="category-form">
+                                    
                                 </form>
+                            </div>
+                        </div>
+                        <div class="filter-box-sections">
+                            <div class="filter-header">
+                                <p class="filter-header-text">تنظیم قیمت کالا</p>
+                            </div>
+                            <div class="filter-content" id="price-filter-content">
+                                <label for="min-price-input">از: </label>
+                                <input type="text" class="price-filter" id="min-price-input">
+                                <label id="price-filter-label" for="max-price-input">تا: </label>
+                                <input type="text" class="price-filter" id="max-price-input">
+                                <input type="submit" id="price-filter-submit" value="ثبت">
                             </div>
                         </div>
                     </div>
@@ -156,7 +146,7 @@
             <span class="modalClose">&times;</span>
             <div id="modal-message"></div>
         </div>
-    
+
     </div>
     <script src="Script/slider.js"></script>
     <script src="Script/productList.js"></script>

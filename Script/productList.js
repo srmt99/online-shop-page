@@ -2,11 +2,23 @@
  * Class for defining product attributes
  */
 class Product {
-    constructor(imgSource, title, category, price) {
-        this.imgSource = imgSource;
+    constructor(id, imgSource, title, category, price, available, sold) {
+        this.id = id;
+        this.imgSource = 'images/backpack.jpg';
         this.title = title;
         this.category = category;
         this.price = price;
+        this.available = available;
+        this.sold = sold
+    }
+}
+
+/**
+ * Class for defining categories
+ */
+class Category {
+    constructor(catName) {
+        this.catName = catName
     }
 }
 
@@ -65,20 +77,27 @@ class Pagination {
         }
 
         productSection.innerHTML = "";
-        for (var i = (pageNum - 1) * this.numOfProductsPerPage; i < (pageNum * this.numOfProductsPerPage) && i < this.productList.length; i++) {
-            let imgSrc = this.productList[i].imgSource;
-            let title = this.productList[i].title;
-            let cat = this.productList[i].category;
-            let cost = this.productList[i].price;
-            productSection.innerHTML += '<div class=\"product-box\"><img src=' +
-                imgSrc
-                + ' alt=\"\" class=\"product-img\"><div class=\"product-info-wrapper\"><p class=\"product-title\">' +
-                title
-                + '</p><p class=\"product-category\">' +
-                cat
-                + '</p></div><div class=\"bottom-product-wrapper\"><p class=\"product-price\">' +
-                cost
-                + '</p><button class=\"blue-button\" '+' id=\"'+'12'+'\"'+' onclick=\"buy()\">خرید محصول</button></div></div>'
+
+        if (this.productList.length == 0) {
+            productSection.innerHTML += '<p id=\"empty-list-text\">محصولی برای نمایش وجود ندارد.</p>'
+        }
+        else {
+            for (var i = (pageNum - 1) * this.numOfProductsPerPage; i < (pageNum * this.numOfProductsPerPage) && i < this.productList.length; i++) {
+                let imgSrc = this.productList[i].imgSource;
+                let title = this.productList[i].title;
+                let cat = this.productList[i].category;
+                let cost = this.productList[i].price;
+                let btnID = this.productList[i].id;
+                productSection.innerHTML += '<div class=\"product-box\"><img src=' +
+                    imgSrc
+                    + ' alt=\"\" class=\"product-img\"><div class=\"product-info-wrapper\"><p class=\"product-title\">' +
+                    title
+                    + '</p><p class=\"product-category\">' +
+                    cat
+                    + '</p></div><div class=\"bottom-product-wrapper\"><p class=\"product-price\">' +
+                    cost
+                    + '</p><button class=\"blue-button do-hover\" ' + ' id=\"' + 'product-btn-' + btnID + '\"' + ' onclick=\"buy()\">خرید محصول</button></div></div>'
+            }
         }
 
         var next = document.getElementById("next-page");
@@ -189,20 +208,20 @@ class Pagination {
 }
 
 // Modal page for buying a product
-const form  = document.getElementsByTagName('form')[0];
+const form = document.getElementsByTagName('form')[0];
 // Get the modal
 var modal = document.getElementById("modalWindow");
 // Get the <span> element that closes the modal
 var closeModal = document.getElementsByClassName("modalClose")[0];
 // When the user clicks on the button, open the modal
-closeModal.onclick = function() {
-  modal.style.display = "none";
+closeModal.onclick = function () {
+    modal.style.display = "none";
 }
 // When the user clicks anywhere outside of the modal, close it
-window.onclick = function(event) {
-  if (event.target == modal) {
-    modal.style.display = "none";
-  }
+window.onclick = function (event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
 }
 
 function buy() {
@@ -225,306 +244,285 @@ function buy() {
     document.getElementById('points').addEventListener('change', function (event) {
         var tPrice = document.getElementById('total_price')
         amount = document.getElementById('points').value
-        tPrice.innerHTML = " قیمت نهایی " + amount*price  + " تومان "
+        tPrice.innerHTML = " قیمت نهایی " + amount * price + " تومان "
     });
     // document.getElementById("modal").style.borderColor = '#30f04d';
 }
 
 /**
- * Hard-coding products
+ * Create proper URL for fetching products from server
+ * @param {*} optional_params 
+ * @returns 
  */
-pr1Title = 'محصول1';
-pr1Cat = 'دسته بندی دوم';
-pr1Src = 'images/backpack.jpg';
-pr1Price = 10000;
-let pr1 = new Product(pr1Src, pr1Title, pr1Cat, pr1Price);
+function createGetProductsURL(optional_params) {
+    /*orderBy, order, category, searchText, min_price, max_price*/
+    let URL = 'http://127.0.0.1:5002/product/product_list/';
+    if (Object.keys(optional_params).length > 0) {
+        URL += '?'
+        if (optional_params.orderBy !== undefined) {
+            if (URL != 'http://127.0.0.1:5002/product/product_list/?') {
+                URL += '&'
+            }
+            URL += 'orderBy=' + optional_params.orderBy
+        }
+        if (optional_params.order !== undefined) {
+            if (URL != 'http://127.0.0.1:5002/product/product_list/?') {
+                URL += '&'
+            }
+            URL += 'order=' + optional_params.order
+        }
+        if (optional_params.category !== undefined) {
+            if (URL != 'http://127.0.0.1:5002/product/product_list/?') {
+                URL += '&'
+            }
+            URL += 'category=' + optional_params.category
+        }
+        if (optional_params.searchText !== undefined) {
+            if (URL != 'http://127.0.0.1:5002/product/product_list/?') {
+                URL += '&'
+            }
+            URL += 'searchText=' + optional_params.searchText
+        }
+        if (optional_params.min_price !== undefined) {
+            if (URL != 'http://127.0.0.1:5002/product/product_list/?') {
+                URL += '&'
+            }
+            URL += 'min_price=' + optional_params.min_price
+        }
+        if (optional_params.max_price !== undefined) {
+            if (URL != 'http://127.0.0.1:5002/product/product_list/?') {
+                URL += '&'
+            }
+            URL += 'max_price=' + optional_params.max_price
+        }
+    }
+    console.log(URL)
+    return URL;
+}
 
-pr2Title = 'محصول2';
-pr2Cat = 'دسته بندی دوم';
-pr2Src = 'images/backpack.jpg';
-pr2Price = 20000;
-let pr2 = new Product(pr2Src, pr2Title, pr2Cat, pr2Price);
-
-pr3Title = 'محصول3';
-pr3Cat = 'دسته بندی دوم';
-pr3Src = 'images/backpack.jpg';
-pr3Price = 30000;
-let pr3 = new Product(pr3Src, pr3Title, pr3Cat, pr3Price);
-
-pr4Title = 'محصول4';
-pr4Cat = 'دسته بندی دوم';
-pr4Src = 'images/backpack.jpg';
-pr4Price = 40000;
-let pr4 = new Product(pr4Src, pr4Title, pr4Cat, pr4Price);
-
-pr5Title = 'محصول5';
-pr5Cat = 'دسته بندی دوم';
-pr5Src = 'images/backpack.jpg';
-pr5Price = 50000;
-let pr5 = new Product(pr5Src, pr5Title, pr5Cat, pr5Price);
-
-pr6Title = 'محصول6';
-pr6Cat = 'دسته بندی دوم';
-pr6Src = 'images/backpack.jpg';
-pr6Price = 60000;
-let pr6 = new Product(pr6Src, pr6Title, pr6Cat, pr6Price);
-
-pr7Title = 'محصول7';
-pr7Cat = 'دسته بندی دوم';
-pr7Src = 'images/backpack.jpg';
-pr7Price = 70000;
-let pr7 = new Product(pr7Src, pr7Title, pr7Cat, pr7Price);
-
-pr8Title = 'محصول8';
-pr8Cat = 'دسته بندی دوم';
-pr8Src = 'images/backpack.jpg';
-pr8Price = 80000;
-let pr8 = new Product(pr8Src, pr8Title, pr8Cat, pr8Price);
-
-pr9Title = 'محصول9';
-pr9Cat = 'دسته بندی دوم';
-pr9Src = 'images/backpack.jpg';
-pr9Price = 90000;
-let pr9 = new Product(pr9Src, pr9Title, pr9Cat, pr9Price);
-
-pr10Title = 'محصول10';
-pr10Cat = 'دسته بندی دوم';
-pr10Src = 'images/backpack.jpg';
-pr10Price = 100000;
-let pr10 = new Product(pr10Src, pr10Title, pr10Cat, pr10Price);
-
-pr11Title = 'محصول11';
-pr11Cat = 'دسته بندی دوم';
-pr11Src = 'images/backpack.jpg';
-pr11Price = 110000;
-let pr11 = new Product(pr11Src, pr11Title, pr11Cat, pr11Price);
-
-pr12Title = 'محصول12';
-pr12Cat = 'دسته بندی دوم';
-pr12Src = 'images/backpack.jpg';
-pr12Price = 120000;
-let pr12 = new Product(pr12Src, pr12Title, pr12Cat, pr12Price);
-
-pr13Title = 'محصول13';
-pr13Cat = 'دسته بندی دوم';
-pr13Src = 'images/backpack.jpg';
-pr13Price = 130000;
-let pr13 = new Product(pr13Src, pr13Title, pr13Cat, pr13Price);
-
-pr14Title = 'محصول14';
-pr14Cat = 'دسته بندی دوم';
-pr14Src = 'images/backpack.jpg';
-pr14Price = 140000;
-let pr14 = new Product(pr14Src, pr14Title, pr14Cat, pr14Price);
-
-pr15Title = 'محصول15';
-pr15Cat = 'دسته بندی دوم';
-pr15Src = 'images/backpack.jpg';
-pr15Price = 150000;
-let pr15 = new Product(pr15Src, pr15Title, pr15Cat, pr15Price);
-
-pr16Title = 'محصول16';
-pr16Cat = 'دسته بندی دوم';
-pr16Src = 'images/backpack.jpg';
-pr16Price = 160000;
-let pr16 = new Product(pr16Src, pr16Title, pr16Cat, pr16Price);
-
-pr17Title = 'محصول17';
-pr17Cat = 'دسته بندی دوم';
-pr17Src = 'images/backpack.jpg';
-pr17Price = 170000;
-let pr17 = new Product(pr17Src, pr17Title, pr17Cat, pr17Price);
-
-pr18Title = 'محصول18';
-pr18Cat = 'دسته بندی دوم';
-pr18Src = 'images/backpack.jpg';
-pr18Price = 180000;
-let pr18 = new Product(pr18Src, pr18Title, pr18Cat, pr18Price);
-
-pr19Title = 'محصول19';
-pr19Cat = 'دسته بندی دوم';
-pr19Src = 'images/backpack.jpg';
-pr19Price = 190000;
-let pr19 = new Product(pr19Src, pr19Title, pr19Cat, pr19Price);
-
-pr20Title = 'محصول20';
-pr20Cat = 'دسته بندی دوم';
-pr20Src = 'images/backpack.jpg';
-pr20Price = 200000;
-let pr20 = new Product(pr20Src, pr20Title, pr20Cat, pr20Price);
-
-pr21Title = 'محصول21';
-pr21Cat = 'دسته بندی دوم';
-pr21Src = 'images/backpack.jpg';
-pr21Price = 210000;
-let pr21 = new Product(pr21Src, pr21Title, pr21Cat, pr21Price);
-
-pr22Title = 'محصول22';
-pr22Cat = 'دسته بندی دوم';
-pr22Src = 'images/backpack.jpg';
-pr22Price = 220000;
-let pr22 = new Product(pr22Src, pr22Title, pr22Cat, pr22Price);
-
-pr23Title = 'محصول23';
-pr23Cat = 'دسته بندی دوم';
-pr23Src = 'images/backpack.jpg';
-pr23Price = 230000;
-let pr23 = new Product(pr23Src, pr23Title, pr23Cat, pr23Price);
-
-pr24Title = 'محصول24';
-pr24Cat = 'دسته بندی دوم';
-pr24Src = 'images/backpack.jpg';
-pr24Price = 240000;
-let pr24 = new Product(pr24Src, pr24Title, pr24Cat, pr24Price);
-
-pr25Title = 'محصول25';
-pr25Cat = 'دسته بندی دوم';
-pr25Src = 'images/backpack.jpg';
-pr25Price = 250000;
-let pr25 = new Product(pr25Src, pr25Title, pr25Cat, pr25Price);
-
-pr26Title = 'محصول26';
-pr26Cat = 'دسته بندی دوم';
-pr26Src = 'images/backpack.jpg';
-pr26Price = 260000;
-let pr26 = new Product(pr26Src, pr26Title, pr26Cat, pr26Price);
-
-pr27Title = 'محصول27';
-pr27Cat = 'دسته بندی دوم';
-pr27Src = 'images/backpack.jpg';
-pr27Price = 270000;
-let pr27 = new Product(pr27Src, pr27Title, pr27Cat, pr27Price);
-
-pr28Title = 'محصول28';
-pr28Cat = 'دسته بندی دوم';
-pr28Src = 'images/backpack.jpg';
-pr28Price = 280000;
-let pr28 = new Product(pr28Src, pr28Title, pr28Cat, pr28Price);
-
-pr29Title = 'محصول29';
-pr29Cat = 'دسته بندی دوم';
-pr29Src = 'images/backpack.jpg';
-pr29Price = 290000;
-let pr29 = new Product(pr29Src, pr29Title, pr29Cat, pr29Price);
-
-pr30Title = 'محصول30';
-pr30Cat = 'دسته بندی دوم';
-pr30Src = 'images/backpack.jpg';
-pr30Price = 300000;
-let pr30 = new Product(pr30Src, pr30Title, pr30Cat, pr30Price);
-
-pr31Title = 'محصول31';
-pr31Cat = 'دسته بندی دوم';
-pr31Src = 'images/backpack.jpg';
-pr31Price = 310000;
-let pr31 = new Product(pr31Src, pr31Title, pr31Cat, pr31Price);
-
-pr32Title = 'محصول32';
-pr32Cat = 'دسته بندی دوم';
-pr32Src = 'images/backpack.jpg';
-pr32Price = 320000;
-let pr32 = new Product(pr32Src, pr32Title, pr32Cat, pr32Price);
-
-pr33Title = 'محصول33';
-pr33Cat = 'دسته بندی دوم';
-pr33Src = 'images/backpack.jpg';
-pr33Price = 330000;
-let pr33 = new Product(pr33Src, pr33Title, pr33Cat, pr33Price);
-
-pr34Title = 'محصول34';
-pr34Cat = 'دسته بندی دوم';
-pr34Src = 'images/backpack.jpg';
-pr34Price = 340000;
-let pr34 = new Product(pr34Src, pr34Title, pr34Cat, pr34Price);
-
-pr35Title = 'محصول35';
-pr35Cat = 'دسته بندی دوم';
-pr35Src = 'images/backpack.jpg';
-pr35Price = 350000;
-let pr35 = new Product(pr35Src, pr35Title, pr35Cat, pr35Price);
-
-pr36Title = 'محصول36';
-pr36Cat = 'دسته بندی دوم';
-pr36Src = 'images/backpack.jpg';
-pr36Price = 360000;
-let pr36 = new Product(pr36Src, pr36Title, pr36Cat, pr36Price);
-
-pr37Title = 'محصول37';
-pr37Cat = 'دسته بندی دوم';
-pr37Src = 'images/backpack.jpg';
-pr37Price = 370000;
-let pr37 = new Product(pr37Src, pr37Title, pr37Cat, pr37Price);
-
-pr38Title = 'محصول38';
-pr38Cat = 'دسته بندی دوم';
-pr38Src = 'images/backpack.jpg';
-pr38Price = 380000;
-let pr38 = new Product(pr38Src, pr38Title, pr38Cat, pr38Price);
-
-pr39Title = 'محصول39';
-pr39Cat = 'دسته بندی دوم';
-pr39Src = 'images/backpack.jpg';;
-pr39Price = 390000;
-let pr39 = new Product(pr39Src, pr39Title, pr39Cat, pr39Price);
-
-pr40Title = 'محصول40';
-pr40Cat = 'دسته بندی دوم';
-pr40Src = 'images/backpack.jpg';
-pr40Price = 400000;
-let pr40 = new Product(pr40Src, pr40Title, pr40Cat, pr40Price);
 
 /**
- * Creating an array of created products
+ * Get products from server given the proper URL
+ * @param {} URL 
  */
-let products = [
-    pr1,
-    pr2,
-    pr3,
-    pr4,
-    pr5,
-    pr6,
-    pr7,
-    pr8,
-    pr9,
-    pr10,
-    pr11,
-    pr12,
-    pr13,
-    pr14,
-    pr15,
-    pr16,
-    pr17,
-    pr18,
-    pr19,
-    pr20,
-    pr21,
-    pr22,
-    pr23,
-    pr24,
-    pr25,
-    pr26,
-    pr27,
-    pr28,
-    pr29,
-    pr30,
-    pr31,
-    pr32,
-    pr33,
-    pr34,
-    pr35,
-    pr36,
-    pr37,
-    pr38,
-    pr39,
-    pr40
-];
+function getProducts(URL) {
+    fetch(URL)
+        .then(res => res.json()) // the .json() method parses the JSON response into a JS object literal
+        .then(function (data) {
+            let retrievedProducts = [];
+            for (var k in data) {
+                let current = data[k];
+                let newProduct = new Product(current.p_id, current.picture, current.name, current.category, current.price, current.available, current.sold);
+                retrievedProducts.push(newProduct);
+            }
+            console.log(retrievedProducts);
+            new Pagination(retrievedProducts, productsPerPage, 1);
+            document.getElementById("min-price-input").placeholder = Math.min.apply(Math, retrievedProducts.map(function (o) { return o.price; })).toString();
+            document.getElementById("max-price-input").placeholder = Math.max.apply(Math, retrievedProducts.map(function (o) { return o.price; })).toString();
+        });
+}
+
+/**
+ * Get all available categories from server
+ */
+function getCategories() {
+    fetch('http://127.0.0.1:5002/category/category_list/')
+        .then(res => res.json()) // the .json() method parses the JSON response into a JS object literal
+        .then(function (data) {
+            let retrievedCategories = [];
+            for (var k in data) {
+                let current = data[k];
+                let newCategory = new Category(current.name);
+                retrievedCategories.push(newCategory);
+            }
+            console.log(retrievedCategories);
+            viewCategories(retrievedCategories);
+        });
+}
+
+
+/**
+ * View all categories in the category filter box
+ * @param {*} categoryList 
+ */
+function viewCategories(categoryList) {
+    var catForm = document.getElementById("category-form");
+    catForm.innerHTML = "";
+
+    if (categoryList.length == 0) {
+        catForm.innerHTML += '<p id=\"empty-list-text\">دسته بندی برای نمایش وجود ندارد.</p>';
+    }
+    else {
+        for (var i = 0; i < categoryList.length; i++) {
+            let categoryName = categoryList[i].catName;
+            catForm.innerHTML += '<div class=\"checkbox-wrapper\"></div><input class=\"filter-checkbox\" type=\"checkbox\" id=\"filter-' +
+                categoryName + '\" value=\"' + categoryName + '"><label for=\"filter-' +
+                categoryName + '\"> ' +
+                categoryName + '</label><br>';
+        }
+    }
+}
+
+/**
+ * Get all category checkboxes with a checked status
+ * @returns 
+ */
+function getCheckedCategories(){
+    let availableategories = document.getElementsByClassName('filter-checkbox');
+    let checkedCategories = [];
+    for (let j = 0; j < availableategories.length; ++j) {
+        if (availableategories[j].checked == true) {
+            checkedCategories.push(availableategories[j].value);
+        }
+    }
+    return checkedCategories;
+}
+
+
+/**
+ * Handler for search button - get all products according to page state
+ * @param {} e 
+ */
+function searchText(e) {
+    e.preventDefault();
+    let pageStatURL = createGetProductsURL(productViewStat());
+    console.log("finished URL: " + pageStatURL);
+    getProducts(pageStatURL);
+}
+
+/**
+ * Handler for sort buttons - get all products according to page state
+ * @param {} e 
+ */
+function changeSort(e) {
+    e.preventDefault();
+    let currentSort = document.getElementsByClassName("sort-option blue-button")[0];
+    console.log(currentSort);
+    if (this.id == currentSort.id) {
+        console.log("same sort")
+    }
+    else {
+        currentSort.classList.remove('blue-button');
+        currentSort.classList.remove('do-hover');
+        currentSort.classList.add('white-button');
+        this.classList.remove('white-button');
+        this.classList.add('blue-button');
+        this.classList.add('do-hover');
+    }
+    let pageStatURL = createGetProductsURL(productViewStat());
+    console.log("finished URL: " + pageStatURL);
+    getProducts(pageStatURL);
+}
+
+/**
+ * Set handlers for all sort buttons
+ */
+function setSortOptionsEventListener() {
+    let sortOptions = document.getElementsByClassName("sort-option");
+    console.log(sortOptions);
+    for (let index = 0; index < sortOptions.length; ++index) {
+        sortOptions[index].addEventListener('click', changeSort)
+    }
+}
+
+/**
+ * Handler for category checkboxes - get all products according to page state
+ * @param {*} e 
+ */
+function filterByCategory(e){
+    e.preventDefault();
+    console.log("CHANGE DETECTED");
+    let pageStatURL = createGetProductsURL(productViewStat());
+    getProducts(pageStatURL);
+}
+
+/**
+ * Set handlers for category filter checkboxes
+ */
+ function setCategoryCheckboxesEventListener() {
+    let categoryForm = document.getElementById('category-form');
+    categoryForm.addEventListener('change', filterByCategory);
+}
+
+/**
+ * Determine the proper parameters that need to be in the URL to get products according to the page's state
+ * @returns
+ */
+function productViewStat(){
+    let searchInput = document.getElementById("product-input").value;
+    if (searchInput == "") {
+        searchInput = undefined;
+    }
+    console.log("searched Text = " + searchInput)
+    let sortMode = document.getElementsByClassName("sort-option blue-button")[0];
+    let sortModeText = sortMode.innerHTML;
+    if (sortMode.id == 'sort-by-max-sale-button') {
+        sortModeText = 'sold'
+    }
+    else if (sortMode.id == "sort-by-price-desc") {
+        sortModeText = 'price'
+    }
+    else if (sortMode.id == "sort-by-price-asc") {
+        sortModeText = 'price'
+    }
+    else if (sortMode.id == "sort-by-date") {
+        sortModeText = 'date'
+    }
+    console.log("sort Mode = " + sortModeText);
+    let orderview = undefined;
+    if (sortMode.id == "sort-by-price-desc") {
+        orderview = 'desc';
+    }
+    else if (sortMode.id == "sort-by-price-asc") {
+        orderview = 'asc';
+    }
+    console.log("orderview Mode = " + orderview)
+    let startPrice = document.getElementById("min-price-input").value;
+    if (startPrice == "") {
+        startPrice = undefined;
+    }
+    else if (startPrice === parseInt(startPrice, 10)){
+        startPrice = parseInt(data, 10);
+    }
+    let stopPrice = document.getElementById("max-price-input").value;
+    if (stopPrice == "") {
+        stopPrice = undefined;
+    }
+    else if (stopPrice === parseInt(stopPrice, 10)){
+        stopPrice = parseInt(data, 10);
+    }
+    console.log("range = " + startPrice + ",  " + stopPrice);
+    let selectedCategories = getCheckedCategories();
+    if (selectedCategories.length == 0) {
+        selectedCategories = undefined
+    }
+    console.log("selected categories: ", selectedCategories);
+    return {orderBy: sortModeText, order: orderview, category: selectedCategories, searchText: searchInput, min_price: startPrice, max_price: stopPrice}
+}
+
+/**
+ * Handler for price submit button - get all products according to page state
+ * @param {} e 
+ */
+function priceRangeHandler(e) {
+    e.preventDefault();
+    let pageStatURL = createGetProductsURL(productViewStat());
+    console.log("finished URL: " + pageStatURL);
+    getProducts(pageStatURL);
+}
 
 /**
  * Number of products per page
  */
 let productsPerPage = 15;
 
-/**
- * Creating pagination
- */
-new Pagination(products, productsPerPage, 1)
+getProducts(createGetProductsURL({ orderBy: 'price', order: 'asc'}));
+getCategories();
+setSortOptionsEventListener();
+setCategoryCheckboxesEventListener();
+
+let productSubmitButton = document.getElementById("product-submit");
+productSubmitButton.addEventListener('click', searchText);
+
+let priceRangeSubmitButton = document.getElementById("price-filter-submit");
+priceRangeSubmitButton.addEventListener('click', priceRangeHandler);
