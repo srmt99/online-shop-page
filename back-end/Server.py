@@ -69,9 +69,10 @@ def protected():
 @jwt_required
 def get_user_info(username):
     # print(username)
+    current_user = get_jwt_identity()
     response = User.read_profile(username)
     response = jsonify(response)
-    return response
+    return jsonify(logged_in_as=current_user), response
 
 @app.route("/protected/user/receipts/<string:username>")
 @cross_origin()

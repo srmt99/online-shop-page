@@ -2,11 +2,12 @@
 async function fetch_user_info(username){
 
   try {
-    // console.log(localStorage.getItem('jwt'))
-    response = await fetch('http://127.0.0.1:5002/protected/user/profile/'+username, {
+      response = await fetch('http://127.0.0.1:5002/protected/user/profile/'+username, {
       method: "GET",
       headers: {'Authorization': 'Bearer ' + localStorage.getItem('jwt')}
     });
+    console.log("RES:")
+    console.log(response)
     return await response.json();
   } catch (error) {
     console.error('There has been a problem with fetching user info:', error);
