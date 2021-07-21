@@ -91,7 +91,7 @@ GO
 
 -- INSERTS
 -- inserting the one and only admin
-INSERT INTO Admin VALUES ('jesus','bebackin3');
+INSERT INTO Admin VALUES ('jesus@christ','bebackin3');
 
 -- inserting the uncategorized category
 INSERT INTO Categories VALUES ('uncategorized');

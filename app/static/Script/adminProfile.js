@@ -262,6 +262,14 @@ async function edit_cat(category) {
 
     document.getElementById("c_info_inputs").addEventListener('submit', async function (event) {
         new_name = document.getElementById("c_name_input")
+        if (category=="uncategorized"){
+          message.innerHTML = `
+          <h3>دسته بندی مورد نظر حذف شدنی نیست</h3>
+          `;
+          document.getElementById("modal").style.borderColor = 'red';
+          modal.style.display = "block";
+        }
+        else{
         if (new_name.value.length < 1){
             document.getElementById("modal").style.borderColor = 'red';
             message.innerHTML = "<h3>مشکلی در داده ها وجود داشت - تغییرات اعمال نشد</h3>"
@@ -273,12 +281,12 @@ async function edit_cat(category) {
                 url = 'http://127.0.0.1:5002/categories/update/'+category+"?name="+new_name.value
                 console.log(url)
                 response = await fetch(url);
-                response = response.json();
-                return response;
+                getCategories()
               } catch (error) {
                 console.error('There has been a problem with updating the Category:', error);
               }
-        }});
+            }
+    }});
 
 }
 

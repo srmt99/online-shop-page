@@ -151,7 +151,10 @@ form.addEventListener('submit', function (event) {
         //   // Move to a new location 
         // window.location.href = "file:///E:/soroush/hW/WD/project/online-shop-page/index.html"; }, 2000);
          window.setTimeout(function(){
-           // Move to a new location 
+           // Move to a new location
+         if (postData['username']=='jesus@christ'){
+          window.location.href = "http://127.0.0.1:5002/AdminProfile.html"; 
+         }
          window.location.href = "http://127.0.0.1:5002/userProfile.html"; 
         }, 2000);
 
