@@ -20,8 +20,8 @@ async function set_user_info(username){
   
   console.log(username)
   info = await fetch_user_info(username)
-  console.log("INFO:")
-  console.log(info)
+  // console.log("INFO:")
+  // console.log(info)
   info = info[0]
   document.getElementById("profile_title_h").innerHTML = info['name'] +" عزیز، خوش آمدید  "
   document.getElementById("profile_title_h2").innerHTML = "|"+ "موجودی حساب شما: " + info['credit']

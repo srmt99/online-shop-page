@@ -1,3 +1,22 @@
+
+
+
+// check if user is logged in
+// async function check_login(){
+//     try {
+//         response = await fetch('http://127.0.0.1:5002//protected/check_login/', {
+//         method: "GET",
+//         headers: {'Authorization': 'Bearer ' + localStorage.getItem('jwt')}
+//       });
+//       return await response.json();
+//     } catch (error) { console.error('There has been a problem with fetching user info:', error);}
+// }
+
+// async function apply_login(){
+//     let user = check_login()
+//     console.log(user)
+// }
+
 /**
  * Class for defining product attributes
  */
@@ -96,7 +115,7 @@ class Pagination {
                     cat
                     + '</p></div><div class=\"bottom-product-wrapper\"><p class=\"product-price\">' +
                     cost
-                    + '</p><button class=\"blue-button do-hover\" ' + ' id=\"' + 'product-btn-' + btnID + '\"' + ' onclick=\"buy()\">خرید محصول</button></div></div>'
+                    + '</p><button class=\"blue-button do-hover\" ' + ' onclick=\"buy('+btnID+')\">خرید محصول</button></div></div>'
             }
         }
 
@@ -157,8 +176,8 @@ class Pagination {
         var selectSection = document.getElementById('select-page-limit');
         let selectionOptions = selectSection.options;
         let numPerPage = selectionOptions[selectionOptions.selectedIndex].value;
-        console.log("number");
-        console.log(numPerPage);
+        // console.log("number");
+        // console.log(numPerPage);
         for (var opt, j = 0; opt = selectionOptions[j]; j++) {
             if (opt.value == numPerPage) {
                 selectSection.selectedIndex = j;
@@ -224,15 +243,27 @@ window.onclick = function (event) {
     }
 }
 
-function buy() {
-    
-    var btn = document.getElementById("12");
-    var price = 1000
-    console.log(btn.id)
+// fetching a product from database
+async function fetch_product(p_id){
+    try {
+      response = await fetch('http://127.0.0.1:5002/product/'+p_id+'/');
+      response = response.json()
+      return await response;
+    } catch (error) {
+      console.error('There has been a problem with fetching Products:', error);
+    }
+  }
+
+async function buy(p_id) {
+    prod = await fetch_product(p_id)
+    prod = prod[0]
+    var modal = document.getElementById("modalWindow");
+    var price = prod['price']
+    var credit = 40000
     message = document.getElementById('modal-message')
     message.innerHTML = `
     <p style="padding-bottom:5%;">لطفا تعداد مورد نظر از کالا را انتخاب فرمایید</p>
-    <form action="">
+    <form id="buy_info">
                 <label style="margin-right: 5%;" for="points">تعداد</label>
                 <input class="buy_num" type="number" id="points" name="points" step="1" value="1">
                 <label id="total_price" for="points">قیمت نهایی ${price} تومان</label>
@@ -245,6 +276,23 @@ function buy() {
         var tPrice = document.getElementById('total_price')
         amount = document.getElementById('points').value
         tPrice.innerHTML = " قیمت نهایی " + amount * price + " تومان "
+    });
+    document.getElementById("buy_info").addEventListener('submit', function (event) {
+        amount = document.getElementById('points').value
+        if ((amount * price)>credit){
+            message.innerHTML = `
+            <h3>اعتبار شما کافی نیست</h3>
+            `
+            document.getElementById("modal").style.borderColor = 'red';
+        }
+        else {
+            message.innerHTML = `
+            <h3>خرید با موفقیت انجام شد</h3>
+            `
+            document.getElementById("modal").style.borderColor = 'green';
+            credit -= (amount * price);
+        }
+        event.preventDefault();
     });
     // document.getElementById("modal").style.borderColor = '#30f04d';
 }
@@ -315,7 +363,7 @@ function getProducts(URL) {
                 let newProduct = new Product(current.p_id, current.picture, current.name, current.category, current.price, current.available, current.sold);
                 retrievedProducts.push(newProduct);
             }
-            console.log(retrievedProducts);
+            // console.log(retrievedProducts);
             new Pagination(retrievedProducts, productsPerPage, 1);
             document.getElementById("min-price-input").placeholder = Math.min.apply(Math, retrievedProducts.map(function (o) { return o.price; })).toString();
             document.getElementById("max-price-input").placeholder = Math.max.apply(Math, retrievedProducts.map(function (o) { return o.price; })).toString();
@@ -335,7 +383,7 @@ function getCategories() {
                 let newCategory = new Category(current.name);
                 retrievedCategories.push(newCategory);
             }
-            console.log(retrievedCategories);
+            // console.log(retrievedCategories);
             viewCategories(retrievedCategories);
         });
 }
@@ -397,7 +445,7 @@ function searchText(e) {
 function changeSort(e) {
     e.preventDefault();
     let currentSort = document.getElementsByClassName("sort-option blue-button")[0];
-    console.log(currentSort);
+    // console.log(currentSort);
     if (this.id == currentSort.id) {
         console.log("same sort")
     }

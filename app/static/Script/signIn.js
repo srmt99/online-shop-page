@@ -148,10 +148,10 @@ form.addEventListener('submit', function (event) {
                     
 
         // window.setTimeout(function(){
-        //   // Move to a new location or you can do something else
+        //   // Move to a new location 
         // window.location.href = "file:///E:/soroush/hW/WD/project/online-shop-page/index.html"; }, 2000);
          window.setTimeout(function(){
-           // Move to a new location or you can do something else
+           // Move to a new location 
          window.location.href = "http://127.0.0.1:5002/userProfile.html"; 
         }, 2000);
 
@@ -177,7 +177,7 @@ async function fetch_user_info(username){
     console.error('There has been a problem with fetching user info:', error);
   }
   
-
+}
 function showError(entity, entityERROR, minl=0, maxl=255, is_password=false) {
     if(entity.validity.valueMissing) {
       // If the field is empty,

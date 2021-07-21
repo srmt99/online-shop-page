@@ -4,7 +4,7 @@ from flask_jwt_extended import create_access_token
 from flask_jwt_extended import get_jwt_identity
 from flask_jwt_extended import jwt_required
 from flask_jwt_extended import JWTManager
-from flask_jwt_extended import verify_jwt_in_request_optional
+# from flask_jwt_extended import verify_jwt_in_request_optional
 from flask_cors import CORS, cross_origin
 from backEnd import User, Receipt, Product, Category
 import json
@@ -65,7 +65,7 @@ def login():
 @jwt_required
 def get_identity_if_logedin():
     try:
-        verify_jwt_in_request_optional()
+        # verify_jwt_in_request_optional()
         return get_jwt_identity()
     except Exception:
         pass
