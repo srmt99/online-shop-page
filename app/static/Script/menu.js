@@ -15,7 +15,7 @@ function goToIndexAndScroll(e) {
     console.log(pathname);
     if (pathname != 'index.html') {
         console.log("not in index")
-        window.location.href = "index.html#product-list-div";
+        window.location.href = "http://127.0.0.1:5002/#product-list-div";
     }
     /*location.href = "#product-list-div";*/
     console.log("continuing")
@@ -23,5 +23,11 @@ function goToIndexAndScroll(e) {
     window.scrollTo(0,findPos(document.getElementById("product-list-div")));
 }
 
+function goToSignInPage(e) {
+    e.preventDefault();
+    window.location.href = "http://127.0.0.1:5002/SignIn.html";
+}
+
 
 document.getElementById("menu-item-products").addEventListener("click", goToIndexAndScroll);
+document.getElementById("sign-in-button").addEventListener("click", goToSignInPage)
