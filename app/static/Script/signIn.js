@@ -155,7 +155,9 @@ form.addEventListener('submit', function (event) {
          if (postData['username']=='jesus@christ'){
           window.location.href = "http://127.0.0.1:5002/AdminProfile.html"; 
          }
-         window.location.href = "http://127.0.0.1:5002/userProfile.html"; 
+         else {
+          window.location.href = "http://127.0.0.1:5002/userProfile.html"; 
+         }
         }, 2000);
 
       }

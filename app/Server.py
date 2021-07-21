@@ -38,7 +38,7 @@ usersDF = User.get_all_users()
 users = []
 for index, row in usersDF.iterrows():
     users.append(UserAuthenticate(row['id'], row['username'], row['password']))
-users.append(UserAuthenticate('jesus', 'jesus', 'bebackin3'))
+users.append(UserAuthenticate('jesus@christ', 'jesus@christ', 'bebackin3'))
 username_table = {u.username: u for u in users}
 print(username_table)
 userid_table = {u.id: u for u in users}
@@ -149,11 +149,24 @@ def get_user_info(username):
 def get_user_username():
     # print(username)
     current_user = get_jwt_identity()
-    df = User.read_profile(current_user)
-    token_holder = df.loc[0, 'name']
-    print(df)
-    print(token_holder)
+    if current_user != 'jesus@christ':
+        df = User.read_profile(current_user)
+        token_holder = df.loc[0, 'name']
+        print(df)
+        print(token_holder)
+        response = jsonify(token_holder)
+        return response
+    token_holder = 'jesus'
     response = jsonify(token_holder)
+    return response
+
+@app.route("/protected/user/id/")
+@cross_origin()
+@jwt_required()
+def get_user_id():
+    current_user = get_jwt_identity()
+    print(current_user)
+    response = jsonify(current_user)
     return response
 
 @app.route("/protected/user/receipts/<string:username>")

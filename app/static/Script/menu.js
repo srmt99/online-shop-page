@@ -43,7 +43,18 @@ function logoutJWT(e) {
 
 function goToProfilePage(e) {
     e.preventDefault();
-    window.location.href = "http://127.0.0.1:5002/userProfile.html";
+    fetch('http://127.0.0.1:5002/protected/user/id/', {
+            method: "GET",
+            headers: { 'Authorization': 'Bearer ' + localStorage.getItem('jwt') }
+        }).then(res => res.json())
+            .then(function (data) {
+                if (data == 'jesus@christ') {
+                    window.location.href = "http://127.0.0.1:5002/AdminProfile.html";
+                }
+                else {
+                    window.location.href = "http://127.0.0.1:5002/userProfile.html";
+                }
+            });
 }
 
 function addListeners() {
