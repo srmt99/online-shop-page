@@ -67,12 +67,22 @@ Styling dropdown menu main div
     background-color: #cccccc;
     border-bottom-left-radius: 15px;
     border-bottom-right-radius: 15px;
-    display: flex;
+    display: none;
     flex-direction: column;
     width: 100%;
     top: 50%;
     padding-top: 25px;
     padding-bottom: 10px;
+    position:absolute !important;
+    z-index:1 !important;
+}
+
+.show {
+    display: flex;
+}
+
+#menu-profile-btn {
+    z-index:1 !important;
 }
 
 /*
@@ -84,6 +94,7 @@ Styling each submenu button
     color: black;
     padding-top: 5px;
     padding-bottom: 5px;
+    cursor: pointer;
 }
 
 .nav-submenu-item:hover {
