@@ -143,6 +143,19 @@ def get_user_info(username):
     response = jsonify(df_to_dict(response))
     return response
 
+@app.route("/protected/user/get_username/")
+@cross_origin()
+@jwt_required()
+def get_user_username():
+    # print(username)
+    current_user = get_jwt_identity()
+    df = User.read_profile(current_user)
+    token_holder = df.loc[0, 'name']
+    print(df)
+    print(token_holder)
+    response = jsonify(token_holder)
+    return response
+
 @app.route("/protected/user/receipts/<string:username>")
 @cross_origin()
 @jwt_required()
