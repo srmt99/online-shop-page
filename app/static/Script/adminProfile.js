@@ -89,7 +89,7 @@ async function fetch_receipts(r_code='null'){
 async function getProducts() {
     data = await fetch_products()
     data.forEach(current => {
-        document.getElementById("product_list").innerHTML += '<div class=\"product-box\"><img src=images\\' +
+        document.getElementById("product_list").innerHTML += '<div class=\"product-box\"><img src=../images\\' +
         current.picture
         + ' alt=\"\" class=\"product-img\"><div class=\"product-info-wrapper\"><p class=\"product-title\">' +
         current.name

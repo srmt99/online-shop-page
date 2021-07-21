@@ -1,0 +1,87 @@
+<!--
+    In this file, the shared components in all pages (menu, content section, footer) are defined.
+    Pages using this file vary only in the container div section.
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Web Project</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link href='http://www.fontonline.ir/css/BYekan.css' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="../static/style/reset.css">
+    <link rel="stylesheet" href="../static/style/Reg&Login.css">
+</head>
+
+<body>
+    <!--Main section - fix width - centered-->
+    <section id="main-section">
+        <header>
+            <!--Navigation bar-->
+            <nav class="navigation-bar">
+                <div id="menu-item-div" class="menu-div">
+                    <h2 id="menu-logo">فروشگاه</h2>
+                    <a href="index.html" class="menu-item">صفحه اول</a>
+                    <a href="#" class="menu-item">تماس با ما</a>
+                    <a href="#" class="menu-item">پشتیبانی</a>
+                    <a href="#" class="menu-item" id="menu-item-products">محصولات</a>
+                </div>
+                <div id="menu-button-div" class="menu-div">
+                    <button class="white-button-yellow-border">ورود / ثبت نام</button>
+                    <!--
+                    <button class="white-button-yellow-border">هادی </button>
+                    <div class="hidden-div">
+                        <div id="menu-dropdown" class="dropdown-content">
+                            <a href="#" class="nav-submenu-item">پروفایل</a>
+                            <a href="#" class="nav-submenu-item">خروج از حساب</a>
+                        </div>
+                    </div>
+                    -->
+                </div>
+            </nav>
+        </header>
+
+        <!--Only change this div for each page!!!!!!-->
+        <div class="container">
+            <form action="" id="form_input" novalidate>
+                <h3 id="login_title">فروشگاه - ورود</h3>
+                <div class="input_">
+                    <label for="email" class="input_label" id="email_input_label">ایمیل</label>
+                    <div class="input_message">
+                        <input type="email" class="input_box" id="email_input" maxLength="255" name="email" placeholder="ایمیل خود را وارد کنید..." title="یک ایمیل معتبر وارد نمایید" required>
+                        <span class="error" aria-live="polite"></span>
+                    </div>
+                </div>
+                <div class="input_">
+                    <label for="password" class="input_label" id="pass_input_label">رمز عبور</label>
+                    <div class="input_message">
+                        <input type="password" class="input_box" id="pass_input" name="password" placeholder="رمز عبور خود را وارد کنید..." required>
+                        <span class="error" aria-live="polite"></span>
+                    </div>
+                </div>
+                <input type="submit" id="submit_input" class="yellow-button" value="ورود">
+                <a id="signup_link" href="SignUp.html">اگر حسابی ثبت نکرده اید در اینجا ثبت نام کنید</a> 
+            </form>
+        </div>
+
+        <!--Footer-->
+        <footer>
+            <p>تمامی حقوق برای توسعه دهندگان محفوظ است. سروش مرتضوی مقدم - مانا عطارد</p>
+        </footer>
+    </section>
+    <!-- The Modal -->
+    <div id="modalWindow" class="modal">
+        <!-- Modal content -->
+        <div id="modal" class="modal-content">
+            <span class="modalClose">&times;</span>
+            <div id="modal-message"></div>
+        </div>
+    
+    </div>
+
+    <script src="../static/Script/SignIn.js"></script>
+    <script src="../static/Script/menu.js"></script>
+</body>
+
+</html>

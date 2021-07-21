@@ -14,12 +14,12 @@ from collections import defaultdict
 app = Flask(__name__)
 CORS(app)
 api = Api(app)
-app = Flask(__name__, template_folder="../")
-
+app = Flask(__name__)
 
 app.debug = True
 app.config["JWT_SECRET_KEY"] = "super-secret"
 jwt = JWTManager(app)
+
 
 # Defining class for Users to be authenticated with jwt
 class UserAuthenticate(object):
@@ -30,6 +30,7 @@ class UserAuthenticate(object):
 
     def __str__(self):
         return "User(id='%s')" % self.id
+
 
 # Reading Users from DB and adding their credentials to dicts
 usersDF = User.get_all_users()
@@ -58,12 +59,12 @@ def login():
 
 
 # Protected resource with jwt example
-@app.route("/protected/", methods=["GET"])
-@cross_origin()
-@jwt_required
-def protected():
-    current_user = get_jwt_identity()
-    return jsonify(logged_in_as=current_user), 200
+#@app.route("/protected/", methods=["GET"])
+#@cross_origin()
+#@jwt_required
+#def protected():
+#    current_user = get_jwt_identity()
+#    return jsonify(logged_in_as=current_user), 200
 
 
 def df_to_dict(df):
@@ -92,6 +93,7 @@ def get_all_products():
     response = jsonify(df)
     return response
 
+
 @app.route("/product/product_list/")
 @cross_origin()
 def get_products():
@@ -107,6 +109,7 @@ def get_products():
     response = jsonify(df_to_dict(df))
     return response
 
+
 @app.route("/category/category_list/")
 @cross_origin()
 def get_all_categories():
@@ -116,7 +119,7 @@ def get_all_categories():
 
 @app.route("/protected/user/profile/<string:username>")
 @cross_origin()
-@jwt_required
+@jwt_required()
 def get_user_info(username):
     # print(username)
     current_user = get_jwt_identity()
@@ -126,16 +129,15 @@ def get_user_info(username):
 
 @app.route("/protected/user/receipts/<string:username>")
 @cross_origin()
-@jwt_required
+@jwt_required()
 def get_user_receipts(username):
     # print(username)
     response = jsonify(User.get_user_receipts(username))
     return response
 
-
 @app.route("/protected/user/profile/<string:username>/inc_crd")
 @cross_origin()
-@jwt_required
+@jwt_required()
 def increase_credit(username):
     User.update(username, new_credit=10000)
     return "Increased"
@@ -143,7 +145,7 @@ def increase_credit(username):
 
 @app.route("/protected/user/profile/<string:username>/update_prof")
 @cross_origin()
-@jwt_required
+@jwt_required()
 def update_profile(username):
     name = request.args.get('name')
     lastname = request.args.get('lastname')
@@ -195,6 +197,12 @@ def get_receipts():
     response = jsonify(Receipt._get_all())
     return response
 
+@app.route("/product/all_product_list/")
+@cross_origin()
+def get_products_date():
+    df = Product.get_all_products(orderBy='date')
+    response = jsonify(df)
+    return response
 
 @app.route("/product/<string:p_id>/")
 @cross_origin()

@@ -4,7 +4,7 @@
 class Product {
     constructor(id, imgSource, title, category, price, available, sold) {
         this.id = id;
-        this.imgSource = 'images/' + imgSource;
+        this.imgSource = '../static/images/' + imgSource;
         this.title = title;
         this.category = category;
         this.price = price;

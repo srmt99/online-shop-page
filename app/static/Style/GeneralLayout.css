@@ -1,0 +1,228 @@
+@import "NavigationBar.css";
+/***
+This file defines the general style of the site
+***/
+
+/*
+Default styles for all components
+*/
+
+* {
+    font-size: 16px;
+    font-family: BYekan, 'BYekan', tahoma;
+    box-sizing: border-box;
+    direction: rtl;
+}
+
+/*
+Making all pages cover the entire height of the screen
+*/
+
+html {
+    height: 100%;
+    scroll-behavior: smooth;
+}
+
+/*
+Styling the main section of the page - contains all components
+max-width and centered
+*/
+
+#main-section {
+    max-width: 1280px;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+}
+
+.menu-item {
+    margin-left: 25px;
+    margin-right: 25px;
+    text-decoration: none;
+    color: #666666;
+}
+
+.menu-item:hover {
+    color: #00cccc;
+}
+
+/*
+The main content of each page is shown in the container component -> takes all the space from header to footer
+*/
+
+.container {
+    background-color: #ebebeb;
+    flex: 1 0 auto;
+}
+
+/*
+Styling the body
+*/
+
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #e6e6e6;
+    height: 100%;
+}
+
+/*
+Styling footer -> sticky
+*/
+
+footer {
+    flex-shrink: 0;
+    background-color: black;
+    color: #cccccc;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 60px;
+    width: 100%;
+}
+
+/* buttons used in the project  */
+
+.blue-button {
+    background-color: #009cff;
+    color: white;
+    border-radius: 24px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-right: 10px;
+    padding-left: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
+    box-shadow: 0 5px 10px 0 #b0cee0;
+}
+
+.blue-button.do-hover:hover {
+    color: #e8e9ed;
+}
+
+.yellow-button {
+    margin-top: 30px;
+    background-color: #ffcc00;
+    color: black;
+    border-radius: 25px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-right: 50px;
+    padding-left: 50px;
+}
+
+.yellow-button:hover {
+    color: white;
+}
+
+.white-button {
+    background-color: white;
+    color: black;
+    border-radius: 24px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-right: 10px;
+    padding-left: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.white-button:hover {
+    color: #b6b6b7;
+}
+
+.white-button-yellow-border {
+    /*
+    margin-left: 25px;
+    margin-right: 25px;
+    */
+    width: 100%;
+    background-color: white;
+    color: black;
+    border: 2px solid #ffcc00;
+    border-radius: 25px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-right: 20px;
+    padding-left: 20px;
+    z-index: 1;
+}
+
+.white-button-yellow-border:hover {
+    background-color: #ffcc00;
+}
+
+/* products */
+
+.product-list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 15px;
+}
+
+/***
+Styling product box
+***/
+
+.product-box {
+    width: 100%;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 340px;
+    border-radius: 5px;
+}
+
+.product-img {
+    margin: 15px;
+    width: 100px;
+    height: 40%;
+    text-align: center;
+}
+
+.product-title {
+    font-size: large;
+}
+
+.product-category {
+    font-size:smaller;
+    color: gray;
+}
+
+.product-info-wrapper {
+    width: 100%;
+    height: 30%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.bottom-product-wrapper {
+    width: 100%;
+    height: 20%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-left: 15px;
+    padding-right: 15px;
+    border-top:  solid 1px;
+    border-color: #e6e6e6;
+}
