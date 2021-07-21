@@ -4,6 +4,7 @@ from flask_jwt_extended import create_access_token
 from flask_jwt_extended import get_jwt_identity
 from flask_jwt_extended import jwt_required
 from flask_jwt_extended import JWTManager
+from flask_jwt_extended import verify_jwt_in_request_optional
 from flask_cors import CORS, cross_origin
 from backEnd import User, Receipt, Product, Category
 import json
@@ -57,15 +58,15 @@ def login():
     # print(jsonify(access_token=access_token))
     return jsonify(access_token=access_token)
 
-
-# Protected resource with jwt example
-#@app.route("/protected/", methods=["GET"])
-#@cross_origin()
-#@jwt_required
-#def protected():
-#    current_user = get_jwt_identity()
-#    return jsonify(logged_in_as=current_user), 200
-
+@app.route("/protected/check_login/", methods=["GET"])
+@cross_origin()
+@jwt_required
+def get_identity_if_logedin():
+    try:
+        verify_jwt_in_request_optional()
+        return get_jwt_identity()
+    except Exception:
+        pass
 
 def df_to_dict(df):
     dict_df = df.to_dict()
@@ -120,7 +121,6 @@ def get_all_categories():
 @jwt_required()
 def get_user_info(username):
     # print(username)
-    current_user = get_jwt_identity()
     response = User.read_profile(username)
     response = jsonify(df_to_dict(response))
     return response

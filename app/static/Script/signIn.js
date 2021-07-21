@@ -135,6 +135,18 @@ form.addEventListener('submit', function (event) {
         document.getElementById("modal").style.borderColor = '#30f04d';
         modal.style.display = "block";
 
+        // info = await fetch_user_info(username) = 
+        // document.getElementById("menu-button-div").innerHTML = `
+        //     <button class="white-button-yellow-border">${}</button>
+        //     <div class="hidden-div">
+        //         <div id="menu-dropdown" class="dropdown-content">
+        //             <a href="#" class="nav-submenu-item">پروفایل</a>
+        //             <a href="#" class="nav-submenu-item">خروج از حساب</a>
+        //         </div>
+        //     </div>
+        `
+                    
+
         // window.setTimeout(function(){
         //   // Move to a new location or you can do something else
         // window.location.href = "file:///E:/soroush/hW/WD/project/online-shop-page/index.html"; }, 2000);
@@ -145,6 +157,22 @@ form.addEventListener('submit', function (event) {
     event.preventDefault();
   }
 });
+
+// fetching user info from database
+async function fetch_user_info(username){
+
+  try {
+      response = await fetch('http://127.0.0.1:5002/protected/user/profile/'+username, {
+      method: "GET",
+      headers: {'Authorization': 'Bearer ' + localStorage.getItem('jwt')}
+    });
+    console.log("RES:")
+    console.log(response)
+    return await response.json();
+  } catch (error) {
+    console.error('There has been a problem with fetching user info:', error);
+  }
+  
 
 function showError(entity, entityERROR, minl=0, maxl=255, is_password=false) {
     if(entity.validity.valueMissing) {
