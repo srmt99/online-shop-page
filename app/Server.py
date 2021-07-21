@@ -87,11 +87,7 @@ def go_to_index():
     return render_template('index.html')
 
 @app.route("/AdminProfile.html")
-@jwt_required()
 def go_to_adminProfile():
-    current_user = get_jwt_identity()
-    if current_user != 'jesus':
-        return render_template('SignIn.html')
     return render_template('AdminProfile.html')
 
 @app.route("/SignIn.html")
@@ -103,11 +99,7 @@ def go_to_SignUp():
     return render_template('SignUp.html')
 
 @app.route("/userProfile.html")
-@jwt_required()
 def go_to_userProfile():
-    current_user = get_jwt_identity()
-    if current_user == 'jesus':
-        return render_template('SignIn.html')
     return render_template('userProfile.html')
 
 

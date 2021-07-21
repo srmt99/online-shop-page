@@ -135,9 +135,10 @@ form.addEventListener('submit', function (event) {
         document.getElementById("modal").style.borderColor = '#30f04d';
         modal.style.display = "block";
 
-        // window.setTimeout(function(){
-        //   // Move to a new location or you can do something else
-        // window.location.href = "file:///E:/soroush/hW/WD/project/online-shop-page/index.html"; }, 2000);
+         window.setTimeout(function(){
+           // Move to a new location or you can do something else
+         window.location.href = "http://127.0.0.1:5002/userProfile.html"; 
+        }, 2000);
 
       }
     });

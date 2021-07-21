@@ -15,7 +15,7 @@ function goToIndexAndScroll(e) {
     console.log(pathname);
     if (pathname != 'index.html') {
         console.log("not in index")
-        window.location.href = "index.html#product-list-div";
+        window.location.href = "http://127.0.0.1:5002/#product-list-div";
     }
     /*location.href = "#product-list-div";*/
     console.log("continuing")
@@ -25,7 +25,7 @@ function goToIndexAndScroll(e) {
 
 function goToSignInPage(e) {
     e.preventDefault();
-    window.location.href = "SignIn.html";
+    window.location.href = "http://127.0.0.1:5002/SignIn.html";
 }
 
 
