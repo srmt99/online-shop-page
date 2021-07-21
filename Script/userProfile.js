@@ -22,7 +22,57 @@ async function set_user_info(username){
   document.getElementById("address_input").placeholder = info['address']
 }
 
-set_user_info("mm") // THIS HAS TO CHANGE FOR EACH LOGGED IN USER
+var username = "user0@gmail.com"
+
+document.getElementById("profile_title_b").addEventListener('click', async function(){
+  try {
+    // console.log("http://127.0.0.1:5002/user/profile/"+username+"/inc_crd")
+    response = await fetch("http://127.0.0.1:5002/user/profile/"+username+"/inc_crd");
+  } catch (error) {
+    console.error('There has been a problem with incrementing user credit:', error);
+  }
+  set_user_info(username)
+});
+
+// fetching receipts from database
+async function fetch_receipts(r_code){
+  try {
+    response = await fetch('http://127.0.0.1:5002/receipts/'+r_code);
+    return await response.json();
+  } catch (error) {
+    console.error('There has been a problem with fetching Receipts:', error);
+  }
+}
+
+// fetching user receipts from database
+async function fetch_user_receipts(username){
+  try {
+    response = await fetch('http://127.0.0.1:5002/user/receipts/'+username);
+    return await response.json();
+  } catch (error) {
+    console.error('There has been a problem with fetching user receipts:', error);
+  }
+}
+
+// adding the receipts to receipt list
+async function set_user_receipts(username){
+  info = await fetch_user_receipts(username)
+  // console.log(info)
+  for (let index = 0; index < info.length; index++) {
+    const element = info[index];
+    r_info =  await fetch_receipts(element['r_code'])
+    r_info = r_info[0]
+    document.getElementById("receipt_section").innerHTML += `
+      <div class="receipt_item" id="receipt_title${index}">
+          <p class="item_1">${element['r_code']}</p>
+          <p class="item_2">${r_info['name']}</p>
+          <p class="item_3">${r_info['price']}</p>
+          <p class="item_4">${r_info['buyer_address']}</p>
+          <p class="item_5">${r_info['status']}</p>
+      </div>
+    `
+  }
+}
 
 function change_tab_rec(){
     document.getElementById('profile_title_h2').style.display = "none"
@@ -166,8 +216,8 @@ window.onclick = function(event) {
     modal.style.display = "none";
   }
 } 
-form.addEventListener('submit', function (event) {
-    
+form.addEventListener('submit', async function (event) {
+
   fname.value = fname.value.trim()
   lname.value = lname.value.trim()
 
@@ -182,11 +232,27 @@ form.addEventListener('submit', function (event) {
     `;
 
     document.getElementById("modal").style.borderColor = 'red';
-    modal.style.display = "block";
+    document.getElementById("modalWindow").style.display = "block";
     // Then we prevent the form from being sent by canceling the event
     event.preventDefault();
   }
   else { // form is valid
+
+    // const data = {
+    //   "name": name,
+    //   "lastname" : lastname,
+    //   "password" : password,
+    //   "address" : address
+    //   }
+    
+    try {
+      url = "http://127.0.0.1:5002/user/profile/"+username+"/update_prof?name="+fname.value+"&lastname="+lname.value+"&password="+pass.value+"&address="+adrr.value
+      response = await fetch(url)
+    } catch (error) {
+      console.error('There has been a problem with sumbiting user info:', error);
+    }
+    // set_user_info(username)
+
     message = document.getElementById('modal-message')
     message.innerHTML = `
     <p>تغییر اطلاعات شما با موفقیت انجام شد</p>
@@ -231,3 +297,6 @@ function resetAll() {
   passError.textContent = '';
   adrrError.textContent = '';
 }
+
+set_user_info(username) // THIS HAS TO CHANGE FOR EACH LOGGED IN USER
+set_user_receipts(username) // THIS HAS TO CHANGE FOR EACH LOGGED IN USER

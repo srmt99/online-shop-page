@@ -17,7 +17,7 @@ def connect_db():
 
 
 def _log(massage):
-    with open("../logs/logs.txt", 'a')as f:
+    with open("logs/logs.txt", 'a', encoding="utf-8")as f:
         f.write(str(datetime.datetime.now()) + " --- " + massage + "\n")
 
 
@@ -36,7 +36,7 @@ def check_categories(cat):
 
 
 class Product:
-    def __init__(self, name, price, available, sold=0, category="uncategorized", picture=None):
+    def __init__(self, name, price, available, sold=0, category="uncategorized", picture="null"):
         self.name = name
         self.category = category
         self.price = price
@@ -49,7 +49,7 @@ class Product:
         conn = connect_db()
         cursor = conn.cursor()
         # check if category does not exist, insert it into database
-        check_categories(category)
+        check_categories(self.category)
         cursor.execute("insert into Products(name, price, available, sold, category, picture) values (?,?,?,?,?,?)",
                        self.name, self.price, self.available, self.sold, self.category, self.picture)
         conn.commit()
@@ -96,12 +96,13 @@ class Product:
         if new_picture:
             picture = new_picture
         else:
-            picture = 'null'
+            picture = pic
         if new_available != None:
             available = new_available
 
+
         count = cursor.execute(
-            f"update Products set name='{name}',price={price}, available={available},category='{category}', picture={picture} WHERE p_id={p_id}").rowcount
+            f"update Products set name='{name}',price={price}, available={available},category='{category}', picture='{picture}' WHERE p_id={p_id}").rowcount
         conn.commit()
         _log(
             f"updated product with p_id={p_id} : name={name}, price={price}, available={available}, category={category}, picture={picture} [{count} rows affected]")
@@ -171,7 +172,12 @@ class Product:
                     f"SELECT * FROM Products WHERE category = '{filterCat}' and name LIKE '%{searchText}%' and price > {min_price} ORDER BY {orderBy} {order}", conn)
         conn.close()
         return sql_query
-
+    
+    @staticmethod
+    def get_product(p_id):
+        conn = connect_db()
+        sql_query = pd.read_sql_query(f"SELECT * FROM Products WHERE p_id={p_id}", conn)
+        return sql_query
 
 class Category:
     def __init__(self, name):
@@ -186,7 +192,7 @@ class Category:
     def update(old_name, new_name):
         conn = connect_db()
         cursor = conn.cursor()
-        count = cursor.execute(f"update Categories set name='{new_name}' WHERE name={old_name}").rowcount
+        count = cursor.execute(f"update Categories set name='{new_name}' WHERE name='{old_name}'").rowcount
         conn.commit()  # update is cascaded on products as well (catrgory foreign key)
         _log(f"updated Category '{old_name}' --> '{new_name}' [{count} rows affected] ")
         conn.close()
@@ -214,9 +220,10 @@ class Category:
 
 
 class Receipt:
-    def __init__(self, name, number_sold, buyer_firstname, buyer_lastname, buyer_address, price, status='Pending'):
+    def __init__(self, name, buyer_username, number_sold, buyer_firstname, buyer_lastname, buyer_address, price, status='Pending'):
         self.r_code = self.generate_r_code()
         self.name = name
+        self.buyer_username = buyer_username
         self.number_sold = number_sold
         self.buyer_firstname = buyer_firstname
         self.buyer_lastname = buyer_lastname
@@ -245,6 +252,7 @@ class Receipt:
                        "buyer_address, price, buy_date, status) values (?,?,?,?,?,?,?,?,?)",
                        self.r_code, str(self.name), str(self.number_sold), str(self.buyer_firstname), str(self.buyer_lastname),
                        str(self.buyer_address), int(self.price), str(self.buy_date), str(self.status))
+        cursor.execute("insert into USer_Receipts (username, r_code) values (?, ?)", self.buyer_username, self.r_code)
         conn.commit()
         sql_query = pd.read_sql_query(
             f"SELECT * FROM Receipts WHERE r_code='{self.r_code}' and name='{self.name}' and number_sold={self.number_sold} and buyer_firstname='{self.buyer_firstname}' and buyer_lastname='{self.buyer_lastname}' and buyer_address='{self.buyer_address}' and price={self.price} and buy_date='{self.buy_date}' and status='{self.status}'",
@@ -252,6 +260,7 @@ class Receipt:
         self.r_code = sql_query.iloc[-1]['r_code']
         _log(
             f"inserted receipt: r_code={self.r_code} and name='{self.name}' and number_sold={self.number_sold} and buyer_firstname={self.buyer_firstname} buyer_lastname='{self.buyer_lastname}' and buyer_address='{self.buyer_address}' and price={self.price} and buy_date='{self.buy_date}' and status={self.status}")
+        _log(f"inserted into User_receipts : user:{self.buyer_username} --> Receipt:{self.r_code}")
         conn.close()
 
     @staticmethod
@@ -320,9 +329,16 @@ class User:
         conn.close()
         return sql_query
 
-    def get_user_receipts(self):
+    def get_self_receipts(self):
         conn = connect_db()
         sql_query = pd.read_sql_query(f"SELECT * FROM Receipts r inner join User_Receipts ur on r.r_code = ur.r_code WHERE ur.username = '{self.username}'", conn)
+        conn.close()
+        return sql_query
+    
+    @staticmethod
+    def get_user_receipts(username):
+        conn = connect_db()
+        sql_query = pd.read_sql_query(f"SELECT * FROM User_Receipts WHERE username = '{username}'", conn)
         conn.close()
         return sql_query
 
@@ -350,6 +366,8 @@ class User:
                                                     sql_query['lastname'][0], \
                                                     sql_query['address'][0], sql_query['credit'][0]
 
+        print(password, name, lastname, address, credit)
+
         if new_password:
             password = new_password
         if new_name:
@@ -359,10 +377,10 @@ class User:
         if new_address:
             address = new_address
         if new_credit:
-            credit = new_credit
-
+            credit += new_credit
+        
         count = cursor.execute(
-            f"update Users set password='{password}',name='{name}', lastname='{lastname}',address='{address}', credit={credit} WHERE username='{username}'").rowcount
+            f"update Users set password='{password}',name='{name}' , lastname='{lastname}',address='{address}', credit={credit} WHERE username='{username}'").rowcount
         conn.commit()
         _log(
             f"updated user with username={username} : password={password}, name={name}, lastname={lastname}, address={address}, credit={credit} [{count} rows affected] ")

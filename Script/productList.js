@@ -206,7 +206,7 @@ window.onclick = function(event) {
 }
 
 function buy() {
-
+    
     var btn = document.getElementById("12");
     var price = 1000
     console.log(btn.id)
