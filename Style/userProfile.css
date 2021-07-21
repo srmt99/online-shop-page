@@ -128,13 +128,16 @@
     width: 20%;
 }
 .receipt_item .item_2 {
-    width: 25%;
+    width: 20%;
 }
 .receipt_item .item_3 {
     width: 20%;
 }
 .receipt_item .item_4 {
-    width: 35%;
+    width: 30%;
+}
+.receipt_item .item_5 {
+    width: 10%;
 }
 
 #search_input_ {

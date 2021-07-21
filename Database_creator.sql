@@ -2,11 +2,11 @@ use shop;
 
 -- creating the USERs table
 CREATE TABLE Users (  
-    username varchar(255) NOT NULL,  
+    username varchar(255) NOT NULL ,  
     password varchar(255) NOT NULL ,
-	name varchar(255) NOT NULL,
-	lastname varchar(255) NOT NULL,
-	address varchar(1000) NOT NULL,
+	name nvarchar(255) COLLATE Latin1_General_100_CI_AI_SC_UTF8 NOT NULL,
+	lastname nvarchar(255) COLLATE Latin1_General_100_CI_AI_SC_UTF8 NOT NULL,
+	address nvarchar(1000) COLLATE Latin1_General_100_CI_AI_SC_UTF8 NOT NULL,
 	credit int DEFAULT 0,
     PRIMARY KEY (username)
 	); 
@@ -20,19 +20,20 @@ CREATE TABLE Admin (
 
 -- creating the CATEGORIES table
 CREATE TABLE Categories (
-    name varchar(255) NOT NULL,
+    name varchar(255) COLLATE Latin1_General_100_CI_AI_SC_UTF8 NOT NULL,
     PRIMARY KEY (name)
 	); 
 
 -- creating the PRODUCTs table
 CREATE TABLE Products (
 	p_id int IDENTITY(1,1),
-	name varchar(255) NOT NULL,
-	category varchar(255) NOT NULL DEFAULT 'uncategorized',
+	name varchar(255) COLLATE Latin1_General_100_CI_AI_SC_UTF8 NOT NULL,
+	category varchar(255) COLLATE Latin1_General_100_CI_AI_SC_UTF8 NOT NULL DEFAULT 'uncategorized',
 	price int NOT NULL,
 	available int DEFAULT 0,
 	sold int DEFAULT 0,
-	picture VARBINARY(MAX),
+	picture varchar(1000) DEFAULT '/images/backpack.jpg',
+	date datetime DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (p_id),
 	CONSTRAINT BelongsToCat FOREIGN KEY (category)
     REFERENCES Categories (name)
@@ -42,16 +43,51 @@ CREATE TABLE Products (
 -- creating the RECEIPTs table
 CREATE TABLE Receipts (
 	r_code varchar(10) NOT NULL,
-	name varchar(255) NOT NULL,
+	name varchar(255) COLLATE Latin1_General_100_CI_AI_SC_UTF8 NOT NULL,
 	number_sold int NOT NULL,
-	buyer_firstname varchar(255) NOT NULL,
-	buyer_lastname varchar(255) NOT NULL,
-	buyer_address varchar(1000) NOT NULL,
+	buyer_firstname varchar(255) COLLATE Latin1_General_100_CI_AI_SC_UTF8 NOT NULL,
+	buyer_lastname varchar(255) COLLATE Latin1_General_100_CI_AI_SC_UTF8 NOT NULL,
+	buyer_address varchar(1000) COLLATE Latin1_General_100_CI_AI_SC_UTF8 NOT NULL,
 	price int NOT NULL,
 	buy_date datetime DEFAULT CURRENT_TIMESTAMP,
 	status varchar(20) DEFAULT 'pending',
     PRIMARY KEY (r_code)
 	); 
+
+USE [shop]
+GO
+
+/****** Object:  Table [dbo].[User_Receipts]    Script Date: 7/17/2021 3:57:45 AM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[User_Receipts](
+	[username] [varchar](255) NOT NULL,
+	[r_code] [varchar](10) NOT NULL,
+ CONSTRAINT [PK_User_Receipts] PRIMARY KEY CLUSTERED 
+(
+	[username] ASC,
+	[r_code] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+ALTER TABLE [dbo].[User_Receipts]  WITH CHECK ADD  CONSTRAINT [FK_User_Receipts_Receipts] FOREIGN KEY([r_code])
+REFERENCES [dbo].[Receipts] ([r_code])
+GO
+
+ALTER TABLE [dbo].[User_Receipts] CHECK CONSTRAINT [FK_User_Receipts_Receipts]
+GO
+
+ALTER TABLE [dbo].[User_Receipts]  WITH CHECK ADD  CONSTRAINT [FK_User_Receipts_Users] FOREIGN KEY([username])
+REFERENCES [dbo].[Users] ([username])
+GO
+
+ALTER TABLE [dbo].[User_Receipts] CHECK CONSTRAINT [FK_User_Receipts_Users]
+GO
 
 -- INSERTS
 -- inserting the one and only admin
