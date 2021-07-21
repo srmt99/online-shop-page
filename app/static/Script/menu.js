@@ -28,6 +28,31 @@ function goToSignInPage(e) {
     window.location.href = "http://127.0.0.1:5002/SignIn.html";
 }
 
+function viewDropDownMenu(e) {
+    e.preventDefault();
+    let dropDownMenu = document.getElementById("menu-dropdown");
+    dropDownMenu.classList.toggle("show");
+}
+
+function logoutJWT(e) {
+    e.preventDefault();
+    localStorage.removeItem('jwt');
+    console.log('signed out');
+    window.location.href = "http://127.0.0.1:5002/SignIn.html"; 
+}
+
+function goToProfilePage(e) {
+    e.preventDefault();
+    window.location.href = "http://127.0.0.1:5002/userProfile.html";
+}
+
 
 document.getElementById("menu-item-products").addEventListener("click", goToIndexAndScroll);
-document.getElementById("sign-in-button").addEventListener("click", goToSignInPage)
+if (document.getElementById("sign-in-button") != undefined) {
+    document.getElementById("sign-in-button").addEventListener("click", goToSignInPage);
+}
+if (document.getElementById("menu-profile-btn") != undefined) {
+    document.getElementById("menu-profile-btn").addEventListener("click", viewDropDownMenu);
+    document.getElementById("profile-dropdown-btn").addEventListener("click", goToProfilePage);
+    document.getElementById("logout-dropdown-btn").addEventListener("click", logoutJWT);
+}
