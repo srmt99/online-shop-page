@@ -53,8 +53,8 @@ def login():
     elif userid_table[username] != password_table[password]:
         return jsonify({"msg": "Bad username or password"}), 401
     access_token = create_access_token(identity=username)
-    print("TOKEN:")
-    print(jsonify(access_token=access_token))
+    # print("TOKEN:")
+    # print(jsonify(access_token=access_token))
     return jsonify(access_token=access_token)
 
 
@@ -69,7 +69,6 @@ def login():
 
 def df_to_dict(df):
     dict_df = df.to_dict()
-    print(dict_df)
     for value in list(dict_df.items()):
         for v in list(value[1].items()):
             if isinstance(v[1], datetime.datetime) or isinstance(v[1], bytes):
@@ -90,7 +89,7 @@ def go_to_index():
 @cross_origin()
 def get_all_products():
     df = Product.get_all_products(orderBy='date')
-    response = jsonify(df)
+    response = jsonify(df_to_dict(df))
     return response
 
 
@@ -105,7 +104,6 @@ def get_products():
     max_price = request.args.get('max_price')
     df = Product.get_all_products(orderBy=orderBy, order=order, filterCat=category, searchText=searchText,
                                   min_price=min_price, max_price=max_price)
-    print(df)
     response = jsonify(df_to_dict(df))
     return response
 
@@ -119,25 +117,26 @@ def get_all_categories():
 
 @app.route("/protected/user/profile/<string:username>")
 @cross_origin()
-@jwt_required()
+# @jwt_required()
 def get_user_info(username):
     # print(username)
     current_user = get_jwt_identity()
     response = User.read_profile(username)
-    response = jsonify(response)
-    return jsonify(logged_in_as=current_user), response
+    response = jsonify(df_to_dict(response))
+    return response
 
 @app.route("/protected/user/receipts/<string:username>")
 @cross_origin()
-@jwt_required()
+# @jwt_required()
 def get_user_receipts(username):
     # print(username)
-    response = jsonify(User.get_user_receipts(username))
+    df = User.get_user_receipts(username)
+    response = jsonify(df_to_dict(df))
     return response
 
 @app.route("/protected/user/profile/<string:username>/inc_crd")
 @cross_origin()
-@jwt_required()
+# @jwt_required()
 def increase_credit(username):
     User.update(username, new_credit=10000)
     return "Increased"
@@ -145,7 +144,7 @@ def increase_credit(username):
 
 @app.route("/protected/user/profile/<string:username>/update_prof")
 @cross_origin()
-@jwt_required()
+# @jwt_required()
 def update_profile(username):
     name = request.args.get('name')
     lastname = request.args.get('lastname')
@@ -168,13 +167,15 @@ def update_profile(username):
 @app.route("/receipts/<string:r_code>")
 @cross_origin()
 def get_receipt(r_code):
-    response = jsonify(Receipt._get_all(searchText=r_code))
+    df = Receipt._get_all(searchText=r_code)
+    response = jsonify(df_to_dict(df))
     return response
 
 @app.route("/categories/get_categories")
 @cross_origin()
 def get_categories():
-    response = jsonify(Category._get_all())
+    df = Category._get_all()
+    response = jsonify(df_to_dict(df))
     return response
 
 @app.route("/categories/update/<string:c_name>")
@@ -194,21 +195,23 @@ def delete_category(c_name):
 @app.route("/receipts/get_receipts")
 @cross_origin()
 def get_receipts():
-    response = jsonify(Receipt._get_all())
+    df = Receipt._get_all()
+    response = jsonify(df_to_dict(df))
     return response
 
 @app.route("/product/all_product_list/")
 @cross_origin()
 def get_products_date():
     df = Product.get_all_products(orderBy='date')
-    response = jsonify(df)
+    response = jsonify(df_to_dict(df))
+    print(response)
     return response
 
 @app.route("/product/<string:p_id>/")
 @cross_origin()
 def get_product(p_id):
     df = Product.get_product(p_id)
-    response = jsonify(df)
+    response = jsonify(df_to_dict(df))
     return response
 
 @app.route("/product/update/<string:p_id>")

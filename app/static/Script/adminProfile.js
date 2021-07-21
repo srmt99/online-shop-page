@@ -53,7 +53,7 @@ function change_tab_cat(){
 async function fetch_products(){
     try {
       response = await fetch('http://127.0.0.1:5002/product/all_product_list/');
-      response = response.json();
+      response = response.json()
       return response;
     } catch (error) {
       console.error('There has been a problem with fetching Products:', error);
@@ -87,11 +87,14 @@ async function fetch_receipts(r_code='null'){
 
 
 async function getProducts() {
+    
     data = await fetch_products()
-    data.forEach(current => {
-        document.getElementById("product_list").innerHTML += '<div class=\"product-box\"><img src=../images\\' +
+    for (let [key, value] of Object.entries(data)) {
+      const current = value;
+      console.log(current.picture)
+      document.getElementById("product_list").innerHTML += '<div class=\"product-box\"><img src="../static/images/' +
         current.picture
-        + ' alt=\"\" class=\"product-img\"><div class=\"product-info-wrapper\"><p class=\"product-title\">' +
+        + '" alt=\"\" class=\"product-img\"><div class=\"product-info-wrapper\"><p class=\"product-title\">' +
         current.name
         + '</p><p class=\"product-category\">' +
         current.category
@@ -99,12 +102,13 @@ async function getProducts() {
         current.price
         + '</p><button class=\"blue-button do-hover\" ' + ' id=\"' + 'product-btn-' + current.p_id + '\"' + ' onclick="edit_prod('+current.p_id+')">ویرایش محصول</button></div></div>'
         // console.log(current.picture)
-    });
+    } 
     }
 
 async function getCategories() {
     data = await fetch_categories()
-    data.forEach(current => {
+    for (let [key, value] of Object.entries(data)) {
+      const current = value;
             document.getElementById("category_section").innerHTML += `
             <div class="receipt_item">
                 <p class="item_1 category">${current['name']}</p>
@@ -112,7 +116,7 @@ async function getCategories() {
                 <button class="item_3" onclick="delete_cat('${current['name']}')">×حذف دسته بندی</button>
             </div>
         `
-    });
+    };
 
 }
 
@@ -126,7 +130,8 @@ async function getReceipts(data=null) {
                     <p class="item_5">وضعیت</p>
                 </div>`
     if (data==null) {data = await fetch_receipts()}
-    data.forEach(current => {
+    for (let [key, value] of Object.entries(data)) {
+      const current = value;
             document.getElementById("receipt_section").innerHTML += `
                 <div class="receipt_item">
                     <p class="item_1">${current['r_code']}</p>
@@ -136,7 +141,7 @@ async function getReceipts(data=null) {
                     <p class="item_5">${current['status']}</p>
                 </div>
         `
-    });
+    };
 }
 
 async function get_product(p_id){

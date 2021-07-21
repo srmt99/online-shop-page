@@ -72,12 +72,12 @@ async function fetch_user_receipts(username){
 async function set_user_receipts(username){
   info = await fetch_user_receipts(username)
   // console.log(info)
-  for (let index = 0; index < info.length; index++) {
-    const element = info[index];
+  for (let [key, value] of Object.entries(info)) {
+    const element = value;
     r_info =  await fetch_receipts(element['r_code'])
     r_info = r_info[0]
     document.getElementById("receipt_section").innerHTML += `
-      <div class="receipt_item" id="receipt_title${index}">
+      <div class="receipt_item" id="receipt_title${key}">
           <p class="item_1">${element['r_code']}</p>
           <p class="item_2">${r_info['name']}</p>
           <p class="item_3">${r_info['price']}</p>

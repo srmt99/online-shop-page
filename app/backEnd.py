@@ -8,16 +8,16 @@ import re
 
 def connect_db():
     conn = pyodbc.connect('Driver={SQL Server};'
-                          'Server=DESKTOP-GK7V7V3;'
-                          'Database=shop_db;'
-                          'User=mana;'
+                          'Server=DESKTOP-UH3DDJR;'
+                          'Database=shop;'
+                          'User=srmt;'
                           'Password=123'
                           'Trusted_Connection=yes;')
     return conn
 
 
 def _log(massage):
-    with open("logs/logs.txt", 'a', encoding="utf-8")as f:
+    with open("static/logs/logs.txt", 'a', encoding="utf-8")as f:
         f.write(str(datetime.datetime.now()) + " --- " + massage + "\n")
 
 
