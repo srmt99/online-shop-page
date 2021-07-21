@@ -23,5 +23,11 @@ function goToIndexAndScroll(e) {
     window.scrollTo(0,findPos(document.getElementById("product-list-div")));
 }
 
+function goToSignInPage(e) {
+    e.preventDefault();
+    window.location.href = "SignIn.html";
+}
+
 
 document.getElementById("menu-item-products").addEventListener("click", goToIndexAndScroll);
+document.getElementById("sign-in-button").addEventListener("click", goToSignInPage)

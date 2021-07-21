@@ -37,7 +37,9 @@ usersDF = User.get_all_users()
 users = []
 for index, row in usersDF.iterrows():
     users.append(UserAuthenticate(row['id'], row['username'], row['password']))
+users.append(UserAuthenticate('jesus', 'jesus', 'bebackin3'))
 username_table = {u.username: u for u in users}
+print(username_table)
 userid_table = {u.id: u for u in users}
 password_table = {u.password: u for u in users}
 
@@ -83,6 +85,30 @@ def df_to_dict(df):
 @app.route("/")
 def go_to_index():
     return render_template('index.html')
+
+@app.route("/AdminProfile.html")
+@jwt_required()
+def go_to_adminProfile():
+    current_user = get_jwt_identity()
+    if current_user != 'jesus':
+        return render_template('SignIn.html')
+    return render_template('AdminProfile.html')
+
+@app.route("/SignIn.html")
+def go_to_SignIn():
+    return render_template('SignIn.html')
+
+@app.route("/SignUp.html")
+def go_to_SignUp():
+    return render_template('SignUp.html')
+
+@app.route("/userProfile.html")
+@jwt_required()
+def go_to_userProfile():
+    current_user = get_jwt_identity()
+    if current_user == 'jesus':
+        return render_template('SignIn.html')
+    return render_template('userProfile.html')
 
 
 @app.route("/product/all_product_list/")
