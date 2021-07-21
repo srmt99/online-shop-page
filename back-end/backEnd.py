@@ -436,3 +436,14 @@ class User:
             Product.available_dec(product_id, amount)
             Product.sold_inc(product_id, amount)
         conn.close()
+
+    @staticmethod
+    def get_all_users():
+        conn = connect_db()
+        sql_query = pd.read_sql_query(
+            f"SELECT * FROM Users",
+            conn)
+        conn.close()
+        idList = sql_query['username'].tolist()
+        sql_query['id'] = idList
+        return sql_query

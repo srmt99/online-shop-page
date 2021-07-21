@@ -1,5 +1,9 @@
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, jsonify
 from flask_restful import Resource, Api
+from flask_jwt_extended import create_access_token
+from flask_jwt_extended import get_jwt_identity
+from flask_jwt_extended import jwt_required
+from flask_jwt_extended import JWTManager
 from flask_cors import CORS, cross_origin
 from backEnd import User, Receipt, Product, Category
 import json
@@ -12,45 +16,83 @@ api = Api(app)
 app = Flask(__name__, template_folder="../")
 
 
-def df_to_json(df):
+app.debug = True
+app.config["JWT_SECRET_KEY"] = "super-secret"
+jwt = JWTManager(app)
 
-    result = df.to_json(orient="records")
-    parsed = json.loads(result)
-    return json.dumps(parsed) 
+# Defining class for Users to be authenticated with jwt
+class UserAuthenticate(object):
+    def __init__(self, id, username, password):
+        self.id = id
+        self.username = username
+        self.password = password
 
-    # dict_df = df.to_dict()
-    # for value in list(dict_df.items()):
-    #     for v in list(value[1].items()):
-    #         if isinstance(v[1], datetime.datetime):
-    #             dict_df[value[0]][v[0]] = str(dict_df[value[0]][v[0]])
-    # json_df = json.dumps(dict_df)
-    # return json_df
+    def __str__(self):
+        return "User(id='%s')" % self.id
+
+# Reading Users from DB and adding their credentials to dicts
+usersDF = User.get_all_users()
+users = []
+for index, row in usersDF.iterrows():
+    users.append(UserAuthenticate(row['id'], row['username'], row['password']))
+username_table = {u.username: u for u in users}
+userid_table = {u.id: u for u in users}
+password_table = {u.password: u for u in users}
 
 
-@app.route("/user/profile/<string:username>")
+# Login path with JWT
+@app.route("/login/", methods=["POST"])
 @cross_origin()
+def login():
+    username = request.args.get("username", None)
+    password = request.args.get("password", None)
+    if username not in userid_table:
+        return jsonify({"msg": "Bad username"}), 401
+    elif password not in password_table or userid_table[username] != password_table[password]:
+        return jsonify({"msg": "Bad username or password"}), 401
+    access_token = create_access_token(identity=username)
+    print("TOKEN:")
+    print(jsonify(access_token=access_token))
+    return jsonify(access_token=access_token)
+
+
+# Protected resource with jwt example
+@app.route("/protected/", methods=["GET"])
+@cross_origin()
+@jwt_required
+def protected():
+    current_user = get_jwt_identity()
+    return jsonify(logged_in_as=current_user), 200
+
+@app.route("/protected/user/profile/<string:username>")
+@cross_origin()
+@jwt_required
 def get_user_info(username):
     # print(username)
-    response = df_to_json(User.read_profile(username))
+    response = User.read_profile(username)
+    response = jsonify(response)
     return response
 
-@app.route("/user/receipts/<string:username>")
+@app.route("/protected/user/receipts/<string:username>")
 @cross_origin()
+@jwt_required
 def get_user_receipts(username):
     # print(username)
-    response = df_to_json(User.get_user_receipts(username))
+    response = jsonify(User.get_user_receipts(username))
     return response
 
 
-@app.route("/user/profile/<string:username>/inc_crd")
+@app.route("/protected/user/profile/<string:username>/inc_crd")
 @cross_origin()
+@jwt_required
 def increase_credit(username):
     User.update(username, new_credit=10000)
     return "Increased"
 
 
-@app.route("/user/profile/<string:username>/update_prof")
+@app.route("/protected/user/profile/<string:username>/update_prof")
 @cross_origin()
+@jwt_required
 def update_profile(username):
     name = request.args.get('name')
     lastname = request.args.get('lastname')
@@ -73,13 +115,13 @@ def update_profile(username):
 @app.route("/receipts/<string:r_code>")
 @cross_origin()
 def get_receipt(r_code):
-    response = df_to_json(Receipt._get_all(searchText=r_code))
+    response = jsonify(Receipt._get_all(searchText=r_code))
     return response
 
 @app.route("/categories/get_categories")
 @cross_origin()
 def get_categories():
-    response = df_to_json(Category._get_all())
+    response = jsonify(Category._get_all())
     return response
 
 @app.route("/categories/update/<string:c_name>")
@@ -99,21 +141,21 @@ def delete_category(c_name):
 @app.route("/receipts/get_receipts")
 @cross_origin()
 def get_receipts():
-    response = df_to_json(Receipt._get_all())
+    response = jsonify(Receipt._get_all())
     return response
 
 @app.route("/product/all_product_list/")
 @cross_origin()
 def get_all_products():
     df = Product.get_all_products(orderBy='date')
-    response = df_to_json(df)
+    response = jsonify(df)
     return response
 
 @app.route("/product/<string:p_id>/")
 @cross_origin()
 def get_product(p_id):
     df = Product.get_product(p_id)
-    response = df_to_json(df)
+    response = jsonify(df)
     return response
 
 @app.route("/product/update/<string:p_id>")

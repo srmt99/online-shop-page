@@ -70,9 +70,6 @@ window.onclick = function(event) {
 } 
 form.addEventListener('submit', function (event) {
 
-  
-  var users = {"test@test":"123", "mamad@mamad":"123", "ali@mamad":"111"};
-
   email.value = email.value.trim()
 
   if ((!email.validity.valid) ||(!pass.validity.valid)) {
@@ -88,35 +85,62 @@ form.addEventListener('submit', function (event) {
     // Then we prevent the form from being sent by canceling the event
     event.preventDefault();
   }
-  else if ((email.value in users) && (pass.value!=users[email.value])) { // if the email is valid but not correct
-    message = document.getElementById('modal-message')
-    message.innerHTML = `
-    <p>ورود شما انجام نشد</p>
-    <p>ایمیل یا رمز عبور صحیح نیست</p>
-    `;
-    document.getElementById("modal").style.borderColor = 'red';
-    modal.style.display = "block";
-    // Then we prevent the form from being sent by canceling the event
-    event.preventDefault();
-  }
-  else if ((email.value in users) && (pass.value==users[email.value])) { // form is valid
-    message = document.getElementById('modal-message')
-    message.innerHTML = `
-    <p>شما با موفقیت وارد شدید</p>
-    `;
-    document.getElementById("modal").style.borderColor = '#30f04d';
-    modal.style.display = "block";
-    // handle the event
-    event.preventDefault();
-  }
-  else { // no such user exists
-    message = document.getElementById('modal-message')
-    message.innerHTML = `
-    <p>ورود شما انجام نشد</p>
-    <p>این ایمیل ثبت نشده است</p>
-    `;
-    document.getElementById("modal").style.borderColor = 'red';
-    modal.style.display = "block";
+  else { // form is valid
+    
+    /**
+     * JWT token authentication and protected resource access example
+     */
+    
+    let postData = {
+      "username": email.value,
+      "password": pass.value
+    };
+    jsonData = JSON.stringify(postData);
+    fetch('http://127.0.0.1:5002/login/?username='+postData['username']+'&password='+postData['password'], {
+      method: "POST",
+      body: JSON.stringify(postData)
+    }).then(res => res.json())
+    .then(function (data) {
+      console.log("JWT Token:")
+      console.log(data)
+      if( data['msg']  == "Bad username"){
+          message = document.getElementById('modal-message')
+          message.innerHTML = `
+          <p>ورود شما انجام نشد</p>
+          <p>این ایمیل ثبت نشده است</p>
+          `;
+          document.getElementById("modal").style.borderColor = 'red';
+          modal.style.display = "block";
+          // handle the event
+          event.preventDefault();
+      }
+      else if ( data['msg']  == "Bad username or password"){
+        message = document.getElementById('modal-message')
+        message.innerHTML = `
+        <p>ورود شما انجام نشد</p>
+        <p>ایمیل یا رمز عبور صحیح نیست</p>
+        `;
+        document.getElementById("modal").style.borderColor = 'red';
+        modal.style.display = "block";
+        // Then we prevent the form from being sent by canceling the event
+        event.preventDefault();
+      }
+      else {
+        let jwtToken = data['access_token'];
+        localStorage.setItem('jwt', jwtToken)
+        message = document.getElementById('modal-message')
+        message.innerHTML = `
+        <p>شما با موفقیت وارد شدید</p>
+        `;
+        document.getElementById("modal").style.borderColor = '#30f04d';
+        modal.style.display = "block";
+
+        // window.setTimeout(function(){
+        //   // Move to a new location or you can do something else
+        // window.location.href = "file:///E:/soroush/hW/WD/project/online-shop-page/index.html"; }, 2000);
+
+      }
+    });
     // handle the event
     event.preventDefault();
   }

@@ -2,18 +2,25 @@
 async function fetch_user_info(username){
 
   try {
-    response = await fetch('http://127.0.0.1:5002/user/profile/'+username);
+    // console.log(localStorage.getItem('jwt'))
+    response = await fetch('http://127.0.0.1:5002/protected/user/profile/'+username, {
+      method: "GET",
+      headers: {'Authorization': 'Bearer ' + localStorage.getItem('jwt')}
+    });
     return await response.json();
-
   } catch (error) {
     console.error('There has been a problem with fetching user info:', error);
   }
-
+  
 }
 
 // setting user information in input boxes and in the header
 async function set_user_info(username){
+  
+  console.log(username)
   info = await fetch_user_info(username)
+  console.log("INFO:")
+  console.log(info)
   info = info[0]
   document.getElementById("profile_title_h").innerHTML = info['name'] +" عزیز، خوش آمدید  "
   document.getElementById("profile_title_h2").innerHTML = "|"+ "موجودی حساب شما: " + info['credit']
@@ -26,8 +33,11 @@ var username = "user0@gmail.com"
 
 document.getElementById("profile_title_b").addEventListener('click', async function(){
   try {
-    // console.log("http://127.0.0.1:5002/user/profile/"+username+"/inc_crd")
-    response = await fetch("http://127.0.0.1:5002/user/profile/"+username+"/inc_crd");
+    // console.log("http://127.0.0.1:5002/protected/user/profile/"+username+"/inc_crd")
+    response = await fetch("http://127.0.0.1:5002/protected/user/profile/"+username+"/inc_crd", {
+      method: "GET",
+      headers: {'Authorization': 'Bearer ' + localStorage.getItem('jwt')}
+    });
   } catch (error) {
     console.error('There has been a problem with incrementing user credit:', error);
   }
@@ -47,7 +57,10 @@ async function fetch_receipts(r_code){
 // fetching user receipts from database
 async function fetch_user_receipts(username){
   try {
-    response = await fetch('http://127.0.0.1:5002/user/receipts/'+username);
+    response = await fetch('http://127.0.0.1:5002/protected/user/receipts/'+username,  {
+      method: "GET",
+      headers: {'Authorization': 'Bearer ' + localStorage.getItem('jwt')}
+    });
     return await response.json();
   } catch (error) {
     console.error('There has been a problem with fetching user receipts:', error);
@@ -246,7 +259,11 @@ form.addEventListener('submit', async function (event) {
     //   }
     
     try {
-      url = "http://127.0.0.1:5002/user/profile/"+username+"/update_prof?name="+fname.value+"&lastname="+lname.value+"&password="+pass.value+"&address="+adrr.value
+      url = "http://127.0.0.1:5002/protected/user/profile/"+username+"/update_prof?name="+fname.value
+      +"&lastname="+lname.value+"&password="+pass.value+"&address="+adrr.value, {
+        method: "GET",
+        headers: {'Authorization': 'Bearer ' + localStorage.getItem('jwt')}
+      }
       response = await fetch(url)
     } catch (error) {
       console.error('There has been a problem with sumbiting user info:', error);
