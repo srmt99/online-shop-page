@@ -9,6 +9,7 @@ from backEnd import User, Receipt, Product, Category
 import json
 import pandas as pd
 import datetime
+from collections import defaultdict
 
 app = Flask(__name__)
 CORS(app)
