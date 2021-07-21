@@ -117,7 +117,7 @@ def get_all_categories():
 
 @app.route("/protected/user/profile/<string:username>")
 @cross_origin()
-# @jwt_required()
+@jwt_required()
 def get_user_info(username):
     # print(username)
     current_user = get_jwt_identity()
@@ -127,7 +127,7 @@ def get_user_info(username):
 
 @app.route("/protected/user/receipts/<string:username>")
 @cross_origin()
-# @jwt_required()
+@jwt_required()
 def get_user_receipts(username):
     # print(username)
     df = User.get_user_receipts(username)
@@ -136,7 +136,7 @@ def get_user_receipts(username):
 
 @app.route("/protected/user/profile/<string:username>/inc_crd")
 @cross_origin()
-# @jwt_required()
+@jwt_required()
 def increase_credit(username):
     User.update(username, new_credit=10000)
     return "Increased"
@@ -144,7 +144,7 @@ def increase_credit(username):
 
 @app.route("/protected/user/profile/<string:username>/update_prof")
 @cross_origin()
-# @jwt_required()
+@jwt_required()
 def update_profile(username):
     name = request.args.get('name')
     lastname = request.args.get('lastname')
@@ -234,7 +234,7 @@ def create_product():
     available = request.args.get('available')
     picture = request.args.get('picture_addr')
     prod = Product(name=name, category=category, price=price, available=available)
-    Product.insert_product(prod)
+    Product.insert_product(prod, category)
     return "Created"
 
 

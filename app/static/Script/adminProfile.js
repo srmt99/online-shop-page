@@ -87,11 +87,10 @@ async function fetch_receipts(r_code='null'){
 
 
 async function getProducts() {
-    
+  document.getElementById("product_list").innerHTML = ""
     data = await fetch_products()
     for (let [key, value] of Object.entries(data)) {
       const current = value;
-      console.log(current.picture)
       document.getElementById("product_list").innerHTML += '<div class=\"product-box\"><img src="../static/images/' +
         current.picture
         + '" alt=\"\" class=\"product-img\"><div class=\"product-info-wrapper\"><p class=\"product-title\">' +
@@ -106,6 +105,12 @@ async function getProducts() {
     }
 
 async function getCategories() {
+  document.getElementById("category_section").innerHTML = `
+                <div class="receipt_item" id="receipt_title">
+                    <p class="item_1">نام دسته بندی</p>
+                    <p class="item_2">عملیات</p>
+                </div>
+  `
     data = await fetch_categories()
     for (let [key, value] of Object.entries(data)) {
       const current = value;
@@ -203,8 +208,8 @@ async function edit_prod(p_id) {
                 + '&price='+new_price.value+'&available='+new_avi.value
                 console.log(url)
                 response = await fetch(url);
-                response = response.json();
-                return response;
+                // response = response.json();
+                getProducts()
               } catch (error) {
                 console.error('There has been a problem with updating Products:', error);
               }
@@ -212,6 +217,16 @@ async function edit_prod(p_id) {
 
 }
 async function delete_cat(category){
+  var modal = document.getElementById("modalWindow");
+  message = document.getElementById('modal-message')
+  if (category=="uncategorized"){
+    message.innerHTML = `
+    <h3>دسته بندی مورد نظر حذف شدنی نیست</h3>
+    `;
+    document.getElementById("modal").style.borderColor = 'red';
+    modal.style.display = "block";
+  }
+  else{
     try {
         url = 'http://127.0.0.1:5002/categories/delete/'+category
         console.log(url)
@@ -219,13 +234,14 @@ async function delete_cat(category){
       } catch (error) {
         console.error('There has been a problem with delete the Category:', error);
       }
-    var modal = document.getElementById("modalWindow");
-    message = document.getElementById('modal-message')
+    
     message.innerHTML = `
     <h3>دسته بندی مورد نظر حذف شد</h3>
     `;
     document.getElementById("modal").style.borderColor = 'blue';
     modal.style.display = "block";
+    getCategories()
+}
 }
 
 async function edit_cat(category) {
@@ -304,7 +320,6 @@ function add_product(){
             message.innerHTML = "<h3>مشکلی در داده ها وجود داشت - کالای جدید ایجاد نشد</h3>"
         }
         else{
-            getProducts()
             document.getElementById("modal").style.borderColor = 'green';
             message.innerHTML = "<h3>کالای جدید با موفقیت ایجاد شد</h3>"
             try {
@@ -312,8 +327,8 @@ function add_product(){
                 + '&price='+new_price.value+'&available='+new_avi.value
                 console.log(url)
                 response = await fetch(url);
-                response = response.json();
-                return response;
+                getProducts()
+                getReceipts()
               } catch (error) {
                 console.error('There has been a problem with fetching Products:', error);
               }

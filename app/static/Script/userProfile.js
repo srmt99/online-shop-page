@@ -70,6 +70,15 @@ async function fetch_user_receipts(username){
 
 // adding the receipts to receipt list
 async function set_user_receipts(username){
+  document.getElementById("receipt_section").innerHTML = `
+                <div class="receipt_item" id="receipt_title">
+                    <p class="item_1">کد پیگیری</p>
+                    <p class="item_2">کالا</p>
+                    <p class="item_3">قیمت پرداخت شده</p>
+                    <p class="item_4">آدرس ارسال شده</p>
+                    <p class="item_5">وضعیت</p>
+                </div>
+  `
   info = await fetch_user_receipts(username)
   // console.log(info)
   for (let [key, value] of Object.entries(info)) {
