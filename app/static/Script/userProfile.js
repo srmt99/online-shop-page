@@ -290,25 +290,19 @@ form.addEventListener('submit', async function (event) {
     event.preventDefault();
   }
   else { // form is valid
-
-    // const data = {
-    //   "name": name,
-    //   "lastname" : lastname,
-    //   "password" : password,
-    //   "address" : address
-    //   }
     
     try {
+      event.preventDefault();
       url = "http://127.0.0.1:5002/protected/user/profile/"+username+"/update_prof?name="+fname.value
-      +"&lastname="+lname.value+"&password="+pass.value+"&address="+adrr.value, {
+      +"&lastname="+lname.value+"&password="+pass.value+"&address="+adrr.value
+      response = await fetch(url, {
         method: "GET",
         headers: {'Authorization': 'Bearer ' + localStorage.getItem('jwt')}
-      }
-      response = await fetch(url)
+      })
     } catch (error) {
       console.error('There has been a problem with sumbiting user info:', error);
     }
-    // set_user_info(username)
+    set_user_info(username)
 
     message = document.getElementById('modal-message')
     message.innerHTML = `
@@ -317,7 +311,7 @@ form.addEventListener('submit', async function (event) {
     document.getElementById("modal").style.borderColor = '#30f04d';
     modal.style.display = "block";
     // handle the event
-    event.preventDefault();
+    
   }
 });
 
