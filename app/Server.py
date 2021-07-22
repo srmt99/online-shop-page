@@ -322,7 +322,7 @@ def set_product(p_id):
     price = request.args.get('price')
     available = request.args.get('available')
     picture = request.args.get('picture_addr')
-    Product.update(p_id, new_name=name, new_cat=category, new_price=price, new_available=available)
+    Product.update(p_id, new_name=name, new_cat=category, new_price=price, new_available=available, new_picture=picture)
     return "Updated"
 
 @app.route("/create/product")
@@ -333,7 +333,7 @@ def create_product():
     price = request.args.get('price')
     available = request.args.get('available')
     picture = request.args.get('picture_addr')
-    prod = Product(name=name, category=category, price=price, available=available)
+    prod = Product(name=name, category=category, price=price, available=available, picture=picture)
     Product.insert_product(prod, category)
     return "Created"
 

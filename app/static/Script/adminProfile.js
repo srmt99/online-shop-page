@@ -214,6 +214,10 @@ async function edit_prod(p_id) {
                     <label class="input_label" style="margin-right: 5%;" for="p_price_input">قیمت:</label>
                     <input class="input_box" type="text" id="p_price_input" name="p_price_input" value="${product['price']}">
                 </div>
+                <div class="p_info">
+                    <label class="input_label" style="margin-right: 5%;" for="p_img_input">فایل تصویر کالا</label>
+                    <input class="input_box" type="text" id="p_img_input" name="p_img_input" value="${product['picture']}">
+                </div>
                 <button class="blue-button submit_receipt" id="change_product">ثبت تغییرات</button>
     </form> 
     `;
@@ -225,6 +229,7 @@ async function edit_prod(p_id) {
         new_avi = document.getElementById("p_available_input")
         new_cat = document.getElementById("p_cat_input")
         new_price = document.getElementById("p_price_input")
+        new_picture = document.getElementById("p_img_input")
         if ((new_name.value.length < 1) || (new_avi.value < 0) || (new_cat.value.length < 1) || (isNaN(new_price.value)) || (new_price.value.length < 1)){
             document.getElementById("modal").style.borderColor = 'red';
             message.innerHTML = "<h3>مشکلی در داده ها وجود داشت - تغییرات اعمال نشد</h3>"
@@ -234,7 +239,7 @@ async function edit_prod(p_id) {
             message.innerHTML = "<h3>تغییرات با موفقیت اعمال شد</h3>"
             try {
                 url = 'http://127.0.0.1:5002/product/update/'+p_id+'?name='+new_name.value+ '&category='+new_cat.value
-                + '&price='+new_price.value+'&available='+new_avi.value
+                + '&price='+new_price.value+'&available='+new_avi.value +"&picture_addr="+new_picture.value
                 console.log(url)
                 response = await fetch(url);
                 // response = response.json();
@@ -377,6 +382,10 @@ function add_product(){
                     <label class="input_label" style="margin-right: 5%;" for="p_price_input_create">قیمت:</label>
                     <input class="input_box" type="text" id="p_price_input_create" name="p_price_input_create" placeholder="قیمت کالا">
                 </div>
+                <div class="p_info">
+                    <label class="input_label" style="margin-right: 5%;" for="p_img_input">فایل تصویر کالا</label>
+                    <input class="input_box" type="text" id="p_img_input" name="p_img_input" value="default.png">
+                </div>
                 <button class="blue-button" id="submit_product">ایجاد کالا</button>
     </form> 
     `;
@@ -388,6 +397,7 @@ function add_product(){
         new_avi = document.getElementById("p_available_input_create")
         new_cat = document.getElementById("p_cat_input_create")
         new_price = document.getElementById("p_price_input_create")
+        new_picture = document.getElementById("p_img_input")
         if ((new_name.value.length < 1) || (new_avi.value < 0) || (new_cat.value.length < 1) || (isNaN(new_price.value)) || (new_price.value.length < 1)){
             document.getElementById("modal").style.borderColor = 'red';
             message.innerHTML = "<h3>مشکلی در داده ها وجود داشت - کالای جدید ایجاد نشد</h3>"
@@ -397,7 +407,7 @@ function add_product(){
             message.innerHTML = "<h3>کالای جدید با موفقیت ایجاد شد</h3>"
             try {
                 url = 'http://127.0.0.1:5002/create/product?name='+new_name.value+ '&category='+new_cat.value
-                + '&price='+new_price.value+'&available='+new_avi.value
+                + '&price='+new_price.value+'&available='+new_avi.value +"&picture_addr="+new_picture.value
                 console.log(url)
                 response = await fetch(url);
                 getProducts()

@@ -32,7 +32,7 @@ CREATE TABLE Products (
 	price int NOT NULL,
 	available int DEFAULT 0,
 	sold int DEFAULT 0,
-	picture varchar(1000) DEFAULT '/images/backpack.jpg',
+	picture varchar(1000) DEFAULT 'default.jpg',
 	date datetime DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (p_id),
 	CONSTRAINT BelongsToCat FOREIGN KEY (category)

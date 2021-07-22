@@ -36,7 +36,7 @@ def check_categories(cat):
 
 
 class Product:
-    def __init__(self, name, price, available, sold=0, category="uncategorized", picture="null"):
+    def __init__(self, name, price, available, sold=0, category="uncategorized", picture="default.png"):
         self.name = name
         self.category = category
         self.price = price
