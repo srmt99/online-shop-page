@@ -198,6 +198,11 @@
     width: 12.5%;
     
 }
+
+#operation{
+    width: 19%;
+}
+
 .receipt_item .item_3 {
     width: 12.5%;
 }
@@ -219,7 +224,7 @@
     margin: auto;
     margin-top: 8px;
     border-radius: 5px;
-    width: 70%;
+    width: 90%;
     padding: 10px;
     background-color: white;
     overflow: auto;

@@ -280,6 +280,17 @@ async function decrease_credit(username, amount){
       }
 }
 
+async function decrease_product(p_id, name, category, price, available, picture){
+    try {
+        url = 'http://127.0.0.1:5002/product/update/'+p_id+'?name='+name+ '&category='+category
+        + '&price='+price+'&available='+available +"&picture_addr="+picture
+        console.log(url)
+        response = await fetch(url);
+      } catch (error) {
+        console.error('There has been a problem with updating Products:', error);
+      }
+}
+
 async function set_receipt(name, buyer_username, number_sold, buyer_firstname, buyer_lastname, buyer_address, price){
     try {
         response = await fetch("http://127.0.0.1:5002/buy/?name="+name+"&buyer_username="+buyer_username+
@@ -313,6 +324,7 @@ async function buy(p_id) {
     var modal = document.getElementById("modalWindow");
     var price = prod['price']
     var credit = user['credit']
+    var available = prod['available']
     message = document.getElementById('modal-message')
     message.innerHTML = `
     <p style="padding-bottom:5%;">لطفا تعداد مورد نظر از کالا را انتخاب فرمایید</p>
@@ -320,7 +332,8 @@ async function buy(p_id) {
                 <label style="margin-right: 5%;" for="points">تعداد</label>
                 <input class="buy_num" type="number" id="points" name="points" step="1" value="1">
                 <label id="total_price" for="points">قیمت نهایی ${price} تومان</label>
-                <h4 id="your-cred" style="margin-right:100px; margin-top:50px;">اعتبار شما:${credit}</h4>
+                <h4 id="your-cred" style="margin-right:110px; margin-top:50px;">موجودی انبار:${available}</h4>
+                <h4 id="your-cred" style="margin-right:90px; margin-top:5px;">اعتبار شما:${credit}</h4>
                 <button class="blue-button" id="submit_receipt">ثبت سفارش</button>
     </form> 
     `;
@@ -339,9 +352,18 @@ async function buy(p_id) {
             `
             document.getElementById("modal").style.borderColor = 'red';
         }
+        else if ((amount>available) || amount<0){
+            message.innerHTML = `
+            <h3>موجودی انبار کافی نیست</h3>
+            `
+            document.getElementById("modal").style.borderColor = 'red';
+        }
         else {
+            console.log(amount)
+            console.log(available)
             decrease_credit(username, (amount * price))
             set_receipt(prod['name'], username, amount, user['name'], user['lastname'], user['address'], (amount * price))
+            decrease_product(prod['p_id'], prod['name'], prod['category'], prod['price'], available-amount, prod['picture'])
             message.innerHTML = `
             <h3>خرید با موفقیت انجام شد</h3>
             `

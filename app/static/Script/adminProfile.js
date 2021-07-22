@@ -140,7 +140,7 @@ async function getCategories() {
   document.getElementById("category_section").innerHTML = `
                 <div class="receipt_item" id="receipt_title">
                     <p class="item_1">نام دسته بندی</p>
-                    <p class="item_2">عملیات</p>
+                    <p class="item_2" id="operation">عملیات</p>
                 </div>
   `
     data = await fetch_categories()
