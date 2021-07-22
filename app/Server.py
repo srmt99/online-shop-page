@@ -34,20 +34,20 @@ class UserAuthenticate(object):
 
 
 # Reading Users from DB and adding their credentials to dicts
-userid_table = {}
-password_table = {}
+userid = {}
 def read_db():
     global userid_table
     global password_table
     usersDF = User.get_all_users()
     users = []
     for index, row in usersDF.iterrows():
-        users.append(UserAuthenticate(row['id'], row['username'], row['password']))
-    users.append(UserAuthenticate('jesus@christ', 'jesus@christ', 'bebackin3'))
-    username_table = {u.username: u for u in users}
-    print(username_table)
-    userid_table = {u.id: u for u in users}
-    password_table = {u.password: u for u in users}
+        users.append((row['id'], row['username'], row['password']))
+    users.append(('jesus@christ', 'jesus@christ', 'bebackin3'))
+    for i in users:
+        userid[i[0]] = i[2]
+    print("###########################")
+    print(userid)
+    print("###########################")
 read_db()
 
 # Login path with JWT
@@ -56,9 +56,9 @@ read_db()
 def login():
     username = request.args.get("username", None)
     password = request.args.get("password", None)
-    if username not in userid_table or password not in password_table:
-        return jsonify({"msg": "Bad username or password"}), 401
-    elif userid_table[username] != password_table[password]:
+    if username not in userid:
+        return jsonify({"msg": "Bad username"}), 401
+    elif userid[username] != password:
         return jsonify({"msg": "Bad username or password"}), 401
     access_token = create_access_token(identity=username)
     # print("TOKEN:")

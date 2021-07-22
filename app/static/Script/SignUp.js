@@ -180,6 +180,20 @@ form.addEventListener('submit', async function (event) {
     // handle the event
     event.preventDefault();
     await sign_up(email.value, pass.value, fname.value, lname.value, adrr.value);
+    let postData = {
+      "username": email.value,
+      "password": pass.value
+    };
+    fetch('http://127.0.0.1:5002/login/?username='+email.value+'&password='+pass.value, {
+      method: "POST",
+      body: JSON.stringify(postData)
+    })
+    .then(res => res.json())
+    .then(function (data) {
+      let jwtToken = data['access_token'];
+      localStorage.setItem('jwt', jwtToken)
+     window.setTimeout(function(){ window.location.href = "http://127.0.0.1:5002/userProfile.html";}, 1000);
+    });
   }
 });
 
