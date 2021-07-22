@@ -101,3 +101,7 @@ Styling each submenu button
     background-color: #e6e6e6;
     text-decoration: none;
 }
+
+.menu-item{
+    cursor: pointer;
+}
