@@ -244,6 +244,7 @@ async function edit_prod(p_id) {
                 response = await fetch(url);
                 // response = response.json();
                 getProducts()
+                getCategories()
               } catch (error) {
                 console.error('There has been a problem with updating Products:', error);
               }
@@ -275,6 +276,7 @@ async function delete_cat(category){
     document.getElementById("modal").style.borderColor = 'blue';
     modal.style.display = "block";
     getCategories()
+    getProducts()
 }
 }
 
@@ -352,6 +354,7 @@ async function edit_cat(category) {
                 console.log(url)
                 response = await fetch(url);
                 getCategories()
+                getProducts()
               } catch (error) {
                 console.error('There has been a problem with updating the Category:', error);
               }
@@ -411,7 +414,7 @@ function add_product(){
                 console.log(url)
                 response = await fetch(url);
                 getProducts()
-                getReceipts()
+                getCategories()
               } catch (error) {
                 console.error('There has been a problem with fetching Products:', error);
               }
