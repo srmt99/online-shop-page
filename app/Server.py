@@ -34,16 +34,21 @@ class UserAuthenticate(object):
 
 
 # Reading Users from DB and adding their credentials to dicts
-usersDF = User.get_all_users()
-users = []
-for index, row in usersDF.iterrows():
-    users.append(UserAuthenticate(row['id'], row['username'], row['password']))
-users.append(UserAuthenticate('jesus@christ', 'jesus@christ', 'bebackin3'))
-username_table = {u.username: u for u in users}
-print(username_table)
-userid_table = {u.id: u for u in users}
-password_table = {u.password: u for u in users}
-
+userid_table = {}
+password_table = {}
+def read_db():
+    global userid_table
+    global password_table
+    usersDF = User.get_all_users()
+    users = []
+    for index, row in usersDF.iterrows():
+        users.append(UserAuthenticate(row['id'], row['username'], row['password']))
+    users.append(UserAuthenticate('jesus@christ', 'jesus@christ', 'bebackin3'))
+    username_table = {u.username: u for u in users}
+    print(username_table)
+    userid_table = {u.id: u for u in users}
+    password_table = {u.password: u for u in users}
+read_db()
 
 # Login path with JWT
 @app.route("/login/", methods=["POST"])
@@ -103,6 +108,19 @@ def go_to_SignUp():
 def go_to_userProfile():
     return render_template('userProfile.html')
 
+@app.route("/SignUp/")
+@cross_origin()
+def sign_up():
+    username = request.args.get('username')
+    password = request.args.get('password')
+    name = request.args.get('name')
+    lastname = request.args.get('lastname')
+    address = request.args.get('address')
+    usr = User(username, password, name, lastname, address)
+    User.sign_up(usr)
+    read_db()
+    return "Signed up"
+
 
 @app.route("/product/all_product_list/")
 @cross_origin()
@@ -160,6 +178,23 @@ def get_user_username():
     response = jsonify(token_holder)
     return response
 
+@app.route("/protected/user/get_user_username/")
+@cross_origin()
+@jwt_required()
+def get_username():
+    # print(username)
+    current_user = get_jwt_identity()
+    if current_user != 'jesus@christ':
+        df = User.read_profile(current_user)
+        token_holder = df.loc[0, 'username']
+        print(df)
+        print(token_holder)
+        response = jsonify(token_holder)
+        return response
+    token_holder = 'jesus@christ'
+    response = jsonify(token_holder)
+    return response
+
 @app.route("/protected/user/id/")
 @cross_origin()
 @jwt_required()
@@ -184,6 +219,14 @@ def get_user_receipts(username):
 def increase_credit(username):
     User.update(username, new_credit=10000)
     return "Increased"
+
+@app.route("/protected/user/profile/<string:username>/dec_crd/<string:amount>")
+@cross_origin()
+@jwt_required()
+def decrease_credit(username, amount):
+    amount = int(amount)
+    User.update(username, new_credit=(-amount))
+    return "Decreased"
 
 
 @app.route("/protected/user/profile/<string:username>/update_prof")

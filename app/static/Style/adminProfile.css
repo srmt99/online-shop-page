@@ -187,20 +187,26 @@
     width: 60%;
 }
 .receipt_item .item_1 {
-    width: 20%;
+    width: 12.5%;
 }
 .receipt_item .item_2 {
-    width: 20%;
+    width: 12.5%;
     
 }
 .receipt_item .item_3 {
-    width: 20%;
+    width: 12.5%;
 }
 .receipt_item .item_4 {
-    width: 30%;
+    width: 12.5%;
 }
 .receipt_item .item_5 {
-    width: 10%;
+    width: 12.5%;
+}
+.receipt_item .item_6 {
+    width: 25%;
+}
+.receipt_item .item_7 {
+    width: 12.5%;
 }
 
 #category_section{

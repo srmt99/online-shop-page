@@ -1,3 +1,35 @@
+// checking login status
+var username = ""
+let loginP = new Promise(function (myResolve, myReject) {
+  let token = localStorage.getItem('jwt');
+  if (token == null) { myReject("Logged Out");}
+  else {
+      fetch('http://127.0.0.1:5002/protected/user/get_user_username/', {
+          method: "GET",
+          headers: { 'Authorization': 'Bearer ' + localStorage.getItem('jwt') }
+      }).then(res => res.json())
+          .then(function (data) {
+            username = data ;
+            myResolve("Logged In");
+          });
+  }
+});
+
+function check_login(){
+  return loginP.then(
+    function (value) { console.log("USERNAME:"+username)
+    if (username.includes("jesus")){ window.location.href = "http://127.0.0.1:5002/AdminProfile.html" }
+    return username},
+    function (error) { window.location.href = "http://127.0.0.1:5002/SignIn.html" }
+  );
+}
+
+check_login().then(
+  function(username) { 
+    set_user_info(username)
+    set_user_receipts(username) }
+)
+
 // fetching user info from database
 async function fetch_user_info(username){
 
@@ -16,7 +48,7 @@ async function fetch_user_info(username){
 }
 
 // setting user information in input boxes and in the header
-async function set_user_info(username){
+async function set_user_info( ){
   
   console.log(username)
   info = await fetch_user_info(username)
@@ -29,8 +61,6 @@ async function set_user_info(username){
   document.getElementById("lastname_input").placeholder = info['lastname']
   document.getElementById("address_input").placeholder = info['address']
 }
-
-var username = "user0@gmail.com"
 
 document.getElementById("profile_title_b").addEventListener('click', async function(){
   try {
@@ -324,6 +354,3 @@ function resetAll() {
   passError.textContent = '';
   adrrError.textContent = '';
 }
-
-set_user_info(username) // THIS HAS TO CHANGE FOR EACH LOGGED IN USER
-set_user_receipts(username) // THIS HAS TO CHANGE FOR EACH LOGGED IN USER

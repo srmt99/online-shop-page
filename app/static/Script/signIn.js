@@ -151,6 +151,7 @@ form.addEventListener('submit', function (event) {
         //   // Move to a new location 
         // window.location.href = "file:///E:/soroush/hW/WD/project/online-shop-page/index.html"; }, 2000);
          window.setTimeout(function(){
+           console.log(postData['username'])
            // Move to a new location
          if (postData['username']=='jesus@christ'){
           window.location.href = "http://127.0.0.1:5002/AdminProfile.html"; 
@@ -168,21 +169,21 @@ form.addEventListener('submit', function (event) {
 });
 
 // fetching user info from database
-async function fetch_user_info(username){
+// async function fetch_user_info(username){
 
-  try {
-      response = await fetch('http://127.0.0.1:5002/protected/user/profile/'+username, {
-      method: "GET",
-      headers: {'Authorization': 'Bearer ' + localStorage.getItem('jwt')}
-    });
-    console.log("RES:")
-    console.log(response)
-    return await response.json();
-  } catch (error) {
-    console.error('There has been a problem with fetching user info:', error);
-  }
+//   try {
+//       response = await fetch('http://127.0.0.1:5002/protected/user/profile/'+username, {
+//       method: "GET",
+//       headers: {'Authorization': 'Bearer ' + localStorage.getItem('jwt')}
+//     });
+//     console.log("RES:")
+//     console.log(response)
+//     return await response.json();
+//   } catch (error) {
+//     console.error('There has been a problem with fetching user info:', error);
+//   }
   
-}
+// }
 function showError(entity, entityERROR, minl=0, maxl=255, is_password=false) {
     if(entity.validity.valueMissing) {
       // If the field is empty,

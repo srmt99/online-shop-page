@@ -1,22 +1,21 @@
+// checking login status
+var username = ""
+let loginP = new Promise(function (myResolve, myReject) {
+    let token = localStorage.getItem('jwt');
+    if (token == null) { myReject("Logged Out");}
+    else {
+        fetch('http://127.0.0.1:5002/protected/user/get_user_username/', {
+            method: "GET",
+            headers: { 'Authorization': 'Bearer ' + localStorage.getItem('jwt') }
+        }).then(res => res.json())
+            .then(function (data) {
+              username = data ;
+              myResolve("Logged In");
+            });
+    }
+  });
 
-
-
-// check if user is logged in
-// async function check_login(){
-//     try {
-//         response = await fetch('http://127.0.0.1:5002//protected/check_login/', {
-//         method: "GET",
-//         headers: {'Authorization': 'Bearer ' + localStorage.getItem('jwt')}
-//       });
-//       return await response.json();
-//     } catch (error) { console.error('There has been a problem with fetching user info:', error);}
-// }
-
-// async function apply_login(){
-//     let user = check_login()
-//     console.log(user)
-// }
-
+  
 /**
  * Class for defining product attributes
  */
@@ -115,7 +114,7 @@ class Pagination {
                     cat
                     + '</p></div><div class=\"bottom-product-wrapper\"><p class=\"product-price\">' +
                     cost
-                    + '</p><button class=\"blue-button do-hover\" ' + ' onclick=\"buy('+btnID+')\">خرید محصول</button></div></div>'
+                    + '</p><button class=\"blue-button buy-btn do-hover\" ' + ' onclick=\"buy('+btnID+')\">خرید محصول</button></div></div>'
             }
         }
 
@@ -254,12 +253,53 @@ async function fetch_product(p_id){
     }
   }
 
+  async function fetch_user_info(username){
+
+    try {
+        response = await fetch('http://127.0.0.1:5002/protected/user/profile/'+username, {
+        method: "GET",
+        headers: {'Authorization': 'Bearer ' + localStorage.getItem('jwt')}
+      });
+      console.log("RES:")
+      console.log(response)
+      return await response.json();
+    } catch (error) {
+      console.error('There has been a problem with fetching user info:', error);
+    }
+    
+  }
+
+async function decrease_credit(username, amount){
+    try {
+        response = await fetch("http://127.0.0.1:5002/protected/user/profile/"+username+"/dec_crd/"+parseInt(amount), {
+          method: "GET",
+          headers: {'Authorization': 'Bearer ' + localStorage.getItem('jwt')}
+        });
+      } catch (error) {
+        console.error('There has been a problem with incrementing user credit:', error);
+      }
+}
+
 async function buy(p_id) {
+
+    loginP.then(
+    function (value) { console.log("USERNAME:"+username)
+    if (username=="jesus"){ // if admin is logged in
+        window.location.href = "http://127.0.0.1:5002/AdminProfile.html";
+        return 'redirected'
+    } },
+    function (error) {
+        window.location.href = "http://127.0.0.1:5002/SignIn.html"
+        return 'redirected' }
+    );
+
     prod = await fetch_product(p_id)
     prod = prod[0]
+    user = await fetch_user_info(username)
+    user = user[0]
     var modal = document.getElementById("modalWindow");
     var price = prod['price']
-    var credit = 40000
+    var credit = user['credit']
     message = document.getElementById('modal-message')
     message.innerHTML = `
     <p style="padding-bottom:5%;">لطفا تعداد مورد نظر از کالا را انتخاب فرمایید</p>
@@ -267,6 +307,7 @@ async function buy(p_id) {
                 <label style="margin-right: 5%;" for="points">تعداد</label>
                 <input class="buy_num" type="number" id="points" name="points" step="1" value="1">
                 <label id="total_price" for="points">قیمت نهایی ${price} تومان</label>
+                <h4 id="your-cred" style="margin-right:100px; margin-top:50px;">اعتبار شما:${credit}</h4>
                 <button class="blue-button" id="submit_receipt">ثبت سفارش</button>
     </form> 
     `;
@@ -286,6 +327,7 @@ async function buy(p_id) {
             document.getElementById("modal").style.borderColor = 'red';
         }
         else {
+            decrease_credit(username, (amount * price))
             message.innerHTML = `
             <h3>خرید با موفقیت انجام شد</h3>
             `

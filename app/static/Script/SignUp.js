@@ -136,7 +136,7 @@ window.onclick = function(event) {
     modal.style.display = "none";
   }
 } 
-form.addEventListener('submit', function (event) {
+form.addEventListener('submit', async function (event) {
 
   var user_emails = ["test@test", "srmt@web", "Apple@gmail"];
   
@@ -179,8 +179,20 @@ form.addEventListener('submit', function (event) {
     modal.style.display = "block";
     // handle the event
     event.preventDefault();
+    await sign_up(email.value, pass.value, fname.value, lname.value, adrr.value);
   }
 });
+
+async function sign_up(username, password, name, lastname, address){
+  try {
+      console.log("NAME:"+name)
+      url = 'http://127.0.0.1:5002/SignUp/?username='+username+'&password='+password+'&name='+name+'&lastname='+lastname+'&address='+address
+      response = await fetch(url);
+      return response;
+    } catch (error) {
+      console.error('There has been a problem with fetching Product:', error);
+    }
+}
 
 function showError(entity, entityERROR, minl=0, maxl=255, is_password=false) {
     if(entity.validity.valueMissing) {

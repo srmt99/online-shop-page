@@ -1,3 +1,27 @@
+// checking login status
+let loginP = new Promise(function (myResolve, myReject) {
+  let token = localStorage.getItem('jwt');
+  if (token == null) { myReject("Logged Out");}
+  else {
+      fetch('http://127.0.0.1:5002/protected/user/get_username/', {
+          method: "GET",
+          headers: { 'Authorization': 'Bearer ' + localStorage.getItem('jwt') }
+      }).then(res => res.json())
+          .then(function (data) {
+            username = data ;
+            myResolve("Logged In");
+          });
+  }
+});
+var username = ""
+loginP.then(
+  function (value) { console.log("USERNAME:"+username)
+  if (username!="jesus"){
+    window.location.href = "http://127.0.0.1:5002/userProfile.html"
+  } },
+  function (error) { window.location.href = "http://127.0.0.1:5002/SignIn.html" }
+);
+
 function change_tab_rec(){
     var tab = document.getElementById('rec_tab')
     tab.style.backgroundColor = "#cccccc";
@@ -131,10 +155,13 @@ async function getReceipts(data=null) {
                     <p class="item_1">کد پیگیری</p>
                     <p class="item_2">کالا</p>
                     <p class="item_3">قیمت پرداخت شده</p>
-                    <p class="item_4">آدرس ارسال شده</p>
-                    <p class="item_5">وضعیت</p>
+                    <p class="item_4">نام خریدار</p>
+                    <p class="item_5">نام خانوادگی</p>
+                    <p class="item_6">آدرس ارسال شده</p>
+                    <p class="item_7">وضعیت</p>
                 </div>`
     if (data==null) {data = await fetch_receipts()}
+    console.log(data)
     for (let [key, value] of Object.entries(data)) {
       const current = value;
             document.getElementById("receipt_section").innerHTML += `
@@ -142,8 +169,10 @@ async function getReceipts(data=null) {
                     <p class="item_1">${current['r_code']}</p>
                     <p class="item_2">${current['name']}</p>
                     <p class="item_3">${current['price']}</p>
-                    <p class="item_4">${current['buyer_address']}</p>
-                    <p class="item_5">${current['status']}</p>
+                    <p class="item_4">${current['buyer_firstname']}</p>
+                    <p class="item_5">${current['buyer_lastname']}</p>
+                    <p class="item_6">${current['buyer_address']}</p>
+                    <p class="item_7">${current['status']}</p>
                 </div>
         `
     };
