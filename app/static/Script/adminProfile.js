@@ -115,19 +115,27 @@ async function getProducts() {
     data = await fetch_products()
     for (let [key, value] of Object.entries(data)) {
       const current = value;
-      document.getElementById("product_list").innerHTML += '<div class=\"product-box\"><img src="../static/images/' +
-        current.picture
-        + '" alt=\"\" class=\"product-img\"><div class=\"product-info-wrapper\"><p class=\"product-title\">' +
-        current.name
-        + '</p><p class=\"product-category\">' +
-        current.category
-        + '</p></div><div class=\"bottom-product-wrapper\"><p class=\"product-price\">' +
-        current.price
-        + '</p><button class=\"blue-button do-hover\" ' + ' id=\"' + 'product-btn-' + current.p_id + '\"' + ' onclick="edit_prod('+current.p_id+')">ویرایش محصول</button></div></div>'
-        // console.log(current.picture)
+      document.getElementById("product_list").innerHTML += `
+      <div class="product-box">
+          <img src="../static/images/${current['picture']}"  class="product-img">
+          <div class="product-info-wrapper">
+              <p class="product-title">${current['name']}</p>
+              <p class="product-category">${current['category']}</p>
+              <span class="sold-num">${current['available']}</span>
+          </div>
+          <div class="bottom-product-wrapper">
+                  <p class="product-price">${current['price']} تومان </p>
+                  <button id="product-btn-${current['p_id']}" onclick="edit_prod('${current['p_id']}')" class="blue-button">ویرایش محصول</button>
+              </div>
+       </div>
+      `
     } 
     }
 
+                    
+                   
+                        
+                    
 async function getCategories() {
   document.getElementById("category_section").innerHTML = `
                 <div class="receipt_item" id="receipt_title">

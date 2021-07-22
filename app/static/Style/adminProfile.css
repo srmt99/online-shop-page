@@ -155,6 +155,11 @@
     max-height: 800px;
 }
 
+#product_list{
+    padding-top:30px;
+    padding-left:40px;
+}
+
 .product-info-wrapper .sold-num {
     position: relative;
     top: -235px;

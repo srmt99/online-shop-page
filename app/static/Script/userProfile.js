@@ -308,6 +308,7 @@ form.addEventListener('submit', async function (event) {
     message.innerHTML = `
     <p>تغییر اطلاعات شما با موفقیت انجام شد</p>
     `;
+    document.getElementById("menu-profile-btn").innerHTML = fname.value
     document.getElementById("modal").style.borderColor = '#30f04d';
     modal.style.display = "block";
     // handle the event
