@@ -276,7 +276,7 @@ class Receipt:
                        self.r_code, str(self.name), str(self.number_sold), str(self.buyer_firstname),
                        str(self.buyer_lastname),
                        str(self.buyer_address), int(self.price), str(self.buy_date), str(self.status))
-        cursor.execute("insert into USer_Receipts (username, r_code) values (?, ?)", self.buyer_username, self.r_code)
+        cursor.execute("insert into User_Receipts (username, r_code) values (?, ?)", self.buyer_username, self.r_code)
         conn.commit()
         sql_query = pd.read_sql_query(
             f"SELECT * FROM Receipts WHERE r_code='{self.r_code}' and name='{self.name}' and number_sold={self.number_sold} and buyer_firstname='{self.buyer_firstname}' and buyer_lastname='{self.buyer_lastname}' and buyer_address='{self.buyer_address}' and price={self.price} and buy_date='{self.buy_date}' and status='{self.status}'",
