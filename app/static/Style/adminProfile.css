@@ -250,10 +250,19 @@
     width: 30%;
 }
 
-#submit_receipt {
-    width: 25%;
+.submit_receipt {
+    width: 30%;
     justify-content: center;
     margin: auto;
+}
+
+#change_receipt {
+    margin-top: 30px;
+    width: 60%;
+}
+
+#r_name_select{
+    width: 40%;
 }
 
 #receipt_search {

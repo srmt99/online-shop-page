@@ -264,6 +264,13 @@ def get_receipt(r_code):
     response = jsonify(df_to_dict(df))
     return response
 
+@app.route("/protected/receipts/change_status/<string:r_code>/")
+@cross_origin()
+def update_receipt(r_code):
+    new_status = request.args.get('new_status')
+    Receipt.update_status(r_code, new_status)
+    return "Updated"
+
 @app.route("/categories/get_categories")
 @cross_origin()
 def get_categories():

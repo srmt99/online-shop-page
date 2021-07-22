@@ -172,7 +172,7 @@ async function getReceipts(data=null) {
                     <p class="item_4">${current['buyer_firstname']}</p>
                     <p class="item_5">${current['buyer_lastname']}</p>
                     <p class="item_6">${current['buyer_address']}</p>
-                    <p class="item_7">${current['status']}</p>
+                    <button class="item_7" onclick="edit_rec('${current['r_code']}')">${current['status']}</button>
                 </div>
         `
     };
@@ -214,7 +214,7 @@ async function edit_prod(p_id) {
                     <label class="input_label" style="margin-right: 5%;" for="p_price_input">قیمت:</label>
                     <input class="input_box" type="text" id="p_price_input" name="p_price_input" value="${product['price']}">
                 </div>
-                <button class="blue-button" id="submit_receipt">ثبت تغییرات</button>
+                <button class="blue-button submit_receipt" id="change_product">ثبت تغییرات</button>
     </form> 
     `;
     document.getElementById("modal").style.borderColor = 'blue';
@@ -273,6 +273,42 @@ async function delete_cat(category){
 }
 }
 
+async function edit_rec(r_code) {
+  var modal = document.getElementById("modalWindow");
+  message = document.getElementById('modal-message')
+  message.innerHTML = `
+  <p style="padding-bottom:5%;">وضعیت رسید مد نظر را مشخص نمایید</p>
+  <form id="r_info_inputs">
+              <div class="r_info" >
+                  <label class="input_label" style="margin-right: 5%;" for="r_name_select">وضعیت رسید:</label>
+                  <select name="r_name_select" id="r_name_select">
+                    <option value="pending">pending</option>
+                    <option value="in progress">in progress</option>
+                    <option value="DONE">DONE</option>
+                  </select>
+              </div>
+              <button class="blue-button submit_receipt" id="change_receipt">ثبت تغییرات</button>
+  </form> 
+  `;
+  document.getElementById("modal").style.borderColor = 'blue';
+  modal.style.display = "block";
+
+  document.getElementById("r_info_inputs").addEventListener('submit', async function (event) {
+          event.preventDefault()
+          new_status = document.getElementById("r_name_select").value
+          try {
+              url = 'http://127.0.0.1:5002/protected/receipts/change_status/'+r_code+"/?new_status="+new_status
+              console.log(url)
+              response = await fetch(url);
+              document.getElementById("modal").style.borderColor = 'green';
+              message.innerHTML = "<h3>تغییرات با موفقیت اعمال شد</h3>"
+              getReceipts()
+            } catch (error) {
+              console.error('There has been a problem with updating the Receipt:', error);
+            }
+          });
+}
+
 async function edit_cat(category) {
     var modal = document.getElementById("modalWindow");
     message = document.getElementById('modal-message')
@@ -283,7 +319,7 @@ async function edit_cat(category) {
                     <label class="input_label" style="margin-right: 5%;" for="c_name_input">نام دسته بندی:</label>
                     <input class="input_box" type="text" id="c_name_input" name="c_name_input" value="${category}">
                 </div>
-                <button class="blue-button" id="submit_receipt">ثبت تغییرات</button>
+                <button class="blue-button submit_receipt" id="change_category">ثبت تغییرات</button>
     </form> 
     `;
     document.getElementById("modal").style.borderColor = 'blue';
@@ -341,7 +377,7 @@ function add_product(){
                     <label class="input_label" style="margin-right: 5%;" for="p_price_input_create">قیمت:</label>
                     <input class="input_box" type="text" id="p_price_input_create" name="p_price_input_create" placeholder="قیمت کالا">
                 </div>
-                <button class="blue-button" id="submit_receipt">ایجاد کالا</button>
+                <button class="blue-button" id="submit_product">ایجاد کالا</button>
     </form> 
     `;
     document.getElementById("modal").style.borderColor = 'blue';

@@ -295,6 +295,17 @@ class Receipt:
             f"SELECT * FROM Receipts WHERE r_code LIKE '%{searchText}%' ORDER BY {orderBy} {order}", conn)
         conn.close()
         return sql_query
+    
+    @staticmethod
+    def update_status(r_code, new_status):
+        conn = connect_db()
+        cursor = conn.cursor()
+        count = cursor.execute(
+            f"update Receipts set status='{new_status}' WHERE r_code='{r_code}'").rowcount
+        conn.commit()
+        _log(
+            f"updated Receipts with r_code='{r_code}' status --> '{new_status}' [{count} rows affected] ")
+        conn.close()
 
 
 class User:
