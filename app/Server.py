@@ -65,15 +65,6 @@ def login():
     # print(jsonify(access_token=access_token))
     return jsonify(access_token=access_token)
 
-@app.route("/protected/check_login/", methods=["GET"])
-@cross_origin()
-@jwt_required
-def get_identity_if_logedin():
-    try:
-        # verify_jwt_in_request_optional()
-        return get_jwt_identity()
-    except Exception:
-        pass
 
 def df_to_dict(df):
     dict_df = df.to_dict()
@@ -121,6 +112,21 @@ def sign_up():
     read_db()
     return "Signed up"
 
+@app.route("/buy/")
+@cross_origin()
+@jwt_required()
+def buy():
+    p_name = request.args.get('name')
+    b_name = request.args.get('buyer_firstname')
+    b_lname = request.args.get('buyer_lastname')
+    b_uname = request.args.get('buyer_username')
+    addr = request.args.get('buyer_address')
+    price = request.args.get('price')
+    sold = request.args.get('number_sold')
+    
+    rcp = Receipt(p_name, b_uname, sold, b_name, b_lname, addr, price)
+    Receipt.insert_receipt(rcp)
+    return "Receipted!"
 
 @app.route("/product/all_product_list/")
 @cross_origin()

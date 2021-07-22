@@ -192,7 +192,10 @@ form.addEventListener('submit', async function (event) {
     .then(function (data) {
       let jwtToken = data['access_token'];
       localStorage.setItem('jwt', jwtToken)
-     window.setTimeout(function(){ window.location.href = "http://127.0.0.1:5002/userProfile.html";}, 1000);
+      if (email.value=='jesus@christ'){
+        window.setTimeout(function(){ window.location.href = "http://127.0.0.1:5002/AdminProfile.html";}, 1000);
+      }
+      else {window.setTimeout(function(){ window.location.href = "http://127.0.0.1:5002/userProfile.html";}, 1000);}
     });
   }
 });

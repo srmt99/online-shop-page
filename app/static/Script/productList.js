@@ -280,6 +280,19 @@ async function decrease_credit(username, amount){
       }
 }
 
+async function set_receipt(name, buyer_username, number_sold, buyer_firstname, buyer_lastname, buyer_address, price){
+    try {
+        response = await fetch("http://127.0.0.1:5002/buy/?name="+name+"&buyer_username="+buyer_username+
+        "&number_sold="+number_sold+"&buyer_firstname="+buyer_firstname+"&buyer_lastname="+buyer_lastname+
+        "&buyer_address="+buyer_address+"&price="+price, {
+          method: "GET",
+          headers: {'Authorization': 'Bearer ' + localStorage.getItem('jwt')}
+        });
+      } catch (error) {
+        console.error('There has been a problem with incrementing user credit:', error);
+      }
+}
+
 async function buy(p_id) {
 
     loginP.then(
@@ -328,6 +341,7 @@ async function buy(p_id) {
         }
         else {
             decrease_credit(username, (amount * price))
+            set_receipt(prod['name'], username, amount, user['name'], user['lastname'], user['address'], (amount * price))
             message.innerHTML = `
             <h3>خرید با موفقیت انجام شد</h3>
             `

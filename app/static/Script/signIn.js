@@ -159,7 +159,7 @@ form.addEventListener('submit', function (event) {
          else {
           window.location.href = "http://127.0.0.1:5002/userProfile.html"; 
          }
-        }, 2000);
+        }, 1000);
 
       }
     });
