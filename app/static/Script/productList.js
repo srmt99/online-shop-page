@@ -280,10 +280,10 @@ async function decrease_credit(username, amount){
       }
 }
 
-async function decrease_product(p_id, name, category, price, available, picture){
+async function decrease_product(p_id, name, category, price, available, picture, sold){
     try {
         url = 'http://127.0.0.1:5002/product/update/'+p_id+'?name='+name+ '&category='+category
-        + '&price='+price+'&available='+available +"&picture_addr="+picture
+        + '&price='+price+'&available='+available +"&picture_addr="+picture+"&sold="+sold
         console.log(url)
         response = await fetch(url);
       } catch (error) {
@@ -363,7 +363,7 @@ async function buy(p_id) {
             console.log(available)
             decrease_credit(username, (amount * price))
             set_receipt(prod['name'], username, amount, user['name'], user['lastname'], user['address'], (amount * price))
-            decrease_product(prod['p_id'], prod['name'], prod['category'], prod['price'], available-amount, prod['picture'])
+            decrease_product(prod['p_id'], prod['name'], prod['category'], prod['price'], available-amount, prod['picture'], amount)
             message.innerHTML = `
             <h3>خرید با موفقیت انجام شد</h3>
             `
